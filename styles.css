@@ -492,6 +492,21 @@
   color: #9ca3af;
   margin-top: 0.15rem;
 }
+.article-image {
+  width: 100%;
+  max-height: 420px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin: 1rem 0 1.5rem;
+}
+
+.article-figure {
+  margin: 1rem 0 1.5rem;
+  text-align: left;
+  font-size: 0.9rem;
+  color: #6b7280; /* subtle grey */
+}
+
 
 /* Footer */
 
