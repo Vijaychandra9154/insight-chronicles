@@ -1,83 +1,220 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Insight Chronicles</title>
-  <meta name="description" content="Insight Chronicles publishes deep analysis on geopolitics, history, technology, and global affairs.">
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Insight Chronicles – History, Geopolitics & Technology</title>
+  <meta name="description" content="Insight Chronicles publishes independent long-form analysis on history, geopolitics, and technology." />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="ic-body">
 
-<header class="site-header">
-  <div class="container">
-    <h1 class="site-title">Insight Chronicles</h1>
-    <p class="tagline">Long-form insights on geopolitics, history & technology</p>
+  <!-- Top strip -->
+  <div class="ic-topstrip">
+    Independent analysis on history, geopolitics & technology
   </div>
-</header>
 
-<main class="container layout">
-  <!-- MAIN CONTENT -->
-  <section class="main-content">
-    <h2>Featured</h2>
+  <!-- Header / Nav -->
+  <header class="ic-header">
+    <div class="ic-container ic-header-inner">
+      <a href="index.html" class="ic-logo">
+        <span class="ic-logo-mark">IC</span>
+        <span class="ic-logo-text">
+          <span class="ic-logo-title">Insight Chronicles</span>
+          <span class="ic-logo-sub">Long-form global analysis</span>
+        </span>
+      </a>
 
-    <article class="post-card">
-      <h3>
-        <a href="article-1.html">
-          How India’s Plan of Democratizing Public Services Will Guide Other Countries and Break Monopolies
-        </a>
-      </h3>
-      <p>
-        An in-depth look at how India’s digital public infrastructure — from UPI to ONDC —
-        is breaking monopolies and offering a new governance model for the world.
-      </p>
-      <a class="read-more" href="article-1.html">Read full article →</a>
-    </article>
+      <nav class="ic-nav">
+        <a href="index.html" class="ic-nav-link ic-nav-link-active">Home</a>
+        <a href="#latest" class="ic-nav-link">Articles</a>
+        <a href="#topics" class="ic-nav-link">Topics</a>
+        <a href="#about" class="ic-nav-link">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero / Featured -->
+  <section class="ic-hero">
+    <div class="ic-container ic-hero-grid">
+      <div class="ic-hero-main">
+        <p class="ic-pill">Featured analysis</p>
+        <h1 class="ic-hero-title">
+          How India’s Digital Public Infrastructure Is Rewriting Global Governance
+        </h1>
+        <p class="ic-hero-sub">
+          From UPI to ONDC and ABHA, India is building a stack of open digital rails that
+          challenge platform monopolies and offer a new model for the world.
+        </p>
+        <div class="ic-hero-meta">
+          <span>Geopolitics • Technology • Governance</span>
+          <span>~ 15 min read</span>
+        </div>
+        <a href="article-1.html" class="ic-btn-primary">Read the full article</a>
+      </div>
+
+      <aside class="ic-hero-side">
+        <h2 class="ic-side-title">This week at a glance</h2>
+        <ul class="ic-hero-list">
+          <li>
+            <p class="ic-hero-list-kicker">History</p>
+            <p class="ic-hero-list-title">
+              How colonial borders still fuel 21st-century conflicts
+            </p>
+          </li>
+          <li>
+            <p class="ic-hero-list-kicker">Geopolitics</p>
+            <p class="ic-hero-list-title">
+              Why semiconductors became the new oil
+            </p>
+          </li>
+          <li>
+            <p class="ic-hero-list-kicker">Technology</p>
+            <p class="ic-hero-list-title">
+              The quiet AI arms race shaping future warfare
+            </p>
+          </li>
+        </ul>
+      </aside>
+    </div>
   </section>
 
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
-    <div class="sidebar-box">
-      <h4>About</h4>
-      <p>
-        Insight Chronicles is an independent publication focused on deep,
-        long-form analysis of geopolitics, history, and technology.
-      </p>
-    </div>
+  <!-- Main content -->
+  <main class="ic-main">
+    <div class="ic-container ic-main-grid">
 
-    <div class="sidebar-box">
-      <h4>Categories</h4>
-      <ul>
-        <li>Geopolitics</li>
-        <li>History</li>
-        <li>Technology</li>
-        <li>Governance</li>
-      </ul>
-    </div>
+      <!-- Article list -->
+      <section class="ic-articles" id="latest">
+        <div class="ic-section-header">
+          <h2>Latest articles</h2>
+          <p>New long-form pieces as they are published.</p>
+        </div>
 
-    <div class="sidebar-box">
-      <h4>Recent Posts</h4>
-      <ul>
-        <li>
-          <a href="article-1.html">
-            Democratizing Public Services in India
+        <!-- Article card 1 – real article -->
+        <article class="ic-article-card">
+          <a href="article-1.html" class="ic-article-thumb-link">
+            <!-- If your images are in /images, change src to images/upi.png -->
+            <img src="upi.png" alt="UPI and digital public infrastructure" class="ic-article-thumb" />
           </a>
-        </li>
-      </ul>
-    </div>
-  </aside>
-</main>
+          <div class="ic-article-body">
+            <div class="ic-article-tags">
+              <span class="ic-tag ic-tag-geo">Geopolitics</span>
+              <span class="ic-tag ic-tag-tech">Technology</span>
+              <span class="ic-tag ic-tag-gov">Governance</span>
+            </div>
+            <h3 class="ic-article-title">
+              <a href="article-1.html">
+                How India’s Plan of Democratizing Public Services Will Guide Other Countries
+              </a>
+            </h3>
+            <p class="ic-article-meta">2025 • India Stack, DPI, global governance</p>
+            <p class="ic-article-excerpt">
+              A breakdown of how UPI, ONDC, Aadhaar, ABHA and more form a new model of
+              open digital infrastructure that weakens monopolies and expands access.
+            </p>
+            <a href="article-1.html" class="ic-article-read">Read article →</a>
+          </div>
+        </article>
 
-<footer class="site-footer">
-  <div class="container">
-    <p>© 2025 Insight Chronicles</p>
-    <nav class="footer-links">
-      <a href="privacy.html">Privacy</a>
-      <a href="terms.html">Terms</a>
-      <a href="disclaimer.html">Disclaimer</a>
-    </nav>
-  </div>
-</footer>
+        <!-- Placeholder future articles -->
+        <article class="ic-article-card ic-article-card-placeholder">
+          <div class="ic-article-body">
+            <div class="ic-article-tags">
+              <span class="ic-tag ic-tag-history">History</span>
+            </div>
+            <h3 class="ic-article-title">Your next article goes here</h3>
+            <p class="ic-article-excerpt">
+              Once you write your second piece, duplicate this card in
+              <code>index.html</code>, change the title, summary and link.
+            </p>
+          </div>
+        </article>
+
+      </section>
+
+      <!-- Sidebar -->
+      <aside class="ic-sidebar">
+        <!-- Search (non-functional for now) -->
+        <section class="ic-sidebar-block">
+          <h3>Search (coming soon)</h3>
+          <div class="ic-search-wrap">
+            <input type="text" placeholder="Search articles…" disabled />
+          </div>
+          <p class="ic-sidebar-note">You can add real search later with a JS plugin.</p>
+        </section>
+
+        <!-- Topics -->
+        <section class="ic-sidebar-block" id="topics">
+          <h3>Topics</h3>
+          <ul class="ic-topic-list">
+            <li><span class="ic-dot ic-dot-history"></span> History & civilisations</li>
+            <li><span class="ic-dot ic-dot-geo"></span> Geopolitics & strategy</li>
+            <li><span class="ic-dot ic-dot-tech"></span> Technology & AI</li>
+            <li><span class="ic-dot ic-dot-gov"></span> Governance & institutions</li>
+          </ul>
+        </section>
+
+        <!-- About -->
+        <section class="ic-sidebar-block" id="about">
+          <h3>About Insight Chronicles</h3>
+          <p>
+            Insight Chronicles is an independent publication exploring how history,
+            power and technology interact. The goal is simple: fewer hot takes,
+            more context.
+          </p>
+        </section>
+
+        <!-- Subscribe -->
+        <section class="ic-sidebar-block">
+          <h3>Stay updated</h3>
+          <p>Get notified when new long-form stories go live.</p>
+          <form onsubmit="alert('Newsletter feature will be added later.'); return false;">
+            <input type="email" placeholder="you@example.com" required />
+            <button type="submit" class="ic-btn-secondary">Notify me</button>
+          </form>
+          <p class="ic-sidebar-note">
+            You can later connect this form to Mailchimp, Buttondown, etc.
+          </p>
+        </section>
+
+      </aside>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="ic-footer">
+    <div class="ic-container ic-footer-grid">
+      <div>
+        <h4>Insight Chronicles</h4>
+        <p>Independent writing on history, geopolitics and technology.</p>
+      </div>
+      <div>
+        <h4>Pages</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="article-1.html">Featured article</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms &amp; Conditions</a></li>
+          <li><a href="disclaimer.html">Disclaimer</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <p><a href="mailto:moonoriginblue@gmail.com">moonoriginblue@gmail.com</a></p>
+      </div>
+    </div>
+    <div class="ic-footer-bottom">
+      © 2025 Insight Chronicles. All rights reserved.
+    </div>
+  </footer>
 
 </body>
 </html>
