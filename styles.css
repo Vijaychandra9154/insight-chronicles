@@ -88,8 +88,30 @@
 .article-body { margin-top:1.75rem; display:grid; gap:1.25rem; font-size:0.96rem; color:#d1d5db; }
 
 /* Figures & images */
+/* Article images — consistent size across all articles */
+.article-section-image,
+.article-image {
+  width: 100%;
+  margin: 1.2rem 0;
+}
+
 .article-section-image img,
-.article-image { width:100%; border-radius:0.9rem; object-fit:cover; max-height:520px; }
+.article-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 0.9rem;
+  object-fit: cover;
+}
+
+/* Mobile fix — make images visually strong */
+@media (max-width: 768px) {
+  .article-section-image img,
+  .article-image {
+    min-height: 220px;
+  }
+}
+
 
 /* Footer */
 .ic-footer { border-top:1px solid rgba(148,163,184,0.25); background:#020617; margin-top:1rem; }
