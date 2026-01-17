@@ -218,33 +218,37 @@
   </footer>
 
   <script>
-    // Topic filtering
-    document.querySelectorAll('.topic-filter').forEach(btn => {
-      btn.addEventListener('click', e => {
-        e.preventDefault();
-        const topic = btn.dataset.topic;
-        document.querySelectorAll('.ic-article-card').forEach(card => {
-          const topics = (card.dataset.topic || '').split(',').map(s=>s.trim());
-          card.style.display = topics.includes(topic) ? '' : 'none';
-        });
+  // Topic filtering
+  document.querySelectorAll('.topic-filter').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      const topic = btn.dataset.topic;
+      document.querySelectorAll('.ic-article-card').forEach(card => {
+        const topics = (card.dataset.topic || '').split(',').map(s => s.trim());
+        card.style.display = topics.includes(topic) ? '' : 'none';
       });
     });
-    document.getElementById('topic-all').addEventListener('click', e => {
-      e.preventDefault();
-      document.querySelectorAll('.ic-article-card').forEach(c => c.style.display = '');
-    });
+  });
 
-    // Simple client-side search (title + excerpt)
-    document.getElementById('siteSearch').addEventListener('keydown', function(e){
-      if(e.key === 'Enter'){ e.preventDefault();
-        const q = this.value.trim().toLowerCase();
-        document.querySelectorAll('.ic-article-card').forEach(card=>{
-          const txt = (card.textContent || '').toLowerCase();
-          card.style.display = q === '' || txt.includes(q) ? '' : 'none';
-        });
-      }
+  document.getElementById('topic-all').addEventListener('click', e => {
+    e.preventDefault();
+    document.querySelectorAll('.ic-article-card').forEach(c => c.style.display = '');
+  });
+
+  // ✅ Real Search (instant filtering)
+  const searchInput = document.getElementById('siteSearch');
+  const cards = document.querySelectorAll('.ic-article-card');
+
+  searchInput.addEventListener('input', function () {
+    const q = this.value.trim().toLowerCase();
+
+    cards.forEach(card => {
+      const text = (card.textContent || "").toLowerCase();
+      card.style.display = q === "" || text.includes(q) ? "" : "none";
     });
-  </script>
+  });
+</script>
+
 </body>
 </html>
 
