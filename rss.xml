@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+  <channel>
+    <title>Insight Chronicles</title>
+    <link>https://insight-chronicles.com/</link>
+    <description>Independent long-form analysis on history, geopolitics, governance and technology.</description>
+    <language>en</language>
+    <generator>Insight Chronicles (Static GitHub Pages)</generator>
+
+    <item>
+      <title>How India’s Plan of Democratizing Public Services Will Guide Other Countries and Break Monopolies</title>
+      <link>https://insight-chronicles.com/article-1.html</link>
+      <guid>https://insight-chronicles.com/article-1.html</guid>
+      <description><![CDATA[
+        A breakdown of how India’s digital public infrastructure model is democratizing payments, identity, commerce, credit, logistics, education, health and governance.
+      ]]></description>
+    </item>
+
+    <item>
+      <title>Democratization of India’s Hardware, Manufacturing & Bio Labs — Public Infrastructure for Next-Gen Entrepreneurs</title>
+      <link>https://insight-chronicles.com/article-hardware-bio.html</link>
+      <guid>https://insight-chronicles.com/article-hardware-bio.html</guid>
+      <description><![CDATA[
+        Why India must democratize machine tool labs, CNC, 3D printing, furnaces, molds and public bio labs to empower the next generation of inventors and entrepreneurs.
+      ]]></description>
+    </item>
+
+  </channel>
+</rss>
