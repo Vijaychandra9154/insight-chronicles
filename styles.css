@@ -203,3 +203,14 @@ Affiliate & Sponsor blocks
   font-size: 0.78rem;
   color: #9ca3af;
 }
+.ic-sponsored-badge {
+  display: inline-flex;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(34,211,238,0.12);
+  color: #a5f3fc;
+  font-size: 0.78rem;
+  font-weight: 700;
+  border: 1px solid rgba(34,211,238,0.25);
+  margin-bottom: 10px;
+}
