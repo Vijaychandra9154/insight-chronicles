@@ -279,3 +279,38 @@ Breadcrumbs + Article Navigation
     grid-template-columns: 1fr 1fr;
   }
 }
+/* =========================
+Table of Contents (TOC)
+========================= */
+.ic-toc {
+  border: 1px solid rgba(148,163,184,0.18);
+  border-radius: 16px;
+  background: rgba(15,23,42,0.75);
+  padding: 16px;
+  margin: 18px 0 22px;
+}
+
+.ic-toc h3 {
+  margin: 0 0 10px;
+  font-size: 1rem;
+  color: #e5e7eb;
+}
+
+.ic-toc ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.ic-toc li {
+  margin: 6px 0;
+  color: #cbd5f5;
+}
+
+.ic-toc a {
+  color: #93c5fd;
+  text-decoration: none;
+}
+
+.ic-toc a:hover {
+  text-decoration: underline;
+}
