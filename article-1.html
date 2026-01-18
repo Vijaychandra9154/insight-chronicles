@@ -73,6 +73,16 @@
       <header class="article-heading">
         <p class="article-kicker">Geopolitics • Technology • Governance</p>
         <h1 class="article-title">How India’s Plan of Democratizing Public Services Will Guide Other Countries and Break Monopolies</h1>
+        <div class="ic-affiliate-box" style="margin-top:14px;">
+  <p class="ic-affiliate-title">Share this article</p>
+  <div class="ic-affiliate-links">
+    <a class="ic-affiliate-btn" id="shareWhatsapp" href="#" target="_blank" rel="noopener">WhatsApp</a>
+    <a class="ic-affiliate-btn" id="shareX" href="#" target="_blank" rel="noopener">X (Twitter)</a>
+    <a class="ic-affiliate-btn" id="copyLink" href="#">Copy link</a>
+  </div>
+  <p class="ic-affiliate-note" id="copyMsg" style="display:none;">Copied ✅</p>
+</div>
+
         <p class="article-meta">2025 • India, digital public infrastructure</p>
         <p class="article-lead">Over the last decade, India has built one of the most ambitious experiments in digital public infrastructure...</p>
       </header>
@@ -256,6 +266,52 @@
     </div>
     <div class="ic-footer-bottom">© 2025 Insight Chronicles.</div>
   </footer>
+  <button class="ic-backtotop" id="backToTop">↑ Top</button>
+
+<script>
+  const btn = document.getElementById("backToTop");
+  window.addEventListener("scroll", () => {
+    if (!btn) return;
+    btn.style.display = window.scrollY > 500 ? "block" : "none";
+  });
+  if (btn) btn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+</script>
+<script>
+  // Simple reading time estimator
+  (function () {
+    const article = document.querySelector("article");
+    if (!article) return;
+    const words = (article.innerText || "").trim().split(/\s+/).length;
+    const minutes = Math.max(3, Math.round(words / 200));
+    const meta = document.querySelector(".article-meta") || document.querySelector(".meta");
+    if (meta) meta.textContent = meta.textContent + " • " + minutes + " min read";
+  })();
+</script>
+<script>
+  const url = encodeURIComponent(window.location.href);
+  const text = encodeURIComponent(document.title);
+
+  const wa = document.getElementById("shareWhatsapp");
+  const x = document.getElementById("shareX");
+  const copy = document.getElementById("copyLink");
+  const msg = document.getElementById("copyMsg");
+
+  if (wa) wa.href = `https://wa.me/?text=${text}%0A${url}`;
+  if (x) x.href = `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
+
+  if (copy) {
+    copy.addEventListener("click", async (e) => {
+      e.preventDefault();
+      try {
+        await navigator.clipboard.writeText(window.location.href);
+        if (msg) { msg.style.display = "block"; setTimeout(()=>msg.style.display="none", 1500); }
+      } catch {
+        alert("Copy failed. Please copy manually from address bar.");
+      }
+    });
+  }
+</script>
+
 </body>
 </html>
 
