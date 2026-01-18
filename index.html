@@ -247,39 +247,60 @@
       <div><h4>Legal</h4><ul><li><a href="privacy.html">Privacy</a></li><li><a href="terms.html">Terms</a></li><li><a href="disclaimer.html">Disclaimer</a></li></ul></div>
       <div><h4>Contact</h4><p><a href="mailto:moonoriginblue@gmail.com">moonoriginblue@gmail.com</a></p></div>
     </div>
-    <div class="ic-footer-bottom">© 2025 Insight Chronicles. All rights reserved.</div>
+    <div class="ic-footer-bottom">© 2025 Insight Chronicles. All rights reserved. • Updated regularly</div>
+
   </footer>
 
   <script>
-  // Topic filtering
-  document.querySelectorAll('.topic-filter').forEach(btn => {
-    btn.addEventListener('click', e => {
+  const topicLinks = document.querySelectorAll('.topic-filter');
+  const cards = document.querySelectorAll('.ic-article-card');
+  const showAll = document.getElementById('topic-all');
+
+  topicLinks.forEach(link => {
+    link.addEventListener('click', e => {
       e.preventDefault();
-      const topic = btn.dataset.topic;
-      document.querySelectorAll('.ic-article-card').forEach(card => {
+      const topic = link.dataset.topic;
+
+      topicLinks.forEach(a => a.classList.remove('active-topic'));
+      link.classList.add('active-topic');
+
+      cards.forEach(card => {
         const topics = (card.dataset.topic || '').split(',').map(s => s.trim());
         card.style.display = topics.includes(topic) ? '' : 'none';
       });
     });
   });
 
-  document.getElementById('topic-all').addEventListener('click', e => {
-    e.preventDefault();
-    document.querySelectorAll('.ic-article-card').forEach(c => c.style.display = '');
-  });
-
-  // ✅ Real Search (instant filtering)
-  const searchInput = document.getElementById('siteSearch');
-  const cards = document.querySelectorAll('.ic-article-card');
-
-  searchInput.addEventListener('input', function () {
-    const q = this.value.trim().toLowerCase();
-
-    cards.forEach(card => {
-      const text = (card.textContent || "").toLowerCase();
-      card.style.display = q === "" || text.includes(q) ? "" : "none";
+  if (showAll) {
+    showAll.addEventListener('click', e => {
+      e.preventDefault();
+      topicLinks.forEach(a => a.classList.remove('active-topic'));
+      cards.forEach(c => c.style.display = '');
     });
+  }
+
+  // Live Search
+  const searchInput = document.getElementById('siteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', function () {
+      const q = this.value.trim().toLowerCase();
+      cards.forEach(card => {
+        const txt = (card.textContent || '').toLowerCase();
+        card.style.display = q === '' || txt.includes(q) ? '' : 'none';
+      });
+    });
+  }
+</script>
+
+<button class="ic-backtotop" id="backToTop">↑ Top</button>
+
+<script>
+  const btn = document.getElementById("backToTop");
+  window.addEventListener("scroll", () => {
+    if (!btn) return;
+    btn.style.display = window.scrollY > 500 ? "block" : "none";
   });
+  if (btn) btn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
 </script>
 
 </body>
