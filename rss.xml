@@ -1,30 +1,27 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
   <channel>
     <title>Insight Chronicles</title>
     <link>https://insight-chronicles.com/</link>
-    <description>Independent long-form analysis on history, geopolitics, governance and technology.</description>
+    <description>Independent long-form analysis on history, geopolitics, and technology.</description>
     <language>en</language>
-    <generator>Insight Chronicles (Static GitHub Pages)</generator>
+    <lastBuildDate>Sun, 18 Jan 2026 20:47:31 +0000</lastBuildDate>
 
     <item>
-      <title>How India’s Plan of Democratizing Public Services Will Guide Other Countries and Break Monopolies</title>
-      <link>https://insight-chronicles.com/article-1.html</link>
-      <guid>https://insight-chronicles.com/article-1.html</guid>
-      <description><![CDATA[
-        A breakdown of how India’s digital public infrastructure model is democratizing payments, identity, commerce, credit, logistics, education, health and governance.
-      ]]></description>
+      <title>Democratization of India’s Hardware, Manufacturing &amp; Bio Labs Infrastructure</title>
+      <link>https://insight-chronicles.com/article-hardware-bio.html</link>
+      <guid>https://insight-chronicles.com/article-hardware-bio.html</guid>
+      <description>Why India must democratize access to machine tools, CNC facilities, 3D printing hubs and public bio labs.</description>
+      <pubDate>Thu, 02 Jan 2025 00:00:00 +0000</pubDate>
     </item>
 
     <item>
-      <title>Democratization of India’s Hardware, Manufacturing &amp; Bio Labs — Public Infrastructure for Next-Gen Entrepreneurs</title>
-      <link>https://insight-chronicles.com/article-hardware-bio.html</link>
-      <guid>https://insight-chronicles.com/article-hardware-bio.html</guid>
-      <description><![CDATA[
-        Why India must democratize machine tool labs, CNC, 3D printing, furnaces, molds and public bio labs to empower the next generation of inventors and entrepreneurs.
-      ]]></description>
+      <title>How India’s Plan of Democratizing Public Services Will Guide Other Countries</title>
+      <link>https://insight-chronicles.com/article-1.html</link>
+      <guid>https://insight-chronicles.com/article-1.html</guid>
+      <description>A breakdown of how UPI, ONDC, Aadhaar and ABHA form a model of open digital infrastructure.</description>
+      <pubDate>Wed, 01 Jan 2025 00:00:00 +0000</pubDate>
     </item>
 
   </channel>
 </rss>
-
