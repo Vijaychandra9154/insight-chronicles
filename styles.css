@@ -314,3 +314,26 @@ Table of Contents (TOC)
 .ic-toc a:hover {
   text-decoration: underline;
 }
+html { scroll-behavior: smooth; }
+
+.ic-backtotop {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 9999;
+  border: 1px solid rgba(148,163,184,0.25);
+  background: rgba(2,6,23,0.9);
+  color: #e5e7eb;
+  border-radius: 999px;
+  padding: 10px 14px;
+  font-weight: 700;
+  cursor: pointer;
+  display: none;
+}
+.ic-backtotop:hover { transform: translateY(-2px); }
+.ic-topic-list a.active-topic {
+  border: 1px solid rgba(34,211,238,0.35);
+  background: rgba(34,211,238,0.10);
+  border-radius: 12px;
+  padding: 8px 10px;
+}
