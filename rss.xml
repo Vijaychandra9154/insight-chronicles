@@ -5,7 +5,15 @@
     <link>https://insight-chronicles.com/</link>
     <description>Independent long-form analysis on history, geopolitics, and technology.</description>
     <language>en</language>
-    <lastBuildDate>Mon, 19 Jan 2026 17:13:17 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 19 Jan 2026 18:06:57 +0000</lastBuildDate>
+
+    <item>
+      <title>Sample Article 3 (Automated Publishing Test)</title>
+      <link>https://insight-chronicles.com/article-3.html</link>
+      <guid>https://insight-chronicles.com/article-3.html</guid>
+      <description>This is a test post generated automatically from drafts.</description>
+      <pubDate>Fri, 03 Jan 2025 00:00:00 +0000</pubDate>
+    </item>
 
     <item>
       <title>Democratization of India’s Hardware, Manufacturing &amp; Bio Labs Infrastructure</title>

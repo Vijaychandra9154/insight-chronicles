@@ -24,5 +24,17 @@
       "Innovation",
       "Governance"
     ]
+  },
+  {
+    "title": "Sample Article 3 (Automated Publishing Test)",
+    "slug": "article-3.html",
+    "url": "https://insight-chronicles.com/article-3.html",
+    "desc": "This is a test post generated automatically from drafts.",
+    "date": "2025-01-03",
+    "thumb": "images/hardware-bio.webp",
+    "tags": [
+      "Technology",
+      "Governance"
+    ]
   }
 ]
