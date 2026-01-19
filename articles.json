@@ -6,7 +6,11 @@
     "desc": "A breakdown of how UPI, ONDC, Aadhaar and ABHA form a model of open digital infrastructure.",
     "date": "2025-01-01",
     "thumb": "images/upi.webp",
-    "tags": ["Geopolitics", "Technology", "Governance"]
+    "tags": [
+      "Geopolitics",
+      "Technology",
+      "Governance"
+    ]
   },
   {
     "title": "Democratization of India’s Hardware, Manufacturing & Bio Labs Infrastructure",
@@ -15,7 +19,10 @@
     "desc": "Why India must democratize access to machine tools, CNC facilities, 3D printing hubs and public bio labs.",
     "date": "2025-01-02",
     "thumb": "images/hardware-bio.webp",
-    "tags": ["Technology", "Innovation", "Governance"]
+    "tags": [
+      "Technology",
+      "Innovation",
+      "Governance"
+    ]
   }
 ]
-
