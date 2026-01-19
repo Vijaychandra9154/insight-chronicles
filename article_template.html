@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{{TITLE}} – Insight Chronicles</title>
+  <meta name="description" content="{{DESCRIPTION}}" />
+  <link rel="stylesheet" href="styles.css" />
+
+  <link rel="canonical" href="https://insight-chronicles.com/{{SLUG}}" />
+
+  <meta property="og:title" content="{{TITLE}}" />
+  <meta property="og:description" content="{{DESCRIPTION}}" />
+  <meta property="og:url" content="https://insight-chronicles.com/{{SLUG}}" />
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://insight-chronicles.com/{{THUMB}}" />
+</head>
+
+<body class="ic-body">
+
+<header class="ic-header">
+  <div class="ic-container ic-header-inner">
+    <a href="index.html" class="ic-logo">
+      <span class="ic-logo-mark">IC</span>
+      <span>
+        <span class="ic-logo-title">Insight Chronicles</span>
+        <span class="ic-logo-sub">Long-form global analysis</span>
+      </span>
+    </a>
+
+    <nav class="ic-nav">
+      <a href="index.html" class="ic-nav-link">Home</a>
+      <a href="articles.html" class="ic-nav-link">Articles</a>
+      <a href="index.html#topics" class="ic-nav-link">Topics</a>
+      <a href="index.html#about" class="ic-nav-link">About</a>
+    </nav>
+  </div>
+</header>
+
+<main class="ic-main">
+  <div class="ic-container">
+
+    <nav class="ic-breadcrumbs">
+      <a href="index.html">Home</a>
+      <span class="sep">›</span>
+      <a href="articles.html">Articles</a>
+      <span class="sep">›</span>
+      <span>Article</span>
+    </nav>
+
+    <article class="ic-sidebar-block">
+      <p class="ic-article-meta">{{DATE}} • {{TAGLINE}}</p>
+      <h1 style="margin-top:0;">{{TITLE}}</h1>
+
+      <div class="ic-affiliate-box" style="margin-top:16px;">
+        <p class="ic-affiliate-title">Share this article</p>
+        <div class="ic-affiliate-links">
+          <a class="ic-affiliate-btn" id="shareWhatsapp" href="#" target="_blank" rel="noopener">WhatsApp</a>
+          <a class="ic-affiliate-btn" id="shareX" href="#" target="_blank" rel="noopener">X (Twitter)</a>
+          <a class="ic-affiliate-btn" id="copyLink" href="#">Copy link</a>
+        </div>
+        <p class="ic-affiliate-note" id="copyMsg" style="display:none;">Copied ✅</p>
+      </div>
+
+      <figure class="article-section-image">
+        <img src="{{THUMB}}" alt="{{TITLE}}">
+      </figure>
+
+      <div class="ic-article-content">
+        {{CONTENT}}
+      </div>
+
+      <div class="ic-ad" aria-label="Advertisement">
+        <small>Advertisement (AdSense will appear here after approval)</small>
+      </div>
+
+      <section class="ic-article-nav">
+        <a href="start-here.html">
+          <div class="kicker">Explore</div>
+          <div class="title">Start Here →</div>
+        </a>
+        <a href="articles.html">
+          <div class="kicker">More articles</div>
+          <div class="title">Browse all articles →</div>
+        </a>
+      </section>
+
+    </article>
+
+  </div>
+</main>
+
+<footer class="ic-footer">
+  <div class="ic-container ic-footer-bottom">© 2025 Insight Chronicles. All rights reserved.</div>
+</footer>
+
+<script>
+  const url = encodeURIComponent(window.location.href);
+  const text = encodeURIComponent(document.title);
+
+  const wa = document.getElementById("shareWhatsapp");
+  const x = document.getElementById("shareX");
+  const copy = document.getElementById("copyLink");
+  const msg = document.getElementById("copyMsg");
+
+  if (wa) wa.href = `https://wa.me/?text=${text}%0A${url}`;
+  if (x) x.href = `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
+
+  if (copy) {
+    copy.addEventListener("click", async (e) => {
+      e.preventDefault();
+      try {
+        await navigator.clipboard.writeText(window.location.href);
+        if (msg) { msg.style.display = "block"; setTimeout(()=>msg.style.display="none", 1500); }
+      } catch {
+        alert("Copy failed. Please copy manually from address bar.");
+      }
+    });
+  }
+</script>
+
+</body>
+</html>
