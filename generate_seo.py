@@ -398,6 +398,7 @@ def make_search_index(articles):
     return json.dumps(data, indent=2, ensure_ascii=False)
 
 def make_search_page():
+    # ✅ FIXED: No Python code inside JS
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -462,6 +463,23 @@ def make_search_page():
     render("");
   }}
 
+  function escapeHtml(str) {{
+    return (str || "").replace(/[&<>"']/g, function (m) {{
+      return {{
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+      }}[m];
+    }});
+  }}
+
+  function makeTagsHtml(tags) {{
+    if (!tags || !tags.length) return "";
+    return tags.slice(0,3).map(t => `<span class="ic-tag">${{escapeHtml(t)}}</span>`).join("");
+  }}
+
   function render(q) {{
     const results = document.getElementById("results");
     results.innerHTML = "";
@@ -488,16 +506,13 @@ def make_search_page():
 
       div.innerHTML = `
         <a href="${{a.slug}}" class="ic-article-thumb-link">
-          <img src="${{a.thumb}}" alt="${{a.title}}" class="ic-article-thumb" />
+          <img src="${{a.thumb}}" alt="${{escapeHtml(a.title)}}" class="ic-article-thumb" />
         </a>
         <div>
-          <div class="ic-article-tags">
-            tags_html = "".join([f'<span class="ic-tag">{t}</span>' for t in tags[:3]])
-
-          </div>
-          <h3 class="ic-article-title"><a href="${{a.slug}}">${{a.title}}</a></h3>
-          <p class="ic-article-meta">${{a.date}}</p>
-          <p class="ic-article-excerpt">${{a.desc}}</p>
+          <div class="ic-article-tags">${{makeTagsHtml(a.tags)}}</div>
+          <h3 class="ic-article-title"><a href="${{a.slug}}">${{escapeHtml(a.title)}}</a></h3>
+          <p class="ic-article-meta">${{escapeHtml(a.date)}}</p>
+          <p class="ic-article-excerpt">${{escapeHtml(a.desc)}}</p>
           <a href="${{a.slug}}" class="ic-article-read">Read article →</a>
         </div>
       `;
@@ -587,6 +602,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
