@@ -492,7 +492,8 @@ def make_search_page():
         </a>
         <div>
           <div class="ic-article-tags">
-            ${(a.tags||[]).slice(0,3).map(t => `<span class="ic-tag">${{t}}</span>`).join("")}
+            tags_html = "".join([f'<span class="ic-tag">{t}</span>' for t in tags[:3]])
+
           </div>
           <h3 class="ic-article-title"><a href="${{a.slug}}">${{a.title}}</a></h3>
           <p class="ic-article-meta">${{a.date}}</p>
