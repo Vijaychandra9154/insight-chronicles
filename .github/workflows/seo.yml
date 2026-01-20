@@ -29,7 +29,8 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add index.html *.html sitemap.xml rss.xml robots.txt articles.json search-index.json site.json
+          git add .
+
           git commit -m "Auto-publish + regenerate site files" || echo "No changes to commit"
           git push
 
