@@ -5,13 +5,13 @@
     <link>https://insight-chronicles.com/</link>
     <description>Independent long-form analysis on history, geopolitics, and technology.</description>
     <language>en</language>
-    <lastBuildDate>Mon, 19 Jan 2026 18:06:57 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 20 Jan 2026 15:15:05 +0000</lastBuildDate>
 
     <item>
-      <title>Sample Article 3 (Automated Publishing Test)</title>
+      <title>Test Article 3 – Automation Publishing Check</title>
       <link>https://insight-chronicles.com/article-3.html</link>
       <guid>https://insight-chronicles.com/article-3.html</guid>
-      <description>This is a test post generated automatically from drafts.</description>
+      <description>This is a test post generated automatically from drafts using GitHub Actions.</description>
       <pubDate>Fri, 03 Jan 2025 00:00:00 +0000</pubDate>
     </item>
 
