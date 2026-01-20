@@ -1,4 +1,4 @@
-name: Generate SEO files (sitemap + rss)
+name: Publish + Generate SEO + Pages
 
 on:
   push:
@@ -10,28 +10,26 @@ permissions:
   contents: write
 
 jobs:
-  build-seo:
+  build:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Set up Python
+      - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - name: Generate sitemap.xml + rss.xml
+      - name: Generate site files
         run: python generate_seo.py
 
       - name: Commit generated files
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add *.html sitemap.xml rss.xml articles.html robots.txt articles.json
-
-
-
-          git commit -m "Auto-generate sitemap.xml and rss.xml" || echo "No changes to commit"
+          git add index.html *.html sitemap.xml rss.xml robots.txt articles.json search-index.json site.json
+          git commit -m "Auto-publish + regenerate site files" || echo "No changes to commit"
           git push
+
