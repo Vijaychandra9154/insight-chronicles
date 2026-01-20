@@ -1,0 +1,4 @@
+Contact: mailto:moonoriginblue@gmail.com
+Preferred-Languages: en
+Canonical: https://insight-chronicles.com/.well-known/security.txt
+Policy: https://insight-chronicles.com/disclaimer.html
