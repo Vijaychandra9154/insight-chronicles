@@ -1,10 +1,10 @@
-{
-  "title": "Test Article 3 – Automation Publishing Check",
-  "slug": "article-3.html",
-  "date": "2026-01-06",
-  "desc": "This is a test post generated automatically from drafts using GitHub Actions.",
-  "thumb": "images/upi.webp",
-  "thumb_og": "images/upi.webp",
-  "tags": ["Technology", "Governance"],
-  "content": "<p>This article is generated from drafts automatically. Automation working ✅</p><h2>Section 1</h2><p>Now it should appear on homepage, search page and category pages.</p>"
-}
+[
+
+
+
+
+
+
+
+  
+]
