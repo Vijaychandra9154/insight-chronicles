@@ -8,7 +8,6 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body class="ic-body">
-
 <div class="ic-topstrip">Search • Insight Chronicles</div>
 
 <header class="ic-header">
@@ -35,7 +34,7 @@
       <h1 style="margin-top:0;">Search Articles</h1>
       <p style="color:#cbd5f5;">Type keywords to search across all published posts.</p>
 
-      <input id="q" type="text" placeholder="Search (UPI, ONDC, labs, geopolitics...)" 
+      <input id="q" type="text" placeholder="Search (UPI, ONDC, labs, geopolitics...)"
         style="width:100%;padding:14px;border-radius:14px;border:1px solid rgba(148,163,184,0.25);background:#020617;color:#e5e7eb;" />
 
       <p id="count" style="margin-top:10px;color:#9ca3af;">Loading…</p>
@@ -49,7 +48,7 @@
 </main>
 
 <footer class="ic-footer">
-  <div class="ic-container ic-footer-bottom">© 2025 Insight Chronicles. All rights reserved.</div>
+  <div class="ic-container ic-footer-bottom">© 2026 Insight Chronicles. All rights reserved.</div>
 </footer>
 
 <script>
@@ -60,23 +59,6 @@
     data = await res.json();
     document.getElementById("count").textContent = data.length + " articles indexed";
     render("");
-  }
-
-  function escapeHtml(str) {
-    return (str || "").replace(/[&<>"']/g, function (m) {
-      return {
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#039;"
-      }[m];
-    });
-  }
-
-  function makeTagsHtml(tags) {
-    if (!tags || !tags.length) return "";
-    return tags.slice(0,3).map(t => `<span class="ic-tag">${escapeHtml(t)}</span>`).join("");
   }
 
   function render(q) {
@@ -103,15 +85,17 @@
       div.className = "ic-article-card";
       div.style.gridTemplateColumns = "140px 1fr";
 
+      const tags = (a.tags || []).slice(0,3).map(t => `<span class="ic-tag">${t}</span>`).join("");
+
       div.innerHTML = `
         <a href="${a.slug}" class="ic-article-thumb-link">
-          <img src="${a.thumb}" alt="${escapeHtml(a.title)}" class="ic-article-thumb" />
+          <img src="${a.thumb}" alt="${a.title}" class="ic-article-thumb" />
         </a>
         <div>
-          <div class="ic-article-tags">${makeTagsHtml(a.tags)}</div>
-          <h3 class="ic-article-title"><a href="${a.slug}">${escapeHtml(a.title)}</a></h3>
-          <p class="ic-article-meta">${escapeHtml(a.date)}</p>
-          <p class="ic-article-excerpt">${escapeHtml(a.desc)}</p>
+          <div class="ic-article-tags">${tags}</div>
+          <h3 class="ic-article-title"><a href="${a.slug}">${a.title}</a></h3>
+          <p class="ic-article-meta">${a.date}</p>
+          <p class="ic-article-excerpt">${a.desc}</p>
           <a href="${a.slug}" class="ic-article-read">Read article →</a>
         </div>
       `;
