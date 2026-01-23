@@ -28,5 +28,16 @@
     ],
     "content_html": ""
   },
-  
+  {
+  "title": "Test Article 3 – Automation Publishing Check",
+  "slug": "article-3.html",
+  "url": "https://insight-chronicles.com/article-3.html",
+  "desc": "This is a test post generated automatically from drafts using GitHub Actions.",
+  "date": "2026-01-06",
+  "thumb": "images/upi.webp",
+  "thumb_og": "images/upi.webp",
+  "tags": ["Technology", "Governance"],
+  "content_html": "<p>This article is generated from drafts automatically. Replace this later with real content.</p><h2>Section 1</h2><p>Automation working ✅</p>"
+}
+
 ]
