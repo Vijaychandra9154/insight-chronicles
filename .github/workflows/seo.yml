@@ -1,10 +1,10 @@
 name: Publish + Generate SEO + Pages
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
-  workflow_dispatch:
 
 permissions:
   contents: write
@@ -16,6 +16,8 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # ✅ IMPORTANT (so git pull works)
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -25,12 +27,25 @@ jobs:
       - name: Generate site files
         run: python generate_seo.py
 
-      - name: Commit generated files
+      - name: Commit generated files (safe push)
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add .
 
-          git commit -m "Auto-publish + regenerate site files" || echo "No changes to commit"
-          git push
+          git add -A
+
+          # ✅ If no changes, stop cleanly
+          if git diff --cached --quiet; then
+            echo "✅ No changes to commit."
+            exit 0
+          fi
+
+          git commit -m "Auto-publish + regenerate site files"
+
+          # ✅ Pull latest changes from GitHub BEFORE pushing
+          git pull --rebase origin main
+
+          # ✅ Now push safely
+          git push origin main
+
 
