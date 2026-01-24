@@ -3,30 +3,51 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-
   <title>{{TITLE}} – Insight Chronicles</title>
   <meta name="description" content="{{DESCRIPTION}}" />
+  <link rel="stylesheet" href="styles.css" />
 
-  <!-- OG / Social Preview -->
+  <link rel="canonical" href="https://insight-chronicles.com/{{SLUG}}" />
+
+  <!-- Open Graph -->
   <meta property="og:title" content="{{TITLE}}" />
   <meta property="og:description" content="{{DESCRIPTION}}" />
-  <meta property="og:type" content="article" />
   <meta property="og:url" content="https://insight-chronicles.com/{{SLUG}}" />
+  <meta property="og:type" content="article" />
   <meta property="og:image" content="https://insight-chronicles.com/{{THUMB_OG}}" />
 
+  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="{{TITLE}}" />
   <meta name="twitter:description" content="{{DESCRIPTION}}" />
   <meta name="twitter:image" content="https://insight-chronicles.com/{{THUMB_OG}}" />
 
-  <link rel="stylesheet" href="styles.css" />
+  <!-- Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://insight-chronicles.com/{{SLUG}}"
+    },
+    "headline": "{{TITLE}}",
+    "description": "{{DESCRIPTION}}",
+    "image": ["https://insight-chronicles.com/{{THUMB_OG}}"],
+    "author": {
+      "@type": "Organization",
+      "name": "Insight Chronicles"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Insight Chronicles"
+    }
+  }
+  </script>
 </head>
 
 <body class="ic-body">
 
-  <div class="ic-topstrip">Insight Chronicles • Long-form analysis</div>
-
-  <!-- Header -->
   <header class="ic-header">
     <div class="ic-container ic-header-inner">
       <a href="index.html" class="ic-logo">
@@ -39,60 +60,84 @@
 
       <nav class="ic-nav">
         <a href="index.html" class="ic-nav-link">Home</a>
-        <a href="articles.html" class="ic-nav-link">Articles</a>
+        <a href="articles.html" class="ic-nav-link ic-nav-link-active">Articles</a>
         <a href="search.html" class="ic-nav-link">Search</a>
       </nav>
     </div>
   </header>
 
-  <!-- Article -->
-  <main class="ic-main">
+  <main class="article-wrapper">
     <div class="ic-container">
 
-      <section class="ic-article-hero">
-        <p class="ic-pill">{{TAGLINE}}</p>
-        <h1 class="ic-article-title-big">{{TITLE}}</h1>
-        <p class="ic-article-sub">{{DESCRIPTION}}</p>
+      <header class="article-heading">
+        <p class="article-kicker">{{TAGLINE}}</p>
 
-        <div class="ic-article-meta-line">
-          <span>{{DATE}}</span>
-          <span>•</span>
-          <a href="index.html" style="color:#cbd5f5;text-decoration:none;">Back to homepage</a>
+        <h1 class="article-title">{{TITLE}}</h1>
+
+        <!-- Share box (same as your article-1 design) -->
+        <div class="ic-affiliate-box" style="margin-top:14px;">
+          <p class="ic-affiliate-title">Share this article</p>
+
+          <div class="ic-affiliate-links">
+            <a class="ic-affiliate-btn" id="shareWhatsapp" href="#" target="_blank" rel="noopener">WhatsApp</a>
+            <a class="ic-affiliate-btn" id="shareX" href="#" target="_blank" rel="noopener">X (Twitter)</a>
+            <a class="ic-affiliate-btn" id="copyLink" href="#">Copy link</a>
+          </div>
+
+          <p class="ic-affiliate-note" id="copyMsg" style="display:none;">Copied ✅</p>
         </div>
 
-        <figure class="ic-figure ic-hero-figure">
-          <img src="{{THUMB}}" alt="{{TITLE}}" />
-        </figure>
+        <p class="article-meta">{{DATE}}</p>
+
+        <!-- Optional lead paragraph (comes from your draft content if you include it) -->
+      </header>
+
+      <section class="article-body">
+        {{CONTENT}}
+
+        <!-- Recommended Tools & Resources (always present like article-1) -->
+        <div class="ic-affiliate-box" style="margin-top:26px;">
+          <p class="ic-affiliate-title">Recommended tools & resources</p>
+          <p class="ic-affiliate-text">
+            If you want to go deeper into the ideas mentioned here, these resources can help.
+          </p>
+
+          <div class="ic-affiliate-links">
+            <a class="ic-affiliate-btn" href="https://www.amazon.in/" target="_blank" rel="noopener noreferrer">
+              Books & Research
+            </a>
+            <a class="ic-affiliate-btn" href="https://www.coursera.org/" target="_blank" rel="noopener noreferrer">
+              Courses & Learning
+            </a>
+          </div>
+
+          <p class="ic-affiliate-note">
+            Disclosure: Links may be affiliate links. See
+            <a href="disclaimer.html" style="color:#93c5fd;text-decoration:none;">Disclaimer</a>.
+          </p>
+        </div>
+
+        <p style="margin-top:2rem;font-size:0.9rem;">
+          ← <a href="index.html" style="color:#93c5fd;text-decoration:none;">Back to homepage</a>
+        </p>
       </section>
 
-      <article class="ic-article-content">
-        {{CONTENT}}
-      </article>
+      <!-- Explore / Previous / Next (same style like your manual articles) -->
+      <section class="ic-article-nav" style="margin-top:26px;">
+        <a href="start-here.html">
+          <div class="kicker">Explore</div>
+          <div class="title">Start Here →</div>
+        </a>
 
-      <!-- Share -->
-      <section class="ic-sidebar-block" style="margin-top:26px;">
-        <h3 style="margin-top:0;">Share this article</h3>
-        <div style="display:flex; gap:10px; flex-wrap:wrap;">
-          <a class="ic-btn-secondary" target="_blank"
-             href="https://wa.me/?text={{TITLE}}%20https://insight-chronicles.com/{{SLUG}}">
-             WhatsApp
-          </a>
-
-          <a class="ic-btn-secondary" target="_blank"
-             href="https://twitter.com/intent/tweet?text={{TITLE}}&url=https://insight-chronicles.com/{{SLUG}}">
-             X (Twitter)
-          </a>
-
-          <button class="ic-btn-secondary" onclick="navigator.clipboard.writeText('https://insight-chronicles.com/{{SLUG}}');alert('Link copied!')">
-            Copy link
-          </button>
-        </div>
+        <a href="articles.html">
+          <div class="kicker">Browse</div>
+          <div class="title">All Articles →</div>
+        </a>
       </section>
 
     </div>
   </main>
 
-  <!-- Footer -->
   <footer class="ic-footer">
     <div class="ic-container ic-footer-grid">
       <div>
@@ -127,8 +172,47 @@
     <div class="ic-footer-bottom">© 2026 Insight Chronicles. All rights reserved.</div>
   </footer>
 
+  <button class="ic-backtotop" id="backToTop">↑ Top</button>
+
+  <script>
+    // Back to top
+    const btn = document.getElementById("backToTop");
+    window.addEventListener("scroll", () => {
+      if (!btn) return;
+      btn.style.display = window.scrollY > 500 ? "block" : "none";
+    });
+    if (btn) btn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+  </script>
+
+  <script>
+    // Share buttons (same as your manual article)
+    const url = encodeURIComponent(window.location.href);
+    const text = encodeURIComponent(document.title);
+
+    const wa = document.getElementById("shareWhatsapp");
+    const x = document.getElementById("shareX");
+    const copy = document.getElementById("copyLink");
+    const msg = document.getElementById("copyMsg");
+
+    if (wa) wa.href = `https://wa.me/?text=${text}%0A${url}`;
+    if (x) x.href = `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
+
+    if (copy) {
+      copy.addEventListener("click", async (e) => {
+        e.preventDefault();
+        try {
+          await navigator.clipboard.writeText(window.location.href);
+          if (msg) { msg.style.display = "block"; setTimeout(()=>msg.style.display="none", 1500); }
+        } catch {
+          alert("Copy failed. Please copy manually from address bar.");
+        }
+      });
+    }
+  </script>
+
 </body>
 </html>
+
 
 
 
