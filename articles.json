@@ -1,9 +1,9 @@
 [
   {
-    "title": "How India’s Plan of Democratizing Public Services Will Guide Other Countries",
+    "title": "How India’s Plan of Democratizing Public Services Will Guide Other Countries and Break Monopolies",
     "slug": "article-1.html",
     "url": "https://insight-chronicles.com/article-1.html",
-    "desc": "A breakdown of how UPI, ONDC, Aadhaar and ABHA form a model of open digital infrastructure.",
+    "desc": "A breakdown of how India’s digital public infrastructure model is democratizing payments, identity, commerce, credit, logistics, education, health and governance — and what the world can learn from it.",
     "date": "2025-01-01",
     "thumb": "images/upi.webp",
     "thumb_og": "images/upi.webp",
@@ -14,10 +14,21 @@
     "title": "Democratization of India’s Hardware, Manufacturing & Bio Labs Public Infrastructure for the Next Generation Entrepreneurs",
     "slug": "article-hardware-bio.html",
     "url": "https://insight-chronicles.com/article-hardware-bio.html",
-    "desc": "India’s next leap will come from democratizing machine-tool labs, CNC facilities, furnaces, 3D-printing, and public bio-labs — enabling a new generation of inventors and product creators.",
+    "desc": "India’s next leap will come from democratizing machine-tool labs, hardware innovation centers, CNC facilities, furnaces, 3D-printing, and public bio-labs — enabling a new generation of inventors and product creators.",
     "date": "2025-01-02",
     "thumb": "images/hardware-bio.webp",
     "thumb_og": "images/hardware-bio.webp",
+    "tags": ["Technology", "Governance"],
+    "content_html": ""
+  },
+  {
+    "title": "Test Article 3 – Automation Publishing Check",
+    "slug": "article-3.html",
+    "url": "https://insight-chronicles.com/article-3.html",
+    "desc": "This is a test post generated automatically from drafts using GitHub Actions.",
+    "date": "2025-01-03",
+    "thumb": "images/upi.webp",
+    "thumb_og": "images/upi.webp",
     "tags": ["Technology", "Governance"],
     "content_html": ""
   }
