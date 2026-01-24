@@ -48,6 +48,20 @@
         "Governance"
       ],
       "content_html": "<p>This article is generated from drafts automatically. Replace this later with real content.</p><h2>Section 1</h2><p>Automation working ✅</p>"
+    },
+    {
+      "title": "Test Article 4 – Auto Publish Confirmation",
+      "slug": "article-4.html",
+      "url": "https://insight-chronicles.com/article-4.html",
+      "desc": "This is a test article to verify automation creates new articles even if article-3 was deleted.",
+      "date": "2025-01-04",
+      "thumb": "images/upi.webp",
+      "thumb_og": "og/article-4.png",
+      "tags": [
+        "Technology",
+        "Governance"
+      ],
+      "content_html": "<p>This article confirms publishing works even if article-3 was deleted.</p><h2>Automation Test</h2><p>✅ Article 4 created successfully.</p>"
     }
   ]
 }

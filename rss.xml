@@ -5,7 +5,15 @@
     <link>https://insight-chronicles.com/</link>
     <description>Independent long-form analysis on history, geopolitics, and technology.</description>
     <language>en</language>
-    <lastBuildDate>Sat, 24 Jan 2026 18:50:27 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 24 Jan 2026 18:55:59 +0000</lastBuildDate>
+
+    <item>
+      <title>Test Article 4 – Auto Publish Confirmation</title>
+      <link>https://insight-chronicles.com/article-4.html</link>
+      <guid>https://insight-chronicles.com/article-4.html</guid>
+      <description>This is a test article to verify automation creates new articles even if article-3 was deleted.</description>
+      <pubDate>Sat, 04 Jan 2025 00:00:00 +0000</pubDate>
+    </item>
 
     <item>
       <title>Test Article 3 – Automation Publishing Check</title>
