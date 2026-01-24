@@ -26,12 +26,19 @@ def safe_url_from_article(a: dict) -> str:
     """
     Always generate a valid URL even if "url" key is missing.
     """
-    slug = a.get("slug", "").strip()
+    # if full URL exists already
+    url = (a.get("url") or "").strip()
+    if url.startswith("http://") or url.startswith("https://"):
+        return url
+
+    slug = (a.get("slug") or "").strip()
     if not slug:
         return SITE_URL + "/"
-    # If already full URL, return it
+
+    # if slug itself is a full URL
     if slug.startswith("http://") or slug.startswith("https://"):
         return slug
+
     return f"{SITE_URL}/{slug}"
 
 def load_articles_json():
@@ -99,7 +106,7 @@ def publish_drafts(articles):
         articles.append({
             "title": d["title"],
             "slug": d["slug"],
-            "url": f"{SITE_URL}/{d['slug']}",  # ✅ always add url
+            "url": safe_url_from_article({"slug": d["slug"]}),  # ✅ ensures url always exists
             "desc": d["desc"],
             "date": d["date"],
             "thumb": d["thumb"],
@@ -126,8 +133,8 @@ def make_sitemap(articles):
         urls.append(f"""  <url><loc>{SITE_URL}/{cat["file"]}</loc><priority>0.7</priority></url>""")
 
     for a in sorted(articles, key=lambda x: x.get("date", ""), reverse=True):
-        url = safe_url_from_article(a)  # ✅ FIXED
-        urls.append(f"""  <url><loc>{escape(url)}</loc><priority>0.8</priority></url>""")
+        article_url = safe_url_from_article(a)  # ✅ no KeyError now
+        urls.append(f"""  <url><loc>{escape(article_url)}</loc><priority>0.8</priority></url>""")
 
     return f"""<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -140,8 +147,8 @@ def make_rss(articles):
     items = []
 
     for a in sorted(articles, key=lambda x: x.get("date", ""), reverse=True):
-        title = escape(a.get("title", "New article"))
-        link = escape(safe_url_from_article(a))  # ✅ FIXED
+        title = escape(a["title"])
+        link = escape(safe_url_from_article(a))  # ✅ safe
         desc = escape(a.get("desc", "New article on Insight Chronicles."))
         pub_date = a.get("date", "")
 
@@ -186,8 +193,8 @@ def make_homepage_cards(articles, limit=6):
     blocks = []
 
     for a in sorted_articles:
-        title = escape(a.get("title", "Untitled"))
-        slug = escape(a.get("slug", "index.html"))
+        title = escape(a["title"])
+        slug = escape(a["slug"])
         desc = escape(a.get("desc", ""))
         date = escape(a.get("date", ""))
         thumb = escape(a.get("thumb", "images/upi.webp"))
@@ -242,7 +249,7 @@ def make_search_index(articles):
         data.append({
             "title": a.get("title", ""),
             "slug": a.get("slug", ""),
-            "url": safe_url_from_article(a),  # ✅ FIXED
+            "url": safe_url_from_article(a),
             "desc": a.get("desc", ""),
             "date": a.get("date", ""),
             "thumb": a.get("thumb", ""),
@@ -262,6 +269,7 @@ def make_search_page():
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body class="ic-body">
+
 <div class="ic-topstrip">Search • {SITE_NAME}</div>
 
 <header class="ic-header">
@@ -288,7 +296,7 @@ def make_search_page():
       <h1 style="margin-top:0;">Search Articles</h1>
       <p style="color:#cbd5f5;">Type keywords to search across all published posts.</p>
 
-      <input id="q" type="text" placeholder="Search (UPI, ONDC, labs, geopolitics...)"
+      <input id="q" type="text" placeholder="Search (UPI, ONDC, labs, geopolitics...)" 
         style="width:100%;padding:14px;border-radius:14px;border:1px solid rgba(148,163,184,0.25);background:#020617;color:#e5e7eb;" />
 
       <p id="count" style="margin-top:10px;color:#9ca3af;">Loading…</p>
@@ -365,6 +373,12 @@ def make_search_page():
 </html>
 """
 
+def make_site_json(articles):
+    return json.dumps({
+        "site": {"name": SITE_NAME, "url": SITE_URL, "description": SITE_DESC, "language": "en"},
+        "articles": articles
+    }, indent=2, ensure_ascii=False)
+
 def make_404():
     return f"""<!doctype html>
 <html lang="en">
@@ -396,16 +410,172 @@ def make_404():
 </html>
 """
 
+def make_articles_page(articles):
+    sorted_articles = sorted(articles, key=lambda x: x.get("date", ""), reverse=True)
+    cards = []
+
+    for a in sorted_articles:
+        title = escape(a["title"])
+        slug = escape(a["slug"])
+        desc = escape(a.get("desc", ""))
+        date = escape(a.get("date", ""))
+        thumb = escape(a.get("thumb", "images/upi.webp"))
+        tags = a.get("tags", [])
+        tags_html = " ".join([f'<span class="ic-tag">{escape(t)}</span>' for t in tags[:3]])
+
+        cards.append(f"""
+        <article class="ic-article-card">
+          <a href="{slug}" class="ic-article-thumb-link">
+            <img src="{thumb}" alt="{title}" class="ic-article-thumb" />
+          </a>
+          <div>
+            <div class="ic-article-tags">{tags_html}</div>
+            <h3 class="ic-article-title"><a href="{slug}">{title}</a></h3>
+            <p class="ic-article-meta">{date}</p>
+            <p class="ic-article-excerpt">{desc}</p>
+            <a href="{slug}" class="ic-article-read">Read article →</a>
+          </div>
+        </article>
+        """)
+
+    return f"""<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Articles – {SITE_NAME}</title>
+  <meta name="description" content="All long-form articles published on {SITE_NAME}." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="ic-body">
+  <div class="ic-topstrip">All articles • {SITE_NAME}</div>
+
+  <header class="ic-header">
+    <div class="ic-container ic-header-inner">
+      <a href="index.html" class="ic-logo">
+        <span class="ic-logo-mark">IC</span>
+        <span>
+          <span class="ic-logo-title">{SITE_NAME}</span>
+          <span class="ic-logo-sub">Long-form global analysis</span>
+        </span>
+      </a>
+
+      <nav class="ic-nav">
+        <a href="index.html" class="ic-nav-link">Home</a>
+        <a href="articles.html" class="ic-nav-link ic-nav-link-active">Articles</a>
+        <a href="search.html" class="ic-nav-link">Search</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="ic-main">
+    <div class="ic-container">
+      <div class="ic-section-header">
+        <h1>All Articles</h1>
+        <p>Newest first.</p>
+      </div>
+
+      <div style="display:grid;gap:16px;">
+        {''.join(cards)}
+      </div>
+    </div>
+  </main>
+
+  <footer class="ic-footer">
+    <div class="ic-container ic-footer-bottom">© 2026 {SITE_NAME}. All rights reserved.</div>
+  </footer>
+</body>
+</html>
+"""
+
+def make_category_page(tag_name, info, articles):
+    filtered = [a for a in articles if tag_name in a.get("tags", [])]
+    filtered = sorted(filtered, key=lambda x: x.get("date", ""), reverse=True)
+
+    cards = []
+    for a in filtered:
+        title = escape(a["title"])
+        slug = escape(a["slug"])
+        desc = escape(a.get("desc", ""))
+        date = escape(a.get("date", ""))
+        thumb = escape(a.get("thumb", "images/upi.webp"))
+
+        cards.append(f"""
+        <article class="ic-article-card">
+          <a href="{slug}" class="ic-article-thumb-link">
+            <img src="{thumb}" alt="{title}" class="ic-article-thumb" />
+          </a>
+          <div>
+            <h3 class="ic-article-title"><a href="{slug}">{title}</a></h3>
+            <p class="ic-article-meta">{date}</p>
+            <p class="ic-article-excerpt">{desc}</p>
+            <a href="{slug}" class="ic-article-read">Read article →</a>
+          </div>
+        </article>
+        """)
+
+    cards_html = "\n".join(cards) if cards else "<p style='color:#9ca3af;'>No articles published yet. Coming soon.</p>"
+
+    return f"""<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{escape(info["title"])} – {SITE_NAME}</title>
+  <meta name="description" content="{escape(info["desc"])}" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="ic-body">
+
+<header class="ic-header">
+  <div class="ic-container ic-header-inner">
+    <a href="index.html" class="ic-logo">
+      <span class="ic-logo-mark">IC</span>
+      <span>
+        <span class="ic-logo-title">{SITE_NAME}</span>
+        <span class="ic-logo-sub">Long-form global analysis</span>
+      </span>
+    </a>
+
+    <nav class="ic-nav">
+      <a href="index.html" class="ic-nav-link">Home</a>
+      <a href="articles.html" class="ic-nav-link">Articles</a>
+      <a href="search.html" class="ic-nav-link">Search</a>
+    </nav>
+  </div>
+</header>
+
+<main class="ic-main">
+  <div class="ic-container">
+    <section class="ic-sidebar-block">
+      <h1 style="margin-top:0;">{escape(info["title"])}</h1>
+      <p style="color:#cbd5f5;">{escape(info["desc"])}</p>
+    </section>
+
+    <section class="ic-sidebar-block">
+      <h2 style="margin-top:0;">Articles</h2>
+      {cards_html}
+    </section>
+  </div>
+</main>
+
+<footer class="ic-footer">
+  <div class="ic-container ic-footer-bottom">© 2026 {SITE_NAME}. All rights reserved.</div>
+</footer>
+
+</body>
+</html>
+"""
+
+def write_category_pages(articles):
+    for tag, info in CATEGORIES.items():
+        with open(info["file"], "w", encoding="utf-8") as f:
+            f.write(make_category_page(tag, info, articles))
+
 def main():
     articles = load_articles_json()
 
     publish_drafts(articles)
-
-    # ✅ Ensure every article has url (fix old entries)
-    for a in articles:
-        if "url" not in a or not a["url"]:
-            a["url"] = safe_url_from_article(a)
-
     save_articles_json(articles)
 
     update_index_html(articles)
@@ -418,6 +588,11 @@ def main():
     with open("robots.txt", "w", encoding="utf-8") as f:
         f.write(make_robots())
 
+    # Pages
+    with open("articles.html", "w", encoding="utf-8") as f:
+        f.write(make_articles_page(articles))
+    write_category_pages(articles)
+
     # Search system
     with open("search-index.json", "w", encoding="utf-8") as f:
         f.write(make_search_index(articles))
@@ -427,11 +602,14 @@ def main():
     # Support pages
     with open("404.html", "w", encoding="utf-8") as f:
         f.write(make_404())
+    with open("site.json", "w", encoding="utf-8") as f:
+        f.write(make_site_json(articles))
 
     print("✅ Generated everything successfully")
 
 if __name__ == "__main__":
     main()
+
 
 
 
