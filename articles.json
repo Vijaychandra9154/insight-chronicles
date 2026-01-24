@@ -7,7 +7,11 @@
     "date": "2025-01-01",
     "thumb": "images/upi.webp",
     "thumb_og": "images/upi.webp",
-    "tags": ["Geopolitics", "Technology", "Governance"],
+    "tags": [
+      "Geopolitics",
+      "Technology",
+      "Governance"
+    ],
     "content_html": ""
   },
   {
@@ -18,7 +22,10 @@
     "date": "2025-01-02",
     "thumb": "images/hardware-bio.webp",
     "thumb_og": "images/hardware-bio.webp",
-    "tags": ["Technology", "Governance"],
+    "tags": [
+      "Technology",
+      "Governance"
+    ],
     "content_html": ""
   },
   {
@@ -29,7 +36,10 @@
     "date": "2025-01-03",
     "thumb": "images/upi.webp",
     "thumb_og": "images/upi.webp",
-    "tags": ["Technology", "Governance"],
+    "tags": [
+      "Technology",
+      "Governance"
+    ],
     "content_html": ""
   }
 ]
