@@ -42,4 +42,18 @@
     ],
     "content_html": ""
   }
+  {
+    "title": "Test Article 4 – Automation Publishing Check",
+    "slug": "article-4.html",
+    "url": "https://insight-chronicles.com/article-3.html",
+    "desc": "This is a test post generated automatically from drafts using GitHub Actions.",
+    "date": "2025-01-03",
+    "thumb": "images/upi.webp",
+    "thumb_og": "images/upi.webp",
+    "tags": [
+      "Technology",
+      "Governance"
+    ],
+    "content_html": ""
+  }
 ]
