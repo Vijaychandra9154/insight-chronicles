@@ -430,3 +430,40 @@ html { scroll-behavior: smooth; }
   border-radius: 18px;
   object-fit: cover;
 }
+/* ✅ Universal article images - full width on mobile */
+.article-section-image,
+.article-hero-image,
+.article-body picture,
+.article-body img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+}
+
+.article-image {
+  width: 100%;
+  height: auto;
+  border-radius: 18px;
+}
+
+/* ✅ Fix thumbnail sizing everywhere */
+.ic-article-thumb-link {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 18px;
+}
+
+.ic-article-thumb {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+}
+
+@media (max-width: 640px) {
+  .ic-article-thumb {
+    height: 160px;
+  }
+}
