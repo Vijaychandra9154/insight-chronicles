@@ -6,11 +6,11 @@
 
   <title>{{TITLE}} – Insight Chronicles</title>
   <meta name="description" content="{{DESCRIPTION}}" />
-  <link rel="stylesheet" href="styles.css" />
 
+  <link rel="stylesheet" href="styles.css" />
   <link rel="canonical" href="https://insight-chronicles.com/{{SLUG}}" />
 
-  <!-- Open Graph -->
+  <!-- OG -->
   <meta property="og:title" content="{{TITLE}}" />
   <meta property="og:description" content="{{DESCRIPTION}}" />
   <meta property="og:url" content="https://insight-chronicles.com/{{SLUG}}" />
@@ -23,7 +23,7 @@
   <meta name="twitter:description" content="{{DESCRIPTION}}" />
   <meta name="twitter:image" content="https://insight-chronicles.com/{{THUMB_OG}}" />
 
-  <!-- Schema -->
+  <!-- JSON-LD -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -34,9 +34,7 @@
     },
     "headline": "{{TITLE}}",
     "description": "{{DESCRIPTION}}",
-    "image": [
-      "https://insight-chronicles.com/{{THUMB_OG}}"
-    ],
+    "image": ["https://insight-chronicles.com/{{THUMB_OG}}"],
     "author": {
       "@type": "Organization",
       "name": "Insight Chronicles"
@@ -47,10 +45,10 @@
     }
   }
   </script>
+
 </head>
 
 <body class="ic-body">
-
   <header class="ic-header">
     <div class="ic-container ic-header-inner">
       <a href="index.html" class="ic-logo">
@@ -74,10 +72,9 @@
 
       <header class="article-heading">
         <p class="article-kicker">{{TAGLINE}}</p>
-
         <h1 class="article-title">{{TITLE}}</h1>
 
-        <!-- Share (same as Article-1 style) -->
+        <!-- Share box (same style as Article 1) -->
         <div class="ic-affiliate-box" style="margin-top:14px;">
           <p class="ic-affiliate-title">Share this article</p>
           <div class="ic-affiliate-links">
@@ -89,37 +86,46 @@
         </div>
 
         <p class="article-meta">{{DATE}}</p>
-        <p class="article-lead">{{DESCRIPTION}}</p>
       </header>
 
       <section class="article-body">
+
+        <!-- Hero image -->
+        <picture class="article-section-image">
+          <source type="image/webp" srcset="{{THUMB}}">
+          <img src="{{THUMB}}" alt="{{TITLE}}" class="article-image" loading="lazy" />
+        </picture>
+
         {{CONTENT}}
 
-        <!-- Recommended Tools (same block for all articles) -->
+        <!-- Recommended tools/resources (auto included for all new posts) -->
         <div class="ic-affiliate-box">
           <p class="ic-affiliate-title">Recommended tools & resources</p>
           <p class="ic-affiliate-text">
-            If you want to go deeper, these resources can help you explore related topics and build your knowledge.
+            Want to go deeper? These resources can help you explore the topic further.
           </p>
 
           <div class="ic-affiliate-links">
             <a class="ic-affiliate-btn" href="https://www.amazon.in/" target="_blank" rel="noopener noreferrer">
-              Books & References
+              Books & reading
             </a>
             <a class="ic-affiliate-btn" href="https://www.coursera.org/" target="_blank" rel="noopener noreferrer">
-              Courses & Learning
+              Courses & learning
             </a>
           </div>
 
           <p class="ic-affiliate-note">
-            Disclosure: Links may be affiliate links. See
-            <a href="disclaimer.html" style="color:#93c5fd;text-decoration:none;">Disclaimer</a>.
+            Disclosure: Links may be affiliate links. See <a href="disclaimer.html" style="color:#93c5fd;text-decoration:none;">Disclaimer</a>.
           </p>
         </div>
 
+        <p style="margin-top:2rem;font-size:0.9rem;">
+          ← <a href="index.html" style="color:#93c5fd;text-decoration:none;">Back to homepage</a>
+        </p>
+
       </section>
 
-      <!-- Explore + Previous/Next (same style as Article-1) -->
+      <!-- Explore / Prev / Next section -->
       <section class="ic-article-nav">
         <a href="start-here.html">
           <div class="kicker">Explore</div>
@@ -127,40 +133,35 @@
         </a>
 
         <a href="articles.html">
-          <div class="kicker">Explore more</div>
-          <div class="title">Browse all articles →</div>
+          <div class="kicker">Browse</div>
+          <div class="title">All Articles →</div>
         </a>
       </section>
-
-      <p style="margin-top:1.5rem;font-size:0.9rem;">
-        ← <a href="index.html" style="color:#93c5fd;text-decoration:none;">Back to homepage</a>
-      </p>
 
     </div>
   </main>
 
   <footer class="ic-footer">
     <div class="ic-container ic-footer-grid">
-      <div>
-        <h4>Insight Chronicles</h4>
-        <p>Independent writing on history, geopolitics and technology.</p>
+      <div><h4>Insight Chronicles</h4><p>Independent writing on history, geopolitics and technology.</p></div>
+      <div><h4>Pages</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="articles.html">All Articles</a></li>
+          <li><a href="search.html">Search</a></li>
+        </ul>
       </div>
-
-      <div>
-        <h4>Legal</h4>
+      <div><h4>Legal</h4>
         <ul>
           <li><a href="privacy.html">Privacy</a></li>
           <li><a href="terms.html">Terms</a></li>
           <li><a href="disclaimer.html">Disclaimer</a></li>
         </ul>
       </div>
-
-      <div>
-        <h4>Contact</h4>
+      <div><h4>Contact</h4>
         <p><a href="mailto:moonoriginblue@gmail.com">moonoriginblue@gmail.com</a></p>
       </div>
     </div>
-
     <div class="ic-footer-bottom">© 2026 Insight Chronicles. All rights reserved.</div>
   </footer>
 
@@ -204,6 +205,7 @@
 
 </body>
 </html>
+
 
 
 
