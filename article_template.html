@@ -1,6 +1,9 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXX"
+     crossorigin="anonymous"></script>
+
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
 
@@ -23,7 +26,7 @@
   <meta name="twitter:description" content="{{DESCRIPTION}}" />
   <meta name="twitter:image" content="https://insight-chronicles.com/{{THUMB_OG}}" />
 
-  <!-- JSON-LD -->
+  <!-- Schema -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -34,18 +37,23 @@
     },
     "headline": "{{TITLE}}",
     "description": "{{DESCRIPTION}}",
-    "image": ["https://insight-chronicles.com/{{THUMB_OG}}"],
+    "image": [
+      "https://insight-chronicles.com/{{THUMB_OG}}"
+    ],
     "author": {
       "@type": "Organization",
       "name": "Insight Chronicles"
     },
     "publisher": {
       "@type": "Organization",
-      "name": "Insight Chronicles"
+      "name": "Insight Chronicles",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://insight-chronicles.com/images/upi.webp"
+      }
     }
   }
   </script>
-
 </head>
 
 <body class="ic-body">
@@ -55,26 +63,24 @@
         <span class="ic-logo-mark">IC</span>
         <span>
           <span class="ic-logo-title">Insight Chronicles</span>
-          <span class="ic-logo-sub">Long-form global analysis</span>
         </span>
       </a>
 
       <nav class="ic-nav">
         <a href="index.html" class="ic-nav-link">Home</a>
-        <a href="articles.html" class="ic-nav-link ic-nav-link-active">Articles</a>
-        <a href="search.html" class="ic-nav-link">Search</a>
+        <a href="index.html#latest" class="ic-nav-link ic-nav-link-active">Articles</a>
       </nav>
     </div>
   </header>
 
+  <!-- ✅ SAME STRUCTURE AS ARTICLE-1 (NO SIDE BORDER CONTAINER) -->
   <main class="article-wrapper">
     <div class="ic-container">
-
       <header class="article-heading">
         <p class="article-kicker">{{TAGLINE}}</p>
         <h1 class="article-title">{{TITLE}}</h1>
 
-        <!-- Share box (same style as Article 1) -->
+        <!-- Share this article -->
         <div class="ic-affiliate-box" style="margin-top:14px;">
           <p class="ic-affiliate-title">Share this article</p>
           <div class="ic-affiliate-links">
@@ -86,89 +92,54 @@
         </div>
 
         <p class="article-meta">{{DATE}}</p>
+        <p class="article-lead">{{DESCRIPTION}}</p>
       </header>
 
       <section class="article-body">
-
-        <!-- Hero image -->
-        <picture class="article-section-image">
-          <source type="image/webp" srcset="{{THUMB}}">
-          <img src="{{THUMB}}" alt="{{TITLE}}" class="article-image" loading="lazy" />
-        </picture>
-
         {{CONTENT}}
-
-        <!-- Recommended tools/resources (auto included for all new posts) -->
-        <div class="ic-affiliate-box">
-          <p class="ic-affiliate-title">Recommended tools & resources</p>
-          <p class="ic-affiliate-text">
-            Want to go deeper? These resources can help you explore the topic further.
-          </p>
-
-          <div class="ic-affiliate-links">
-            <a class="ic-affiliate-btn" href="https://www.amazon.in/" target="_blank" rel="noopener noreferrer">
-              Books & reading
-            </a>
-            <a class="ic-affiliate-btn" href="https://www.coursera.org/" target="_blank" rel="noopener noreferrer">
-              Courses & learning
-            </a>
-          </div>
-
-          <p class="ic-affiliate-note">
-            Disclosure: Links may be affiliate links. See <a href="disclaimer.html" style="color:#93c5fd;text-decoration:none;">Disclaimer</a>.
-          </p>
-        </div>
-
-        <p style="margin-top:2rem;font-size:0.9rem;">
-          ← <a href="index.html" style="color:#93c5fd;text-decoration:none;">Back to homepage</a>
-        </p>
-
       </section>
 
-      <!-- Explore / Prev / Next section -->
-      <section class="ic-article-nav">
-        <a href="start-here.html">
-          <div class="kicker">Explore</div>
-          <div class="title">Start Here →</div>
-        </a>
-
-        <a href="articles.html">
-          <div class="kicker">Browse</div>
-          <div class="title">All Articles →</div>
-        </a>
-      </section>
-
+      <p style="margin-top:2rem;font-size:0.9rem;">
+        ← <a href="index.html" style="color:#93c5fd;text-decoration:none;">Back to homepage</a>
+      </p>
     </div>
   </main>
 
+  <!-- Explore / Next -->
+  <section class="ic-article-nav">
+    <a href="start-here.html">
+      <div class="kicker">Explore</div>
+      <div class="title">Start Here →</div>
+    </a>
+
+    <a href="articles.html">
+      <div class="kicker">More</div>
+      <div class="title">Browse all articles →</div>
+    </a>
+  </section>
+
   <footer class="ic-footer">
     <div class="ic-container ic-footer-grid">
-      <div><h4>Insight Chronicles</h4><p>Independent writing on history, geopolitics and technology.</p></div>
-      <div><h4>Pages</h4>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="articles.html">All Articles</a></li>
-          <li><a href="search.html">Search</a></li>
-        </ul>
+      <div>
+        <h4>Insight Chronicles</h4>
+        <p>Independent writing on history, geopolitics and technology.</p>
       </div>
-      <div><h4>Legal</h4>
+      <div>
+        <h4>Legal</h4>
         <ul>
           <li><a href="privacy.html">Privacy</a></li>
           <li><a href="terms.html">Terms</a></li>
           <li><a href="disclaimer.html">Disclaimer</a></li>
         </ul>
       </div>
-      <div><h4>Contact</h4>
-        <p><a href="mailto:moonoriginblue@gmail.com">moonoriginblue@gmail.com</a></p>
-      </div>
     </div>
-    <div class="ic-footer-bottom">© 2026 Insight Chronicles. All rights reserved.</div>
+    <div class="ic-footer-bottom">© 2026 Insight Chronicles.</div>
   </footer>
 
   <button class="ic-backtotop" id="backToTop">↑ Top</button>
 
   <script>
-    // Back to top
+    // back to top
     const btn = document.getElementById("backToTop");
     window.addEventListener("scroll", () => {
       if (!btn) return;
@@ -178,7 +149,7 @@
   </script>
 
   <script>
-    // Share buttons
+    // share buttons
     const url = encodeURIComponent(window.location.href);
     const text = encodeURIComponent(document.title);
 
@@ -202,9 +173,9 @@
       });
     }
   </script>
-
 </body>
 </html>
+
 
 
 
