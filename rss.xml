@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Insight Chronicles</title>
+    <link>https://insight-chronicles.com/</link>
+    <description>Independent long-form analysis on history, geopolitics, and technology.</description>
+    <language>en</language>
+    <lastBuildDate>Sat, 24 Jan 2026 15:39:37 +0000</lastBuildDate>
+
+    <item>
+      <title>Test Article 3 – Automation Publishing Check</title>
+      <link>https://insight-chronicles.com/article-3.html</link>
+      <guid>https://insight-chronicles.com/article-3.html</guid>
+      <description>This is a test post generated automatically from drafts using GitHub Actions.</description>
+      <pubDate>Fri, 03 Jan 2025 00:00:00 +0000</pubDate>
+    </item>
+
+    <item>
+      <title>Democratization of India’s Hardware, Manufacturing &amp; Bio Labs Infrastructure</title>
+      <link>https://insight-chronicles.com/article-hardware-bio.html</link>
+      <guid>https://insight-chronicles.com/article-hardware-bio.html</guid>
+      <description>Why India must democratize access to machine tools, CNC facilities, 3D printing hubs and public bio labs.</description>
+      <pubDate>Thu, 02 Jan 2025 00:00:00 +0000</pubDate>
+    </item>
+
+    <item>
+      <title>How India’s Plan of Democratizing Public Services Will Guide Other Countries</title>
+      <link>https://insight-chronicles.com/article-1.html</link>
+      <guid>https://insight-chronicles.com/article-1.html</guid>
+      <description>A breakdown of how UPI, ONDC, Aadhaar and ABHA form a model of open digital infrastructure.</description>
+      <pubDate>Wed, 01 Jan 2025 00:00:00 +0000</pubDate>
+    </item>
+
+  </channel>
+</rss>

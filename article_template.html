@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <title>{{TITLE}} – Insight Chronicles</title>
+  <meta name="description" content="{{DESCRIPTION}}" />
+
+  <!-- OG / Social Preview -->
+  <meta property="og:title" content="{{TITLE}}" />
+  <meta property="og:description" content="{{DESCRIPTION}}" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://insight-chronicles.com/{{SLUG}}" />
+  <meta property="og:image" content="https://insight-chronicles.com/{{THUMB_OG}}" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="{{TITLE}}" />
+  <meta name="twitter:description" content="{{DESCRIPTION}}" />
+  <meta name="twitter:image" content="https://insight-chronicles.com/{{THUMB_OG}}" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body class="ic-body">
+
+  <div class="ic-topstrip">Insight Chronicles • Long-form analysis</div>
+
+  <!-- Header -->
+  <header class="ic-header">
+    <div class="ic-container ic-header-inner">
+      <a href="index.html" class="ic-logo">
+        <span class="ic-logo-mark">IC</span>
+        <span>
+          <span class="ic-logo-title">Insight Chronicles</span>
+          <span class="ic-logo-sub">Long-form global analysis</span>
+        </span>
+      </a>
+
+      <nav class="ic-nav">
+        <a href="index.html" class="ic-nav-link">Home</a>
+        <a href="articles.html" class="ic-nav-link">Articles</a>
+        <a href="search.html" class="ic-nav-link">Search</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Article -->
+  <main class="ic-main">
+    <div class="ic-container">
+
+      <section class="ic-article-hero">
+        <p class="ic-pill">{{TAGLINE}}</p>
+        <h1 class="ic-article-title-big">{{TITLE}}</h1>
+        <p class="ic-article-sub">{{DESCRIPTION}}</p>
+
+        <div class="ic-article-meta-line">
+          <span>{{DATE}}</span>
+          <span>•</span>
+          <a href="index.html" style="color:#cbd5f5;text-decoration:none;">Back to homepage</a>
+        </div>
+
+        <figure class="ic-figure ic-hero-figure">
+          <img src="{{THUMB}}" alt="{{TITLE}}" />
+        </figure>
+      </section>
+
+      <article class="ic-article-content">
+        {{CONTENT}}
+      </article>
+
+      <!-- Share -->
+      <section class="ic-sidebar-block" style="margin-top:26px;">
+        <h3 style="margin-top:0;">Share this article</h3>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <a class="ic-btn-secondary" target="_blank"
+             href="https://wa.me/?text={{TITLE}}%20https://insight-chronicles.com/{{SLUG}}">
+             WhatsApp
+          </a>
+
+          <a class="ic-btn-secondary" target="_blank"
+             href="https://twitter.com/intent/tweet?text={{TITLE}}&url=https://insight-chronicles.com/{{SLUG}}">
+             X (Twitter)
+          </a>
+
+          <button class="ic-btn-secondary" onclick="navigator.clipboard.writeText('https://insight-chronicles.com/{{SLUG}}');alert('Link copied!')">
+            Copy link
+          </button>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="ic-footer">
+    <div class="ic-container ic-footer-grid">
+      <div>
+        <h4>Insight Chronicles</h4>
+        <p>Independent writing on history, geopolitics and technology.</p>
+      </div>
+
+      <div>
+        <h4>Pages</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="articles.html">All Articles</a></li>
+          <li><a href="search.html">Search</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="privacy.html">Privacy</a></li>
+          <li><a href="terms.html">Terms</a></li>
+          <li><a href="disclaimer.html">Disclaimer</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Contact</h4>
+        <p><a href="mailto:moonoriginblue@gmail.com">moonoriginblue@gmail.com</a></p>
+      </div>
+    </div>
+
+    <div class="ic-footer-bottom">© 2026 Insight Chronicles. All rights reserved.</div>
+  </footer>
+
+</body>
+</html>
+
+
+

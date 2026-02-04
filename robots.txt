@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://insight-chronicles.com/sitemap.xml

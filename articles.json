@@ -1,0 +1,24 @@
+[
+  {
+    "title": "How India’s Plan of Democratizing Public Services Will Guide Other Countries",
+    "slug": "article-1.html",
+    "url": "https://insight-chronicles.com/article-1.html",
+    "desc": "A breakdown of how UPI, ONDC, Aadhaar and ABHA form a model of open digital infrastructure.",
+    "date": "2025-01-01",
+    "thumb": "images/upi.webp",
+    "thumb_og": "images/upi.webp",
+    "tags": ["Geopolitics", "Technology", "Governance"],
+    "content_html": ""
+  },
+  {
+    "title": "Democratization of India’s Hardware, Manufacturing & Bio Labs Public Infrastructure for the Next Generation Entrepreneurs",
+    "slug": "article-hardware-bio.html",
+    "url": "https://insight-chronicles.com/article-hardware-bio.html",
+    "desc": "India’s next leap will come from democratizing machine-tool labs, CNC facilities, furnaces, 3D-printing, and public bio-labs — enabling a new generation of inventors and product creators.",
+    "date": "2025-01-02",
+    "thumb": "images/hardware-bio.webp",
+    "thumb_og": "images/hardware-bio.webp",
+    "tags": ["Technology", "Governance"],
+    "content_html": ""
+  }
+]
