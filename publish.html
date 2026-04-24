@@ -1,0 +1,800 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Article Publisher – Insight Chronicles</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; font-family: "Inter", system-ui, sans-serif; background: #050816; color: #e5e7eb; min-height: 100vh; }
+    a { color: inherit; }
+
+    /* Header */
+    .pub-header { background: rgba(15,23,42,0.95); border-bottom: 1px solid rgba(148,163,184,0.2); padding: 0.85rem 0; position: sticky; top: 0; z-index: 50; }
+    .pub-header-inner { width: min(1200px, 100% - 2rem); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+    .pub-logo { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; color: #e5e7eb; }
+    .pub-logo-mark { width: 34px; height: 34px; border-radius: 50%; background: radial-gradient(circle at 0 0, #22d3ee, #6366f1); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; color: #020617; }
+    .pub-logo-title { font-weight: 700; font-size: 1rem; }
+    .pub-logo-sub { font-size: 0.75rem; color: #9ca3af; }
+    .pub-header-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+    /* Layout */
+    .pub-wrap { width: min(1200px, 100% - 2rem); margin: 2rem auto; display: grid; grid-template-columns: 1fr 380px; gap: 1.5rem; align-items: start; }
+    @media (max-width: 900px) { .pub-wrap { grid-template-columns: 1fr; } }
+
+    /* Card */
+    .pub-card { background: rgba(15,23,42,0.9); border: 1px solid rgba(148,163,184,0.15); border-radius: 16px; padding: 1.5rem; }
+    .pub-card h2 { margin: 0 0 1rem; font-size: 1rem; color: #e5e7eb; display: flex; align-items: center; gap: 0.5rem; }
+
+    /* Form fields */
+    .field { margin-bottom: 1rem; }
+    .field label { display: block; font-size: 0.82rem; color: #9ca3af; margin-bottom: 0.35rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.04em; }
+    .field input, .field select, .field textarea {
+      width: 100%; padding: 0.6rem 0.85rem; border-radius: 10px;
+      border: 1px solid rgba(148,163,184,0.3); background: #020617;
+      color: #e5e7eb; font-family: "Inter", system-ui, sans-serif; font-size: 0.92rem;
+      transition: border-color 0.15s;
+    }
+    .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: #6366f1; }
+    .field textarea { resize: vertical; min-height: 120px; }
+    .field-hint { font-size: 0.78rem; color: #6b7280; margin-top: 0.3rem; }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+    @media (max-width: 600px) { .field-row { grid-template-columns: 1fr; } }
+
+    /* Tag selector */
+    .tag-grid { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.35rem; }
+    .tag-btn { padding: 0.3rem 0.75rem; border-radius: 999px; border: 1px solid rgba(148,163,184,0.3); background: transparent; color: #9ca3af; cursor: pointer; font-size: 0.82rem; font-family: "Inter", sans-serif; transition: all 0.15s; }
+    .tag-btn.active-tag { border-color: #6366f1; background: rgba(99,102,241,0.2); color: #a5b4fc; }
+
+    /* Rich text toolbar */
+    .editor-toolbar { display: flex; gap: 0.35rem; flex-wrap: wrap; padding: 0.5rem; background: rgba(2,6,23,0.6); border: 1px solid rgba(148,163,184,0.2); border-radius: 10px 10px 0 0; }
+    .tb-btn { padding: 0.3rem 0.6rem; border-radius: 6px; border: 1px solid rgba(148,163,184,0.2); background: rgba(15,23,42,0.8); color: #cbd5f5; cursor: pointer; font-size: 0.8rem; font-family: "Inter", sans-serif; transition: all 0.15s; }
+    .tb-btn:hover { background: rgba(99,102,241,0.2); border-color: #6366f1; }
+    .tb-sep { width: 1px; background: rgba(148,163,184,0.2); margin: 0 0.1rem; }
+    #contentEditor {
+      min-height: 320px; padding: 0.85rem; background: #020617; color: #e5e7eb;
+      border: 1px solid rgba(148,163,184,0.3); border-top: none;
+      border-radius: 0 0 10px 10px; outline: none; font-size: 0.92rem; line-height: 1.7;
+      font-family: Georgia, serif;
+    }
+    #contentEditor h2 { font-size: 1.3rem; color: #e5e7eb; }
+    #contentEditor h3 { font-size: 1.1rem; color: #e5e7eb; }
+    #contentEditor a { color: #93c5fd; }
+    #contentEditor img { max-width: 100%; border-radius: 8px; }
+
+    /* Buttons */
+    .btn-primary { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.6rem 1.25rem; border-radius: 999px; background: linear-gradient(135deg,#6366f1,#22d3ee); color: #020617; font-weight: 700; border: none; cursor: pointer; font-family: "Inter", sans-serif; font-size: 0.9rem; text-decoration: none; }
+    .btn-secondary { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.6rem 1.25rem; border-radius: 999px; background: rgba(99,102,241,0.15); color: #a5b4fc; border: 1px solid rgba(99,102,241,0.35); font-weight: 600; cursor: pointer; font-family: "Inter", sans-serif; font-size: 0.9rem; text-decoration: none; }
+    .btn-danger { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.45rem 0.9rem; border-radius: 999px; background: rgba(239,68,68,0.15); color: #fca5a5; border: 1px solid rgba(239,68,68,0.3); font-weight: 600; cursor: pointer; font-family: "Inter", sans-serif; font-size: 0.82rem; }
+    .btn-sm { padding: 0.35rem 0.85rem; font-size: 0.82rem; }
+
+    /* Preview panel */
+    .preview-meta { font-size: 0.8rem; color: #9ca3af; margin-bottom: 0.5rem; }
+    .preview-title { font-size: 1.1rem; font-weight: 700; margin: 0 0 0.35rem; color: #e5e7eb; font-family: Georgia, serif; }
+    .preview-desc { font-size: 0.88rem; color: #cbd5f5; margin: 0 0 0.75rem; }
+    .preview-thumb { width: 100%; height: 180px; object-fit: cover; border-radius: 10px; background: rgba(99,102,241,0.1); display: block; margin-bottom: 0.75rem; }
+    .preview-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.5rem; }
+    .preview-tag { padding: 0.15rem 0.55rem; border-radius: 999px; border: 1px solid rgba(148,163,184,0.4); font-size: 0.75rem; }
+
+    /* Published articles list */
+    .pub-article-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; border-radius: 10px; background: rgba(2,6,23,0.5); border: 1px solid rgba(148,163,184,0.12); margin-bottom: 0.6rem; transition: border-color 0.15s; }
+    .pub-article-item:hover { border-color: rgba(99,102,241,0.3); }
+    .pub-article-thumb { width: 52px; height: 44px; object-fit: cover; border-radius: 6px; flex-shrink: 0; }
+    .pub-article-info { flex: 1; min-width: 0; }
+    .pub-article-title { font-size: 0.88rem; font-weight: 600; color: #e5e7eb; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 0 0 0.15rem; }
+    .pub-article-meta { font-size: 0.75rem; color: #9ca3af; }
+    .pub-article-actions { display: flex; gap: 0.35rem; flex-shrink: 0; }
+
+    /* Status messages */
+    .status-bar { padding: 0.75rem 1rem; border-radius: 10px; font-size: 0.88rem; margin-bottom: 1rem; display: none; }
+    .status-success { background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.3); color: #86efac; display: block; }
+    .status-error { background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.3); color: #fca5a5; display: block; }
+
+    /* Step indicator */
+    .steps { display: flex; gap: 0; margin-bottom: 1.5rem; }
+    .step { flex: 1; text-align: center; padding: 0.5rem; font-size: 0.8rem; color: #6b7280; border-bottom: 2px solid rgba(148,163,184,0.2); }
+    .step.active { color: #a5b4fc; border-bottom-color: #6366f1; font-weight: 600; }
+    .step.done { color: #22d3ee; border-bottom-color: #22d3ee; }
+
+    /* Slug preview */
+    .slug-preview { font-size: 0.78rem; color: #6366f1; margin-top: 0.3rem; font-family: monospace; }
+
+    /* Image picker */
+    .img-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 0.5rem; margin-top: 0.5rem; max-height: 200px; overflow-y: auto; }
+    .img-option { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: 6px; cursor: pointer; border: 2px solid transparent; transition: border-color 0.15s; }
+    .img-option.selected { border-color: #6366f1; }
+
+    /* Empty state */
+    .empty-state { text-align: center; padding: 2rem 1rem; color: #6b7280; }
+    .empty-state .icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
+
+    /* Section title */
+    .section-label { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #6b7280; margin-bottom: 0.75rem; }
+
+    /* JSON output */
+    .json-output { font-family: monospace; font-size: 0.78rem; background: #020617; border: 1px solid rgba(148,163,184,0.2); border-radius: 8px; padding: 0.75rem; color: #a5f3fc; white-space: pre; overflow-x: auto; max-height: 220px; }
+
+    /* Tab switcher */
+    .tabs { display: flex; gap: 0; margin-bottom: 1.25rem; border-bottom: 1px solid rgba(148,163,184,0.15); }
+    .tab-btn { padding: 0.5rem 1rem; font-size: 0.88rem; background: none; border: none; border-bottom: 2px solid transparent; color: #9ca3af; cursor: pointer; font-family: "Inter", sans-serif; margin-bottom: -1px; transition: all 0.15s; }
+    .tab-btn.active { color: #e5e7eb; border-bottom-color: #6366f1; }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #020617; }
+    ::-webkit-scrollbar-thumb { background: rgba(148,163,184,0.3); border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+<header class="pub-header">
+  <div class="pub-header-inner">
+    <a href="index.html" class="pub-logo">
+      <div class="pub-logo-mark">IC</div>
+      <div>
+        <div class="pub-logo-title">Insight Chronicles</div>
+        <div class="pub-logo-sub">Article Publisher</div>
+      </div>
+    </a>
+    <div class="pub-header-actions">
+      <a href="articles.html" class="btn-secondary btn-sm" target="_blank">↗ View Site</a>
+    </div>
+  </div>
+</header>
+
+<div style="width:min(1200px,100% - 2rem);margin:1.5rem auto 0;">
+  <div id="statusBar" class="status-bar"></div>
+</div>
+
+<div class="pub-wrap">
+
+  <!-- LEFT: Editor -->
+  <div>
+    <div class="pub-card" style="margin-bottom:1.25rem;">
+      <h2>✍️ Write New Article</h2>
+
+      <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('editor')">Editor</button>
+        <button class="tab-btn" onclick="switchTab('json')">JSON Draft</button>
+        <button class="tab-btn" onclick="switchTab('guide')">How to Publish</button>
+      </div>
+
+      <!-- EDITOR TAB -->
+      <div class="tab-panel active" id="tab-editor">
+        <div class="field">
+          <label>Article Title *</label>
+          <input type="text" id="artTitle" placeholder="e.g. How India's Semiconductor Strategy Is Reshaping Asia" oninput="updateSlug();updatePreview();" />
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label>Publish Date *</label>
+            <input type="date" id="artDate" oninput="updatePreview();" />
+          </div>
+          <div class="field">
+            <label>Read Time</label>
+            <input type="text" id="artReadTime" placeholder="~ 8 min read" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Short Description (meta / excerpt) *</label>
+          <textarea id="artDesc" rows="2" placeholder="One or two sentences summarising the article for search engines and article cards." oninput="updatePreview();"></textarea>
+        </div>
+
+        <div class="field">
+          <label>Tags *</label>
+          <div class="tag-grid" id="tagGrid">
+            <button class="tag-btn" data-tag="History" onclick="toggleTag(this)">History</button>
+            <button class="tag-btn" data-tag="Geopolitics" onclick="toggleTag(this)">Geopolitics</button>
+            <button class="tag-btn" data-tag="Technology" onclick="toggleTag(this)">Technology</button>
+            <button class="tag-btn" data-tag="Governance" onclick="toggleTag(this)">Governance</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Thumbnail Image</label>
+          <input type="text" id="artThumb" placeholder="images/upi.webp" oninput="updatePreview();" />
+          <div class="field-hint">Pick from existing images below, or type the path manually.</div>
+          <div class="img-grid" id="imgGrid">
+            <!-- populated by JS -->
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Article Slug (filename) *</label>
+          <input type="text" id="artSlug" placeholder="article-my-title.html" oninput="updatePreview();" />
+          <div class="slug-preview" id="slugPreview">https://insight-chronicles.com/</div>
+        </div>
+
+        <div class="field">
+          <label>Article Content *</label>
+          <div class="editor-toolbar">
+            <button class="tb-btn" onclick="fmt('bold')" title="Bold"><b>B</b></button>
+            <button class="tb-btn" onclick="fmt('italic')" title="Italic"><i>I</i></button>
+            <div class="tb-sep"></div>
+            <button class="tb-btn" onclick="fmtBlock('h2')">H2</button>
+            <button class="tb-btn" onclick="fmtBlock('h3')">H3</button>
+            <div class="tb-sep"></div>
+            <button class="tb-btn" onclick="fmt('insertUnorderedList')">• List</button>
+            <button class="tb-btn" onclick="fmt('insertOrderedList')">1. List</button>
+            <div class="tb-sep"></div>
+            <button class="tb-btn" onclick="insertLink()">🔗 Link</button>
+            <button class="tb-btn" onclick="insertImage()">🖼 Image</button>
+            <div class="tb-sep"></div>
+            <button class="tb-btn" onclick="fmt('removeFormat')" title="Clear formatting">✕ Clear</button>
+          </div>
+          <div id="contentEditor" contenteditable="true" oninput="updatePreview();"
+            data-placeholder="Start writing your article here…&#10;&#10;Use H2 for main sections, H3 for sub-sections.&#10;Tip: Paste from Google Docs — formatting is preserved!">
+          </div>
+          <div class="field-hint">💡 You can paste directly from Google Docs. Bold, headings, and links are preserved.</div>
+        </div>
+
+        <div style="display:flex;gap:0.75rem;flex-wrap:wrap;margin-top:0.5rem;">
+          <button class="btn-primary" onclick="generateFiles()">⚡ Generate Article Files</button>
+          <button class="btn-secondary" onclick="clearForm()">🗑 Clear Form</button>
+        </div>
+      </div>
+
+      <!-- JSON TAB -->
+      <div class="tab-panel" id="tab-json">
+        <p style="color:#9ca3af;font-size:0.88rem;margin-top:0;">Paste a JSON draft file here to auto-fill the editor. This is the same format used by <code style="color:#a5f3fc;">generate_seo.py</code>.</p>
+        <div class="field">
+          <label>Paste JSON Draft</label>
+          <textarea id="jsonInput" rows="12" placeholder='{
+  "title": "My Article Title",
+  "slug": "my-article.html",
+  "desc": "Short description here.",
+  "date": "2026-04-25",
+  "thumb": "images/upi.webp",
+  "tags": ["Technology", "Governance"],
+  "content": "<p>Article HTML content...</p>"
+}'></textarea>
+        </div>
+        <button class="btn-primary" onclick="loadFromJson()">📥 Load into Editor</button>
+      </div>
+
+      <!-- GUIDE TAB -->
+      <div class="tab-panel" id="tab-guide">
+        <div style="color:#cbd5f5;font-size:0.92rem;line-height:1.8;">
+          <h3 style="margin-top:0;color:#e5e7eb;">How to publish a new article</h3>
+          <p><strong style="color:#22d3ee;">Option A — Use this Dashboard (Easiest)</strong></p>
+          <ol style="padding-left:1.2rem;display:grid;gap:0.5rem;">
+            <li>Fill in the form on the Editor tab (title, date, description, tags, image, content).</li>
+            <li>Click <strong>Generate Article Files</strong>.</li>
+            <li>Download <code style="color:#a5f3fc;">your-article.html</code> and the updated <code style="color:#a5f3fc;">articles.json</code>.</li>
+            <li>Upload both files to your GitHub repo (drag & drop in the web UI).</li>
+            <li>GitHub Pages redeploys automatically — your article is live in ~60 seconds!</li>
+          </ol>
+
+          <p style="margin-top:1.25rem;"><strong style="color:#22d3ee;">Option B — JSON Draft + Python Script</strong></p>
+          <ol style="padding-left:1.2rem;display:grid;gap:0.5rem;">
+            <li>Create a JSON file in <code style="color:#a5f3fc;">drafts/</code> folder (see JSON tab for format).</li>
+            <li>Run <code style="color:#a5f3fc;">python generate_seo.py</code> locally.</li>
+            <li>Commit all generated files to GitHub.</li>
+            <li>Or use the GitHub Actions workflow (<code style="color:#a5f3fc;">workflows/seo.yml</code>) to auto-publish on push.</li>
+          </ol>
+
+          <p style="margin-top:1.25rem;"><strong style="color:#22d3ee;">Option C — Direct HTML Edit</strong></p>
+          <ol style="padding-left:1.2rem;display:grid;gap:0.5rem;">
+            <li>Copy <code style="color:#a5f3fc;">article_template.html</code> and rename it.</li>
+            <li>Replace all <code style="color:#a5f3fc;">{{PLACEHOLDER}}</code> values.</li>
+            <li>Add the article to <code style="color:#a5f3fc;">articles.json</code> manually.</li>
+            <li>Upload to GitHub.</li>
+          </ol>
+
+          <div style="margin-top:1.25rem;padding:1rem;background:rgba(99,102,241,0.1);border-radius:10px;border:1px solid rgba(99,102,241,0.25);">
+            <strong style="color:#a5b4fc;">📌 Uploading to GitHub (web UI)</strong><br>
+            Go to your repo → click <strong>Add file → Upload files</strong> → drag your files → click <strong>Commit changes</strong>. GitHub Pages will rebuild automatically.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Generated output -->
+    <div class="pub-card" id="outputSection" style="display:none;">
+      <h2>📦 Generated Files — Download & Upload to GitHub</h2>
+      <p style="color:#9ca3af;font-size:0.88rem;margin-top:0;">Download these files and upload them to your GitHub repo. Your article will be live in ~1 minute.</p>
+      <div style="display:flex;gap:0.75rem;flex-wrap:wrap;margin-bottom:1rem;">
+        <button class="btn-primary" onclick="downloadArticleHTML()">⬇ Download Article HTML</button>
+        <button class="btn-secondary" onclick="downloadArticlesJson()">⬇ Download articles.json</button>
+        <button class="btn-secondary" onclick="downloadSearchIndex()">⬇ Download search-index.json</button>
+      </div>
+      <div class="section-label">Preview: articles.json entry</div>
+      <div class="json-output" id="jsonPreview"></div>
+
+      <div style="margin-top:1rem;padding:1rem;background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.25);border-radius:10px;font-size:0.88rem;color:#86efac;">
+        ✅ <strong>Next steps:</strong> Upload the downloaded files to your GitHub repo (Add file → Upload files). GitHub Pages rebuilds in ~60 seconds.
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: Sidebar -->
+  <div>
+    <!-- Live Preview -->
+    <div class="pub-card" style="margin-bottom:1.25rem;">
+      <h2>👁 Live Preview</h2>
+      <div id="cardPreview">
+        <div class="empty-state">
+          <div class="icon">📝</div>
+          <div style="font-size:0.88rem;">Fill in the form to see a card preview</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Published Articles -->
+    <div class="pub-card">
+      <h2>📚 Published Articles</h2>
+      <div id="pubList">
+        <div class="empty-state"><div style="font-size:0.88rem;color:#9ca3af;">Loading articles…</div></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ============================================================
+// State
+// ============================================================
+const IMAGES = [
+  'images/upi.webp','images/aadhaar.webp','images/abha.webp',
+  'images/hardware-bio.webp','images/hardware-infra.webp',
+  'images/bio-labs.webp','images/case-study.webp',
+  'images/cnc-fab.webp','images/dbt.webp','images/digi-yatra.webp',
+  'images/digilocker.webp','images/education.webp',
+  'images/furnaces-kilns.webp','images/gem.webp',
+  'images/governance-model.webp','images/idex.webp',
+  'images/machine-tools.webp','images/ocen.webp',
+  'images/ondc.webp','images/onoe.webp','images/onos.webp',
+  'images/ulip.webp','images/3d-printing-molds.webp'
+];
+
+let articles = [];
+let generatedHTML = '';
+let activeTags = new Set();
+
+// ============================================================
+// Init
+// ============================================================
+window.addEventListener('DOMContentLoaded', () => {
+  // Set today's date
+  document.getElementById('artDate').value = new Date().toISOString().split('T')[0];
+
+  // Populate image grid
+  const imgGrid = document.getElementById('imgGrid');
+  IMAGES.forEach(src => {
+    const img = document.createElement('img');
+    img.src = src;
+    img.className = 'img-option';
+    img.title = src;
+    img.onclick = () => selectImage(img, src);
+    imgGrid.appendChild(img);
+  });
+
+  // Default thumbnail
+  document.getElementById('artThumb').value = 'images/upi.webp';
+
+  // Load articles.json
+  loadArticles();
+
+  // Placeholder trick
+  const editor = document.getElementById('contentEditor');
+  editor.addEventListener('focus', () => editor.classList.add('focused'));
+  editor.addEventListener('blur', () => editor.classList.remove('focused'));
+});
+
+// ============================================================
+// Articles loader
+// ============================================================
+async function loadArticles() {
+  try {
+    const res = await fetch('articles.json?t=' + Date.now());
+    articles = await res.json();
+    renderPublishedList();
+  } catch (e) {
+    articles = [];
+    renderPublishedList();
+  }
+}
+
+function renderPublishedList() {
+  const list = document.getElementById('pubList');
+  if (!articles.length) {
+    list.innerHTML = '<div class="empty-state"><div class="icon">📭</div><div style="font-size:0.88rem;">No articles yet.</div></div>';
+    return;
+  }
+  const sorted = [...articles].sort((a,b) => (b.date||'').localeCompare(a.date||''));
+  list.innerHTML = sorted.map(a => `
+    <div class="pub-article-item">
+      <img class="pub-article-thumb" src="${esc(a.thumb || 'images/upi.webp')}" alt="" onerror="this.src='images/upi.webp'" />
+      <div class="pub-article-info">
+        <div class="pub-article-title">${esc(a.title)}</div>
+        <div class="pub-article-meta">${esc(a.date||'')} • ${(a.tags||[]).join(', ')}</div>
+      </div>
+      <div class="pub-article-actions">
+        <a class="btn-secondary btn-sm" href="${esc(a.slug)}" target="_blank" title="View">↗</a>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ============================================================
+// Tag toggle
+// ============================================================
+function toggleTag(btn) {
+  const tag = btn.dataset.tag;
+  if (activeTags.has(tag)) { activeTags.delete(tag); btn.classList.remove('active-tag'); }
+  else { activeTags.add(tag); btn.classList.add('active-tag'); }
+  updatePreview();
+}
+
+// ============================================================
+// Slug auto-generator
+// ============================================================
+function updateSlug() {
+  const title = document.getElementById('artTitle').value;
+  const slug = 'article-' + title.toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .trim().replace(/\s+/g, '-')
+    .substring(0, 60) + '.html';
+  document.getElementById('artSlug').value = slug;
+  document.getElementById('slugPreview').textContent = 'https://insight-chronicles.com/' + slug;
+  updatePreview();
+}
+
+// ============================================================
+// Image selector
+// ============================================================
+function selectImage(el, src) {
+  document.querySelectorAll('.img-option').forEach(i => i.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('artThumb').value = src;
+  updatePreview();
+}
+
+// ============================================================
+// Rich text formatting
+// ============================================================
+function fmt(cmd) {
+  document.getElementById('contentEditor').focus();
+  document.execCommand(cmd, false, null);
+}
+function fmtBlock(tag) {
+  document.getElementById('contentEditor').focus();
+  document.execCommand('formatBlock', false, tag);
+}
+function insertLink() {
+  const url = prompt('URL:', 'https://');
+  if (url) { document.getElementById('contentEditor').focus(); document.execCommand('createLink', false, url); }
+}
+function insertImage() {
+  const src = prompt('Image path:', 'images/upi.webp');
+  if (src) { document.getElementById('contentEditor').focus(); document.execCommand('insertImage', false, src); }
+}
+
+// ============================================================
+// Live preview
+// ============================================================
+function updatePreview() {
+  const title = document.getElementById('artTitle').value;
+  const desc = document.getElementById('artDesc').value;
+  const date = document.getElementById('artDate').value;
+  const thumb = document.getElementById('artThumb').value;
+  const tags = [...activeTags];
+
+  if (!title && !desc) {
+    document.getElementById('cardPreview').innerHTML = `
+      <div class="empty-state"><div class="icon">📝</div><div style="font-size:0.88rem;">Fill in the form to see a card preview</div></div>`;
+    return;
+  }
+
+  const tagsHtml = tags.map(t => `<span class="preview-tag">${esc(t)}</span>`).join('');
+  document.getElementById('cardPreview').innerHTML = `
+    <img class="preview-thumb" src="${esc(thumb)}" alt="" onerror="this.src='images/upi.webp'" />
+    <div class="preview-tags">${tagsHtml}</div>
+    <div class="preview-title">${esc(title) || '<em style="color:#6b7280">No title yet…</em>'}</div>
+    <div class="preview-desc">${esc(desc) || '<em style="color:#6b7280">No description yet…</em>'}</div>
+    <div class="preview-meta">${esc(date)} • Insight Chronicles</div>
+  `;
+}
+
+// ============================================================
+// Validation
+// ============================================================
+function validate() {
+  const fields = [
+    { id: 'artTitle', label: 'Title' },
+    { id: 'artDate', label: 'Date' },
+    { id: 'artDesc', label: 'Description' },
+    { id: 'artSlug', label: 'Slug' }
+  ];
+  for (const f of fields) {
+    if (!document.getElementById(f.id).value.trim()) {
+      showStatus(`⚠️ Please fill in: ${f.label}`, 'error');
+      return false;
+    }
+  }
+  if (activeTags.size === 0) { showStatus('⚠️ Please select at least one tag.', 'error'); return false; }
+  const content = document.getElementById('contentEditor').innerHTML.trim();
+  if (!content || content === '') { showStatus('⚠️ Article content is empty.', 'error'); return false; }
+  return true;
+}
+
+// ============================================================
+// Generate article files
+// ============================================================
+function generateFiles() {
+  if (!validate()) return;
+
+  const title = document.getElementById('artTitle').value.trim();
+  const desc = document.getElementById('artDesc').value.trim();
+  const date = document.getElementById('artDate').value;
+  const thumb = document.getElementById('artThumb').value.trim() || 'images/upi.webp';
+  const slug = document.getElementById('artSlug').value.trim();
+  const readTime = document.getElementById('artReadTime').value.trim() || '~ 8 min read';
+  const tags = [...activeTags];
+  const content = document.getElementById('contentEditor').innerHTML;
+
+  // Build article HTML
+  generatedHTML = buildArticleHTML({ title, desc, date, thumb, slug, readTime, tags, content });
+
+  // Build articles.json entry
+  const newEntry = {
+    title, slug,
+    url: `https://insight-chronicles.com/${slug}`,
+    desc, date, thumb,
+    thumb_og: thumb,
+    tags,
+    content_html: content
+  };
+
+  // Update local articles list (avoid duplicates)
+  const exists = articles.findIndex(a => a.slug === slug);
+  if (exists >= 0) articles[exists] = newEntry;
+  else articles.unshift(newEntry);
+
+  // Sort by date
+  articles.sort((a,b) => (b.date||'').localeCompare(a.date||''));
+
+  // Show output
+  document.getElementById('outputSection').style.display = 'block';
+  document.getElementById('jsonPreview').textContent = JSON.stringify(newEntry, null, 2);
+  renderPublishedList();
+  showStatus(`✅ Files generated for "${title}". Download them below and upload to GitHub.`, 'success');
+  document.getElementById('outputSection').scrollIntoView({ behavior: 'smooth' });
+}
+
+function buildArticleHTML({ title, desc, date, thumb, slug, readTime, tags, content }) {
+  const tagline = tags.join(' • ');
+  const safeTitle = esc(title);
+  const safeDesc = esc(desc);
+  const shareUrl = `https://insight-chronicles.com/${slug}`;
+  const encodedTitle = encodeURIComponent(title);
+  const encodedUrl = encodeURIComponent(shareUrl);
+
+  return `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>${safeTitle} – Insight Chronicles</title>
+  <meta name="description" content="${safeDesc}" />
+  <link rel="canonical" href="${shareUrl}" />
+
+  <meta property="og:title" content="${safeTitle}" />
+  <meta property="og:description" content="${safeDesc}" />
+  <meta property="og:url" content="${shareUrl}" />
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://insight-chronicles.com/${esc(thumb)}" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="${safeTitle}" />
+  <meta name="twitter:description" content="${safeDesc}" />
+  <meta name="twitter:image" content="https://insight-chronicles.com/${esc(thumb)}" />
+
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Article","headline":"${safeTitle}","description":"${safeDesc}","image":"https://insight-chronicles.com/${esc(thumb)}","datePublished":"${date}","author":{"@type":"Organization","name":"Insight Chronicles"},"publisher":{"@type":"Organization","name":"Insight Chronicles"}}
+  <\/script>
+
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="ic-body">
+  <div class="ic-topstrip">Independent analysis on history, geopolitics &amp; technology</div>
+
+  <header class="ic-header">
+    <div class="ic-container ic-header-inner">
+      <a href="index.html" class="ic-logo">
+        <span class="ic-logo-mark">IC</span>
+        <span><span class="ic-logo-title">Insight Chronicles</span><span class="ic-logo-sub">Long-form global analysis</span></span>
+      </a>
+      <button class="ic-hamburger" id="hamburger" aria-label="Menu">&#9776;</button>
+      <nav class="ic-nav" id="mainNav">
+        <a href="index.html" class="ic-nav-link">Home</a>
+        <a href="articles.html" class="ic-nav-link ic-nav-link-active">Articles</a>
+        <a href="about.html" class="ic-nav-link">About</a>
+        <a href="contact.html" class="ic-nav-link">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="article-wrapper">
+    <div class="ic-container">
+
+      <nav class="ic-breadcrumbs">
+        <a href="index.html">Home</a>
+        <span class="sep">›</span>
+        <a href="articles.html">Articles</a>
+        <span class="sep">›</span>
+        <span>${safeTitle}</span>
+      </nav>
+
+      <header class="article-heading">
+        <p class="article-kicker">${esc(tagline)}</p>
+        <h1 class="article-title">${safeTitle}</h1>
+        <p class="article-meta">${esc(date)} • ${esc(readTime)}</p>
+        <p class="article-lead">${safeDesc}</p>
+
+        <div class="ic-affiliate-box" style="margin-top:14px;">
+          <p class="ic-affiliate-title">Share this article</p>
+          <div class="ic-affiliate-links">
+            <a class="ic-affiliate-btn" href="https://wa.me/?text=${encodedTitle}%20${encodedUrl}" target="_blank" rel="noopener">WhatsApp</a>
+            <a class="ic-affiliate-btn" href="https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}" target="_blank" rel="noopener">X (Twitter)</a>
+            <button class="ic-affiliate-btn" onclick="navigator.clipboard.writeText('${shareUrl}').then(()=>{this.textContent='Copied ✅';setTimeout(()=>this.textContent='Copy link',2000)})">Copy link</button>
+          </div>
+        </div>
+      </header>
+
+      <picture class="article-section-image">
+        <img src="${esc(thumb)}" alt="${safeTitle}" class="article-image" loading="lazy" />
+      </picture>
+
+      <article class="article-body">
+        ${content}
+      </article>
+
+      <div class="ic-article-nav">
+        <a href="articles.html">
+          <div class="kicker">← Back to</div>
+          <div class="title">All Articles</div>
+        </a>
+        <a href="index.html">
+          <div class="kicker">Go to</div>
+          <div class="title">Homepage</div>
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="ic-footer">
+    <div class="ic-container ic-footer-grid">
+      <div><h4>Insight Chronicles</h4><p>Independent writing on history, geopolitics and technology.</p></div>
+      <div><h4>Pages</h4><ul><li><a href="index.html">Home</a></li><li><a href="articles.html">Articles</a></li><li><a href="about.html">About</a></li></ul></div>
+      <div><h4>Legal</h4><ul><li><a href="privacy.html">Privacy</a></li><li><a href="terms.html">Terms</a></li><li><a href="disclaimer.html">Disclaimer</a></li></ul></div>
+      <div><h4>Contact</h4><p><a href="mailto:moonoriginblue@gmail.com">moonoriginblue@gmail.com</a></p></div>
+    </div>
+    <div class="ic-footer-bottom">© 2026 Insight Chronicles. All rights reserved.</div>
+  </footer>
+
+  <button class="ic-backtotop" id="backToTop">↑ Top</button>
+  <script>
+    document.getElementById('hamburger').addEventListener('click', () => document.getElementById('mainNav').classList.toggle('open'));
+    const btn = document.getElementById("backToTop");
+    window.addEventListener("scroll", () => { btn.style.display = window.scrollY > 500 ? "block" : "none"; });
+    btn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+  <\/script>
+</body>
+</html>`;
+}
+
+// ============================================================
+// Downloads
+// ============================================================
+function downloadArticleHTML() {
+  if (!generatedHTML) { showStatus('Generate files first.', 'error'); return; }
+  const slug = document.getElementById('artSlug').value.trim() || 'article.html';
+  download(slug, generatedHTML, 'text/html');
+}
+
+function downloadArticlesJson() {
+  download('articles.json', JSON.stringify(articles, null, 2), 'application/json');
+}
+
+function downloadSearchIndex() {
+  const index = articles.map(a => ({
+    title: a.title || '', slug: a.slug || '', url: a.url || '',
+    desc: a.desc || '', date: a.date || '', thumb: a.thumb || '',
+    tags: a.tags || [],
+    body: stripHtml(a.content_html || '')
+  }));
+  download('search-index.json', JSON.stringify(index, null, 2), 'application/json');
+}
+
+function download(filename, content, type) {
+  const blob = new Blob([content], { type });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename; a.click();
+  URL.revokeObjectURL(url);
+}
+
+function stripHtml(html) {
+  const tmp = document.createElement('div');
+  tmp.innerHTML = html;
+  return tmp.textContent || tmp.innerText || '';
+}
+
+// ============================================================
+// Load from JSON
+// ============================================================
+function loadFromJson() {
+  try {
+    const raw = document.getElementById('jsonInput').value.trim();
+    const d = JSON.parse(raw);
+    document.getElementById('artTitle').value = d.title || '';
+    document.getElementById('artDesc').value = d.desc || '';
+    document.getElementById('artDate').value = d.date || '';
+    document.getElementById('artThumb').value = d.thumb || '';
+    document.getElementById('artSlug').value = d.slug || '';
+    document.getElementById('contentEditor').innerHTML = d.content || '';
+    activeTags = new Set(d.tags || []);
+    document.querySelectorAll('.tag-btn').forEach(btn => {
+      btn.classList.toggle('active-tag', activeTags.has(btn.dataset.tag));
+    });
+    updatePreview();
+    updateSlug();
+    switchTab('editor');
+    showStatus('✅ Draft loaded into editor.', 'success');
+  } catch(e) {
+    showStatus('❌ Invalid JSON: ' + e.message, 'error');
+  }
+}
+
+// ============================================================
+// Utilities
+// ============================================================
+function clearForm() {
+  if (!confirm('Clear the form? This will remove your current draft.')) return;
+  document.getElementById('artTitle').value = '';
+  document.getElementById('artDesc').value = '';
+  document.getElementById('artDate').value = new Date().toISOString().split('T')[0];
+  document.getElementById('artThumb').value = 'images/upi.webp';
+  document.getElementById('artSlug').value = '';
+  document.getElementById('artReadTime').value = '';
+  document.getElementById('contentEditor').innerHTML = '';
+  document.getElementById('slugPreview').textContent = 'https://insight-chronicles.com/';
+  activeTags = new Set();
+  document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('active-tag'));
+  document.getElementById('outputSection').style.display = 'none';
+  updatePreview();
+}
+
+function showStatus(msg, type) {
+  const bar = document.getElementById('statusBar');
+  bar.textContent = msg;
+  bar.className = 'status-bar status-' + type;
+  bar.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  if (type === 'success') setTimeout(() => bar.className = 'status-bar', 5000);
+}
+
+function switchTab(name) {
+  document.querySelectorAll('.tab-btn').forEach((b,i) => {
+    const tabs = ['editor','json','guide'];
+    b.classList.toggle('active', tabs[i] === name);
+  });
+  document.querySelectorAll('.tab-panel').forEach(p => {
+    p.classList.toggle('active', p.id === 'tab-' + name);
+  });
+}
+
+function esc(str) {
+  return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+</script>
+</body>
+</html>

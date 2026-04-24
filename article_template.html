@@ -3,132 +3,109 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-
   <title>{{TITLE}} – Insight Chronicles</title>
   <meta name="description" content="{{DESCRIPTION}}" />
+  <link rel="canonical" href="https://insight-chronicles.com/{{SLUG}}" />
 
-  <!-- OG / Social Preview -->
   <meta property="og:title" content="{{TITLE}}" />
   <meta property="og:description" content="{{DESCRIPTION}}" />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://insight-chronicles.com/{{SLUG}}" />
   <meta property="og:image" content="https://insight-chronicles.com/{{THUMB_OG}}" />
-
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="{{TITLE}}" />
   <meta name="twitter:description" content="{{DESCRIPTION}}" />
   <meta name="twitter:image" content="https://insight-chronicles.com/{{THUMB_OG}}" />
 
   <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
-
 <body class="ic-body">
 
-  <div class="ic-topstrip">Insight Chronicles • Long-form analysis</div>
+  <div class="ic-topstrip">Independent analysis on history, geopolitics & technology</div>
 
-  <!-- Header -->
   <header class="ic-header">
     <div class="ic-container ic-header-inner">
       <a href="index.html" class="ic-logo">
         <span class="ic-logo-mark">IC</span>
-        <span>
-          <span class="ic-logo-title">Insight Chronicles</span>
-          <span class="ic-logo-sub">Long-form global analysis</span>
-        </span>
+        <span><span class="ic-logo-title">Insight Chronicles</span><span class="ic-logo-sub">Long-form global analysis</span></span>
       </a>
-
-      <nav class="ic-nav">
+      <button class="ic-hamburger" id="hamburger" aria-label="Menu">&#9776;</button>
+      <nav class="ic-nav" id="mainNav">
         <a href="index.html" class="ic-nav-link">Home</a>
-        <a href="articles.html" class="ic-nav-link">Articles</a>
-        <a href="search.html" class="ic-nav-link">Search</a>
+        <a href="articles.html" class="ic-nav-link ic-nav-link-active">Articles</a>
+        <a href="about.html" class="ic-nav-link">About</a>
+        <a href="contact.html" class="ic-nav-link">Contact</a>
       </nav>
     </div>
   </header>
 
-  <!-- Article -->
-  <main class="ic-main">
+  <main class="article-wrapper">
     <div class="ic-container">
 
-      <section class="ic-article-hero">
-        <p class="ic-pill">{{TAGLINE}}</p>
-        <h1 class="ic-article-title-big">{{TITLE}}</h1>
-        <p class="ic-article-sub">{{DESCRIPTION}}</p>
+      <nav class="ic-breadcrumbs">
+        <a href="index.html">Home</a>
+        <span class="sep">›</span>
+        <a href="articles.html">Articles</a>
+        <span class="sep">›</span>
+        <span>{{TITLE}}</span>
+      </nav>
 
-        <div class="ic-article-meta-line">
-          <span>{{DATE}}</span>
-          <span>•</span>
-          <a href="index.html" style="color:#cbd5f5;text-decoration:none;">Back to homepage</a>
+      <header class="article-heading">
+        <p class="article-kicker">{{TAGLINE}}</p>
+        <h1 class="article-title">{{TITLE}}</h1>
+        <p class="article-meta">{{DATE}}</p>
+        <p class="article-lead">{{DESCRIPTION}}</p>
+
+        <div class="ic-affiliate-box" style="margin-top:14px;">
+          <p class="ic-affiliate-title">Share this article</p>
+          <div class="ic-affiliate-links">
+            <a class="ic-affiliate-btn" href="https://wa.me/?text={{TITLE}}%20https://insight-chronicles.com/{{SLUG}}" target="_blank" rel="noopener">WhatsApp</a>
+            <a class="ic-affiliate-btn" href="https://twitter.com/intent/tweet?text={{TITLE}}&url=https://insight-chronicles.com/{{SLUG}}" target="_blank" rel="noopener">X (Twitter)</a>
+            <button class="ic-affiliate-btn" onclick="navigator.clipboard.writeText('https://insight-chronicles.com/{{SLUG}}').then(()=>{this.textContent='Copied ✅';setTimeout(()=>this.textContent='Copy link',2000)})">Copy link</button>
+          </div>
         </div>
+      </header>
 
-        <figure class="ic-figure ic-hero-figure">
-          <img src="{{THUMB}}" alt="{{TITLE}}" />
-        </figure>
-      </section>
+      <picture class="article-section-image">
+        <img src="{{THUMB}}" alt="{{TITLE}}" class="article-image" loading="lazy" />
+      </picture>
 
-      <article class="ic-article-content">
+      <article class="article-body">
         {{CONTENT}}
       </article>
 
-      <!-- Share -->
-      <section class="ic-sidebar-block" style="margin-top:26px;">
-        <h3 style="margin-top:0;">Share this article</h3>
-        <div style="display:flex; gap:10px; flex-wrap:wrap;">
-          <a class="ic-btn-secondary" target="_blank"
-             href="https://wa.me/?text={{TITLE}}%20https://insight-chronicles.com/{{SLUG}}">
-             WhatsApp
-          </a>
-
-          <a class="ic-btn-secondary" target="_blank"
-             href="https://twitter.com/intent/tweet?text={{TITLE}}&url=https://insight-chronicles.com/{{SLUG}}">
-             X (Twitter)
-          </a>
-
-          <button class="ic-btn-secondary" onclick="navigator.clipboard.writeText('https://insight-chronicles.com/{{SLUG}}');alert('Link copied!')">
-            Copy link
-          </button>
-        </div>
-      </section>
+      <div class="ic-article-nav">
+        <a href="articles.html">
+          <div class="kicker">← Back to</div>
+          <div class="title">All Articles</div>
+        </a>
+        <a href="index.html">
+          <div class="kicker">Go to</div>
+          <div class="title">Homepage</div>
+        </a>
+      </div>
 
     </div>
   </main>
 
-  <!-- Footer -->
   <footer class="ic-footer">
     <div class="ic-container ic-footer-grid">
-      <div>
-        <h4>Insight Chronicles</h4>
-        <p>Independent writing on history, geopolitics and technology.</p>
-      </div>
-
-      <div>
-        <h4>Pages</h4>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="articles.html">All Articles</a></li>
-          <li><a href="search.html">Search</a></li>
-        </ul>
-      </div>
-
-      <div>
-        <h4>Legal</h4>
-        <ul>
-          <li><a href="privacy.html">Privacy</a></li>
-          <li><a href="terms.html">Terms</a></li>
-          <li><a href="disclaimer.html">Disclaimer</a></li>
-        </ul>
-      </div>
-
-      <div>
-        <h4>Contact</h4>
-        <p><a href="mailto:moonoriginblue@gmail.com">moonoriginblue@gmail.com</a></p>
-      </div>
+      <div><h4>Insight Chronicles</h4><p>Independent writing on history, geopolitics and technology.</p></div>
+      <div><h4>Pages</h4><ul><li><a href="index.html">Home</a></li><li><a href="articles.html">Articles</a></li><li><a href="about.html">About</a></li></ul></div>
+      <div><h4>Legal</h4><ul><li><a href="privacy.html">Privacy</a></li><li><a href="terms.html">Terms</a></li><li><a href="disclaimer.html">Disclaimer</a></li></ul></div>
+      <div><h4>Contact</h4><p><a href="mailto:moonoriginblue@gmail.com">moonoriginblue@gmail.com</a></p></div>
     </div>
-
     <div class="ic-footer-bottom">© 2026 Insight Chronicles. All rights reserved.</div>
   </footer>
 
+  <button class="ic-backtotop" id="backToTop">↑ Top</button>
+  <script>
+    document.getElementById('hamburger').addEventListener('click', () => document.getElementById('mainNav').classList.toggle('open'));
+    const btn = document.getElementById("backToTop");
+    window.addEventListener("scroll", () => { btn.style.display = window.scrollY > 500 ? "block" : "none"; });
+    btn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+  </script>
 </body>
 </html>
-
-
-
