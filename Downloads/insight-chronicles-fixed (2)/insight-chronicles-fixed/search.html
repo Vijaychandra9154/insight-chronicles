@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Search – Insight Chronicles</title>
+  <meta name="description" content="Search articles on Insight Chronicles." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="ic-body">
+
+<div class="ic-topstrip">Search • Insight Chronicles</div>
+
+<header class="ic-header">
+  <div class="ic-container ic-header-inner">
+    <a href="index.html" class="ic-logo">
+      <span class="ic-logo-mark">IC</span>
+      <span>
+        <span class="ic-logo-title">Insight Chronicles</span>
+        <span class="ic-logo-sub">Long-form global analysis</span>
+      </span>
+    </a>
+
+    <nav class="ic-nav">
+      <a href="index.html" class="ic-nav-link">Home</a>
+      <a href="articles.html" class="ic-nav-link">Articles</a>
+      <a href="search.html" class="ic-nav-link ic-nav-link-active">Search</a>
+    </nav>
+  </div>
+</header>
+
+<main class="ic-main">
+  <div class="ic-container">
+    <section class="ic-sidebar-block">
+      <h1 style="margin-top:0;">Search Articles</h1>
+      <p style="color:#cbd5f5;">Type keywords to search across all published posts.</p>
+
+      <input id="q" type="text" placeholder="Search (UPI, ONDC, labs, geopolitics...)" 
+        style="width:100%;padding:14px;border-radius:14px;border:1px solid rgba(148,163,184,0.25);background:#020617;color:#e5e7eb;" />
+
+      <p id="count" style="margin-top:10px;color:#9ca3af;">Loading…</p>
+    </section>
+
+    <section class="ic-sidebar-block">
+      <h2 style="margin-top:0;">Results</h2>
+      <div id="results" style="display:grid;gap:14px;"></div>
+    </section>
+  </div>
+</main>
+
+<footer class="ic-footer">
+  <div class="ic-container ic-footer-bottom">© 2026 Insight Chronicles. All rights reserved.</div>
+</footer>
+
+<script>
+  let data = [];
+
+  async function loadIndex() {
+    const res = await fetch("search-index.json");
+    data = await res.json();
+    document.getElementById("count").textContent = data.length + " articles indexed";
+    render("");
+  }
+
+  function render(q) {
+    const results = document.getElementById("results");
+    results.innerHTML = "";
+
+    const query = q.trim().toLowerCase();
+
+    const filtered = data.filter(a => {
+      const hay = (
+        a.title + " " +
+        a.desc + " " +
+        (a.tags||[]).join(" ") + " " +
+        a.date + " " +
+        (a.body || "")
+      ).toLowerCase();
+      return query === "" || hay.includes(query);
+    });
+
+    document.getElementById("count").textContent = filtered.length + " result(s)";
+
+    filtered.forEach(a => {
+      const div = document.createElement("div");
+      div.className = "ic-article-card";
+      div.style.gridTemplateColumns = "140px 1fr";
+
+      const tags = (a.tags || []).slice(0,3).map(t => `<span class="ic-tag">${t}</span>`).join("");
+
+      div.innerHTML = `
+        <a href="${a.slug}" class="ic-article-thumb-link">
+          <img src="${a.thumb}" alt="${a.title}" class="ic-article-thumb" />
+        </a>
+        <div>
+          <div class="ic-article-tags">${tags}</div>
+          <h3 class="ic-article-title"><a href="${a.slug}">${a.title}</a></h3>
+          <p class="ic-article-meta">${a.date}</p>
+          <p class="ic-article-excerpt">${a.desc}</p>
+          <a href="${a.slug}" class="ic-article-read">Read article →</a>
+        </div>
+      `;
+      results.appendChild(div);
+    });
+  }
+
+  document.getElementById("q").addEventListener("input", e => render(e.target.value));
+  loadIndex();
+</script>
+
+</body>
+</html>

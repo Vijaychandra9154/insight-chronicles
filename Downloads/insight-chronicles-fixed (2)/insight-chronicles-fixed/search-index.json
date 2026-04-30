@@ -1,0 +1,42 @@
+[
+  {
+    "title": "Test Article 3 – Automation Publishing Check",
+    "slug": "article-3.html",
+    "url": "https://insight-chronicles.com/article-3.html",
+    "desc": "This is a test post generated automatically from drafts using GitHub Actions.",
+    "date": "2025-01-03",
+    "thumb": "images/upi.webp",
+    "tags": [
+      "Technology",
+      "Governance"
+    ],
+    "body": ""
+  },
+  {
+    "title": "Democratization of India’s Hardware, Manufacturing & Bio Labs Infrastructure",
+    "slug": "article-hardware-bio.html",
+    "url": "https://insight-chronicles.com/article-hardware-bio.html",
+    "desc": "Why India must democratize access to machine tools, CNC facilities, 3D printing hubs and public bio labs.",
+    "date": "2025-01-02",
+    "thumb": "images/hardware-bio.webp",
+    "tags": [
+      "Technology",
+      "Governance"
+    ],
+    "body": ""
+  },
+  {
+    "title": "How India’s Plan of Democratizing Public Services Will Guide Other Countries",
+    "slug": "article-1.html",
+    "url": "https://insight-chronicles.com/article-1.html",
+    "desc": "A breakdown of how UPI, ONDC, Aadhaar and ABHA form a model of open digital infrastructure.",
+    "date": "2025-01-01",
+    "thumb": "images/upi.webp",
+    "tags": [
+      "Geopolitics",
+      "Technology",
+      "Governance"
+    ],
+    "body": ""
+  }
+]
