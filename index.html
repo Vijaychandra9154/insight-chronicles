@@ -208,9 +208,9 @@
       searchInput.addEventListener('input', function () {
         const q = this.value.trim().toLowerCase();
         cards.forEach(card => {
-          const txt = (card.textContent || '').toLowerCase();
-          card.style.display = q === '' || txt.includes(q) ? '' : 'none';
-        });
+        const txt = (card.textContent || '').toLowerCase();
+        card.style.display = q === '' || txt.includes(q) ? '' : 'none';
+      });
       });
     }
 
@@ -223,4 +223,5 @@
   </script>
 </body>
 </html>
+
 
