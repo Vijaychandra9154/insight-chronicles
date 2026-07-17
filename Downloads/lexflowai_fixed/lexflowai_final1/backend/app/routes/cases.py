@@ -32,6 +32,32 @@ def get_case(case_id: int, db: Session = Depends(db.get_db)):
     return c
 
 
+@router.get("/{case_id}/documents", response_model=list[schemas.DocumentOut])
+def list_documents(case_id: int, db: Session = Depends(db.get_db)):
+    c = db.query(models.Case).filter(models.Case.id == case_id).first()
+    if not c:
+        raise HTTPException(status_code=404, detail="Case not found")
+    return (
+        db.query(models.Document)
+        .filter(models.Document.case_id == case_id)
+        .order_by(models.Document.uploaded_at.desc())
+        .all()
+    )
+
+
+@router.get("/{case_id}/drafts", response_model=list[schemas.DraftOut])
+def list_drafts(case_id: int, db: Session = Depends(db.get_db)):
+    c = db.query(models.Case).filter(models.Case.id == case_id).first()
+    if not c:
+        raise HTTPException(status_code=404, detail="Case not found")
+    return (
+        db.query(models.Draft)
+        .filter(models.Draft.case_id == case_id)
+        .order_by(models.Draft.created_at.desc())
+        .all()
+    )
+
+
 @router.post("/{case_id}/upload")
 async def upload_document(case_id: int, file: UploadFile = File(...), db: Session = Depends(db.get_db)):
     content = await file.read()

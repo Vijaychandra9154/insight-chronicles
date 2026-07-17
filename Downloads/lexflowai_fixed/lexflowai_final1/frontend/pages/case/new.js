@@ -13,15 +13,16 @@ export default function NewCase() {
 
   async function handleSubmit(e) {
     e.preventDefault()
+    if (submitting) return
     setError(null)
     setSubmitting(true)
     try {
-      const res = await axios.post('/api/cases', {
+      await axios.post('/api/cases', {
         title,
         case_number: caseNumber || null,
         forum,
       })
-      router.push(`/case/${res.data.id}`)
+      router.push('/')
     } catch (err) {
       setError('Could not create case. Please try again.')
       setSubmitting(false)
