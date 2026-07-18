@@ -12,6 +12,9 @@ const LANGUAGES = [
   { code: 'te-IN', label: 'తెలుగు' },
 ]
 
+const COURT_TRACKED_FORUMS = ['district_court', 'consumer_forum']
+const MANUAL_STATUS_OPTIONS = ['Filed', 'Under Inquiry', 'Notice Issued', 'Disposed']
+
 const VERIFY_PATTERN = /(\[VERIFY:[^\]]*\])/g
 
 function renderWithHighlights(text) {
@@ -37,7 +40,7 @@ export default function CasePage() {
   const router = useRouter()
   const { id } = router.query
 
-  const { data: caseData, error: caseError } = useSWR(id ? `/api/cases/${id}` : null, fetcher)
+  const { data: caseData, error: caseError, mutate: mutateCase } = useSWR(id ? `/api/cases/${id}` : null, fetcher)
   const { data: documents, mutate: mutateDocuments } = useSWR(
     id ? `/api/cases/${id}/documents` : null,
     fetcher
@@ -46,6 +49,17 @@ export default function CasePage() {
     id ? `/api/cases/${id}/drafts` : null,
     fetcher
   )
+  const { data: courtStatus, mutate: mutateCourtStatus } = useSWR(
+    id && caseData?.cnr_number ? `/api/cases/${id}/court-status` : null,
+    fetcher
+  )
+
+  const [cnrInput, setCnrInput] = useState('')
+  const [linkingCnr, setLinkingCnr] = useState(false)
+  const [linkError, setLinkError] = useState(null)
+  const [refreshingStatus, setRefreshingStatus] = useState(false)
+  const [statusError, setStatusError] = useState(null)
+  const [manualStatusError, setManualStatusError] = useState(null)
 
   const [uploading, setUploading] = useState(false)
   const [uploadError, setUploadError] = useState(null)
@@ -78,6 +92,49 @@ export default function CasePage() {
     } finally {
       setUploading(false)
       e.target.value = ''
+    }
+  }
+
+  async function handleLinkCnr(e) {
+    e.preventDefault()
+    if (linkingCnr || !cnrInput.trim()) return
+    setLinkError(null)
+    setLinkingCnr(true)
+    try {
+      const res = await axios.post(`/api/cases/${id}/link-cnr`, {
+        cnr_number: cnrInput.trim().toUpperCase(),
+      })
+      setCnrInput('')
+      await mutateCase()
+      mutateCourtStatus(res.data, false)
+    } catch (err) {
+      setLinkError(err.response?.data?.detail || 'Could not link CNR. Please check the number and try again.')
+    } finally {
+      setLinkingCnr(false)
+    }
+  }
+
+  async function handleRefreshStatus() {
+    setStatusError(null)
+    setRefreshingStatus(true)
+    try {
+      const res = await axios.get(`/api/cases/${id}/court-status`, { params: { refresh: true } })
+      mutateCourtStatus(res.data, false)
+    } catch (err) {
+      setStatusError(err.response?.data?.detail || 'Could not refresh court status. Please try again.')
+    } finally {
+      setRefreshingStatus(false)
+    }
+  }
+
+  async function handleManualStatusChange(e) {
+    const value = e.target.value
+    setManualStatusError(null)
+    try {
+      await axios.post(`/api/cases/${id}/status`, { manual_status: value })
+      mutateCase((prev) => (prev ? { ...prev, manual_status: value } : prev), false)
+    } catch (err) {
+      setManualStatusError('Could not save status. Please try again.')
     }
   }
 
@@ -145,6 +202,7 @@ export default function CasePage() {
   if (!caseData) return <p className="state-message">Loading case...</p>
 
   const displayedText = activeLang === 'en' ? draft : translations[activeLang]
+  const isCourtTracked = COURT_TRACKED_FORUMS.includes(caseData.forum)
 
   return (
     <div>
@@ -154,6 +212,89 @@ export default function CasePage() {
         <p className="case-header-meta">
           Case No: {caseData.case_number || 'Not assigned'} · Created: {formatDate(caseData.created_at)}
         </p>
+      </div>
+
+      <div className="section">
+        <h2 className="section-title">Court Status</h2>
+        {isCourtTracked ? (
+          caseData.cnr_number ? (
+            <div>
+              <div className="court-status-toolbar">
+                <span className="doc-item-date">
+                  {courtStatus?.fetched_at
+                    ? `Checked: ${formatDate(courtStatus.fetched_at)}`
+                    : 'Not yet checked'}
+                </span>
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={handleRefreshStatus}
+                  disabled={refreshingStatus}
+                >
+                  {refreshingStatus ? 'Refreshing...' : 'Refresh'}
+                </button>
+              </div>
+              {statusError && <p className="form-error">{statusError}</p>}
+              {courtStatus && courtStatus.fetched ? (
+                <div className="court-status-grid">
+                  <div className="court-status-primary">
+                    <div className="court-status-label">Stage</div>
+                    <div className="court-status-value">
+                      {courtStatus.stage || courtStatus.case_status || 'Unknown'}
+                    </div>
+                  </div>
+                  <div className="court-status-primary">
+                    <div className="court-status-label">Next Hearing</div>
+                    <div className="court-status-value">
+                      {courtStatus.next_hearing_date || 'Not scheduled'}
+                    </div>
+                  </div>
+                  <div className="court-status-secondary">
+                    <span>Last order: {courtStatus.last_order_date || 'None'}</span>
+                    <span>Judge: {courtStatus.judges?.join(', ') || 'Unknown'}</span>
+                    <span>Parties: {courtStatus.case_title || 'Unknown'}</span>
+                  </div>
+                </div>
+              ) : (
+                <p className="state-message">No status fetched yet.</p>
+              )}
+              <p className="case-header-meta">CNR: {caseData.cnr_number}</p>
+            </div>
+          ) : (
+            <form className="cnr-link-form" onSubmit={handleLinkCnr}>
+              <div className="form-group">
+                <label htmlFor="cnr">CNR Number</label>
+                <input
+                  id="cnr"
+                  type="text"
+                  value={cnrInput}
+                  onChange={(e) => setCnrInput(e.target.value)}
+                  placeholder="e.g. DLND020047882015"
+                  required
+                />
+              </div>
+              <button type="submit" className="btn" disabled={linkingCnr}>
+                {linkingCnr ? 'Linking...' : 'Link CNR'}
+              </button>
+              {linkError && <p className="form-error">{linkError}</p>}
+            </form>
+          )
+        ) : (
+          <div className="form-group">
+            <label htmlFor="manual-status">Status</label>
+            <select
+              id="manual-status"
+              value={caseData.manual_status || ''}
+              onChange={handleManualStatusChange}
+            >
+              <option value="" disabled>Select status</option>
+              {MANUAL_STATUS_OPTIONS.map((opt) => (
+                <option key={opt} value={opt}>{opt}</option>
+              ))}
+            </select>
+            {manualStatusError && <p className="form-error">{manualStatusError}</p>}
+          </div>
+        )}
       </div>
 
       <div className="section">

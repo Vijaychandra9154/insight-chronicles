@@ -1,8 +1,58 @@
+from datetime import datetime, timedelta, timezone
+
 from fastapi import APIRouter, Depends, UploadFile, File, HTTPException
 from sqlalchemy.orm import Session
 from .. import db, models, schemas
+from ..services import court_tracker
 
 router = APIRouter(prefix="/api/cases", tags=["cases"])
+
+SNAPSHOT_FRESHNESS = timedelta(hours=6)
+
+
+def _status_to_out(status: court_tracker.CourtStatus, fetched_at, refreshed: bool) -> schemas.CourtStatusOut:
+    return schemas.CourtStatusOut(
+        fetched=True,
+        stage=status.stage,
+        case_status=status.case_status,
+        next_hearing_date=status.next_hearing_date,
+        last_hearing_date=status.last_hearing_date,
+        last_order_date=status.last_order_date,
+        decision_date=status.decision_date,
+        filing_date=status.filing_date,
+        registration_number=status.registration_number,
+        court_name=status.court_name,
+        judges=status.judges,
+        petitioners=status.petitioners,
+        respondents=status.respondents,
+        case_title=status.case_title,
+        disposal_type=status.disposal_type,
+        fetched_at=fetched_at,
+        refreshed=refreshed,
+    )
+
+
+def _store_snapshot(db: Session, case_id: int, status: court_tracker.CourtStatus) -> models.CaseStatusUpdate:
+    snapshot = models.CaseStatusUpdate(
+        case_id=case_id,
+        stage=status.stage,
+        next_hearing=status.next_hearing_date,
+        raw_json=status.raw,
+    )
+    db.add(snapshot)
+    db.commit()
+    db.refresh(snapshot)
+    return snapshot
+
+
+def _handle_tracker_error(e: court_tracker.CourtTrackerError):
+    if isinstance(e, court_tracker.InsufficientCreditsError):
+        raise HTTPException(status_code=402, detail="Tracking credits exhausted.")
+    if isinstance(e, court_tracker.CaseNotFoundError):
+        raise HTTPException(status_code=404, detail="CNR not found in court records.")
+    if isinstance(e, court_tracker.InvalidCnrError):
+        raise HTTPException(status_code=400, detail=str(e))
+    raise HTTPException(status_code=502, detail=str(e))
 
 
 @router.post("", response_model=schemas.CaseOut)
@@ -56,6 +106,83 @@ def list_drafts(case_id: int, db: Session = Depends(db.get_db)):
         .order_by(models.Draft.created_at.desc())
         .all()
     )
+
+
+@router.post("/{case_id}/link-cnr", response_model=schemas.CourtStatusOut)
+def link_cnr(case_id: int, req: schemas.LinkCnrRequest, db: Session = Depends(db.get_db)):
+    c = db.query(models.Case).filter(models.Case.id == case_id).first()
+    if not c:
+        raise HTTPException(status_code=404, detail="Case not found")
+
+    cnr = req.cnr_number.strip().upper()
+    if not court_tracker.is_valid_cnr(cnr):
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid CNR format. Expected 16 characters: 4 letters followed by 12 digits.",
+        )
+
+    try:
+        status = court_tracker.fetch_case_detail(cnr)
+    except court_tracker.CourtTrackerError as e:
+        _handle_tracker_error(e)
+
+    c.cnr_number = cnr
+    db.add(c)
+    db.commit()
+
+    snapshot = _store_snapshot(db, case_id, status)
+    return _status_to_out(status, snapshot.fetched_at, refreshed=True)
+
+
+@router.get("/{case_id}/court-status", response_model=schemas.CourtStatusOut)
+def get_court_status(case_id: int, refresh: bool = False, db: Session = Depends(db.get_db)):
+    c = db.query(models.Case).filter(models.Case.id == case_id).first()
+    if not c:
+        raise HTTPException(status_code=404, detail="Case not found")
+    if not c.cnr_number:
+        raise HTTPException(status_code=400, detail="No CNR linked to this case yet.")
+
+    latest = (
+        db.query(models.CaseStatusUpdate)
+        .filter(models.CaseStatusUpdate.case_id == case_id)
+        .order_by(models.CaseStatusUpdate.fetched_at.desc())
+        .first()
+    )
+
+    is_stale = latest is None or (
+        datetime.now(timezone.utc) - latest.fetched_at.replace(tzinfo=timezone.utc) > SNAPSHOT_FRESHNESS
+    )
+
+    # Page load (refresh=False) never calls the live API — pure cache read.
+    # A manual Refresh click only triggers a live call if the cache is
+    # actually stale (>=6h), so repeated clicks don't burn credits.
+    if refresh and is_stale:
+        try:
+            status = court_tracker.refresh_and_fetch(c.cnr_number)
+        except court_tracker.CourtTrackerError as e:
+            _handle_tracker_error(e)
+        snapshot = _store_snapshot(db, case_id, status)
+        return _status_to_out(status, snapshot.fetched_at, refreshed=True)
+
+    if latest is None:
+        # No snapshot exists yet (shouldn't normally happen since link-cnr
+        # always creates one) — nothing to show without spending a credit.
+        return schemas.CourtStatusOut(fetched=False)
+
+    status = court_tracker.parse_status(latest.raw_json or {})
+    return _status_to_out(status, latest.fetched_at, refreshed=False)
+
+
+@router.post("/{case_id}/status", response_model=schemas.CaseOut)
+def set_manual_status(case_id: int, req: schemas.ManualStatusRequest, db: Session = Depends(db.get_db)):
+    c = db.query(models.Case).filter(models.Case.id == case_id).first()
+    if not c:
+        raise HTTPException(status_code=404, detail="Case not found")
+    c.manual_status = req.manual_status
+    db.add(c)
+    db.commit()
+    db.refresh(c)
+    return c
 
 
 @router.post("/{case_id}/upload")
