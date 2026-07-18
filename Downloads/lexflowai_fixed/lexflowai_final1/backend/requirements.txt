@@ -14,7 +14,7 @@ sentence-transformers
 faiss-cpu
 tqdm
 gunicorn
-bcrypt
+bcrypt<4.0  # passlib 1.7.4 is incompatible with bcrypt>=4.0's API changes
 python-jose[cryptography]
 beautifulsoup4
 bs4

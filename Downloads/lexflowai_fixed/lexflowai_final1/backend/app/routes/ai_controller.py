@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 from .. import db, models
+from ..auth import get_current_user
 from ..ai_utils import VECTOR_INDEX, llm_generate
 from ..services import translation, institution_templates
 
@@ -63,8 +64,16 @@ class TranslateRequest(BaseModel):
 
 
 @router.post("/draft")
-async def generate_draft(req: DraftRequest, db_session: Session = Depends(db.get_db)):
-    case = db_session.query(models.Case).filter(models.Case.id == req.case_id).first()
+async def generate_draft(
+    req: DraftRequest,
+    db_session: Session = Depends(db.get_db),
+    current_user: models.User = Depends(get_current_user),
+):
+    case = (
+        db_session.query(models.Case)
+        .filter(models.Case.id == req.case_id, models.Case.user_id == current_user.id)
+        .first()
+    )
     if not case:
         raise HTTPException(status_code=404, detail="Case not found")
 
@@ -124,7 +133,10 @@ async def generate_draft(req: DraftRequest, db_session: Session = Depends(db.get
 
 
 @router.post("/translate")
-async def translate_text(req: TranslateRequest):
+async def translate_text(
+    req: TranslateRequest,
+    current_user: models.User = Depends(get_current_user),
+):
     if req.target_lang not in translation.SUPPORTED_LANGS:
         raise HTTPException(
             status_code=400,

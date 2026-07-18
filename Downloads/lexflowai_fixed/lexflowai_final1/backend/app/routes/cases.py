@@ -3,6 +3,7 @@ from datetime import datetime, timedelta, timezone
 from fastapi import APIRouter, Depends, UploadFile, File, HTTPException
 from sqlalchemy.orm import Session
 from .. import db, models, schemas
+from ..auth import get_current_user
 from ..services import court_tracker
 
 router = APIRouter(prefix="/api/cases", tags=["cases"])
@@ -45,6 +46,17 @@ def _store_snapshot(db: Session, case_id: int, status: court_tracker.CourtStatus
     return snapshot
 
 
+def _get_owned_case(db: Session, case_id: int, user: models.User) -> models.Case:
+    c = (
+        db.query(models.Case)
+        .filter(models.Case.id == case_id, models.Case.user_id == user.id)
+        .first()
+    )
+    if not c:
+        raise HTTPException(status_code=404, detail="Case not found")
+    return c
+
+
 def _handle_tracker_error(e: court_tracker.CourtTrackerError):
     if isinstance(e, court_tracker.InsufficientCreditsError):
         raise HTTPException(status_code=402, detail="Tracking credits exhausted.")
@@ -56,12 +68,17 @@ def _handle_tracker_error(e: court_tracker.CourtTrackerError):
 
 
 @router.post("", response_model=schemas.CaseOut)
-def create_case(case: schemas.CaseCreate, db: Session = Depends(db.get_db)):
+def create_case(
+    case: schemas.CaseCreate,
+    db: Session = Depends(db.get_db),
+    current_user: models.User = Depends(get_current_user),
+):
     c = models.Case(
         title=case.title,
         case_number=case.case_number,
         forum=case.forum,
         extra_data=case.extra_data or {},
+        user_id=current_user.id,
     )
     db.add(c)
     db.commit()
@@ -70,23 +87,34 @@ def create_case(case: schemas.CaseCreate, db: Session = Depends(db.get_db)):
 
 
 @router.get("", response_model=list[schemas.CaseOut])
-def list_cases(db: Session = Depends(db.get_db)):
-    return db.query(models.Case).order_by(models.Case.created_at.desc()).all()
+def list_cases(
+    db: Session = Depends(db.get_db),
+    current_user: models.User = Depends(get_current_user),
+):
+    return (
+        db.query(models.Case)
+        .filter(models.Case.user_id == current_user.id)
+        .order_by(models.Case.created_at.desc())
+        .all()
+    )
 
 
 @router.get("/{case_id}", response_model=schemas.CaseOut)
-def get_case(case_id: int, db: Session = Depends(db.get_db)):
-    c = db.query(models.Case).filter(models.Case.id == case_id).first()
-    if not c:
-        raise HTTPException(status_code=404, detail="Case not found")
-    return c
+def get_case(
+    case_id: int,
+    db: Session = Depends(db.get_db),
+    current_user: models.User = Depends(get_current_user),
+):
+    return _get_owned_case(db, case_id, current_user)
 
 
 @router.get("/{case_id}/documents", response_model=list[schemas.DocumentOut])
-def list_documents(case_id: int, db: Session = Depends(db.get_db)):
-    c = db.query(models.Case).filter(models.Case.id == case_id).first()
-    if not c:
-        raise HTTPException(status_code=404, detail="Case not found")
+def list_documents(
+    case_id: int,
+    db: Session = Depends(db.get_db),
+    current_user: models.User = Depends(get_current_user),
+):
+    _get_owned_case(db, case_id, current_user)
     return (
         db.query(models.Document)
         .filter(models.Document.case_id == case_id)
@@ -96,10 +124,12 @@ def list_documents(case_id: int, db: Session = Depends(db.get_db)):
 
 
 @router.get("/{case_id}/drafts", response_model=list[schemas.DraftOut])
-def list_drafts(case_id: int, db: Session = Depends(db.get_db)):
-    c = db.query(models.Case).filter(models.Case.id == case_id).first()
-    if not c:
-        raise HTTPException(status_code=404, detail="Case not found")
+def list_drafts(
+    case_id: int,
+    db: Session = Depends(db.get_db),
+    current_user: models.User = Depends(get_current_user),
+):
+    _get_owned_case(db, case_id, current_user)
     return (
         db.query(models.Draft)
         .filter(models.Draft.case_id == case_id)
@@ -109,10 +139,13 @@ def list_drafts(case_id: int, db: Session = Depends(db.get_db)):
 
 
 @router.post("/{case_id}/link-cnr", response_model=schemas.CourtStatusOut)
-def link_cnr(case_id: int, req: schemas.LinkCnrRequest, db: Session = Depends(db.get_db)):
-    c = db.query(models.Case).filter(models.Case.id == case_id).first()
-    if not c:
-        raise HTTPException(status_code=404, detail="Case not found")
+def link_cnr(
+    case_id: int,
+    req: schemas.LinkCnrRequest,
+    db: Session = Depends(db.get_db),
+    current_user: models.User = Depends(get_current_user),
+):
+    c = _get_owned_case(db, case_id, current_user)
 
     cnr = req.cnr_number.strip().upper()
     if not court_tracker.is_valid_cnr(cnr):
@@ -135,10 +168,13 @@ def link_cnr(case_id: int, req: schemas.LinkCnrRequest, db: Session = Depends(db
 
 
 @router.get("/{case_id}/court-status", response_model=schemas.CourtStatusOut)
-def get_court_status(case_id: int, refresh: bool = False, db: Session = Depends(db.get_db)):
-    c = db.query(models.Case).filter(models.Case.id == case_id).first()
-    if not c:
-        raise HTTPException(status_code=404, detail="Case not found")
+def get_court_status(
+    case_id: int,
+    refresh: bool = False,
+    db: Session = Depends(db.get_db),
+    current_user: models.User = Depends(get_current_user),
+):
+    c = _get_owned_case(db, case_id, current_user)
     if not c.cnr_number:
         raise HTTPException(status_code=400, detail="No CNR linked to this case yet.")
 
@@ -174,10 +210,13 @@ def get_court_status(case_id: int, refresh: bool = False, db: Session = Depends(
 
 
 @router.post("/{case_id}/status", response_model=schemas.CaseOut)
-def set_manual_status(case_id: int, req: schemas.ManualStatusRequest, db: Session = Depends(db.get_db)):
-    c = db.query(models.Case).filter(models.Case.id == case_id).first()
-    if not c:
-        raise HTTPException(status_code=404, detail="Case not found")
+def set_manual_status(
+    case_id: int,
+    req: schemas.ManualStatusRequest,
+    db: Session = Depends(db.get_db),
+    current_user: models.User = Depends(get_current_user),
+):
+    c = _get_owned_case(db, case_id, current_user)
     c.manual_status = req.manual_status
     db.add(c)
     db.commit()
@@ -186,7 +225,13 @@ def set_manual_status(case_id: int, req: schemas.ManualStatusRequest, db: Sessio
 
 
 @router.post("/{case_id}/upload")
-async def upload_document(case_id: int, file: UploadFile = File(...), db: Session = Depends(db.get_db)):
+async def upload_document(
+    case_id: int,
+    file: UploadFile = File(...),
+    db: Session = Depends(db.get_db),
+    current_user: models.User = Depends(get_current_user),
+):
+    _get_owned_case(db, case_id, current_user)
     content = await file.read()
     try:
         text = content.decode(errors="ignore")[:100000]

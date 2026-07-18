@@ -8,6 +8,7 @@ from docx import Document as DocxDocument
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 
 from .. import db, models
+from ..auth import get_current_user
 
 router = APIRouter(prefix="/api/drafts", tags=["drafts"])
 
@@ -87,11 +88,19 @@ def _has_signature_block(content: str) -> bool:
 
 
 @router.get("/{draft_id}/download")
-def download_draft(draft_id: int, db_session: Session = Depends(db.get_db)):
+def download_draft(
+    draft_id: int,
+    db_session: Session = Depends(db.get_db),
+    current_user: models.User = Depends(get_current_user),
+):
     draft = db_session.query(models.Draft).filter(models.Draft.id == draft_id).first()
     if not draft:
         raise HTTPException(status_code=404, detail="Draft not found")
-    case = db_session.query(models.Case).filter(models.Case.id == draft.case_id).first()
+    case = (
+        db_session.query(models.Case)
+        .filter(models.Case.id == draft.case_id, models.Case.user_id == current_user.id)
+        .first()
+    )
     if not case:
         raise HTTPException(status_code=404, detail="Case not found")
 

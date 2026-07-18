@@ -22,6 +22,7 @@ class Case(Base):
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     cnr_number = Column(String, index=True, nullable=True)
     manual_status = Column(String, nullable=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=True, index=True)
 
 
 class Document(Base):

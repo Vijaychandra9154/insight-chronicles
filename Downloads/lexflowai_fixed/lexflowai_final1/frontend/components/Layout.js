@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { useAuth } from '../lib/AuthContext'
 
 const NAV_ITEMS = [
   { href: '/', label: 'Dashboard' },
@@ -9,6 +10,12 @@ const NAV_ITEMS = [
 
 export default function Layout({ children }) {
   const router = useRouter()
+  const { user, logout } = useAuth()
+
+  async function handleLogout() {
+    await logout()
+    router.push('/login')
+  }
 
   return (
     <div className="app-shell">
@@ -26,6 +33,16 @@ export default function Layout({ children }) {
             </Link>
           ))}
         </nav>
+        <div className="sidebar-user">
+          {user && (
+            <>
+              <div className="sidebar-user-name">{user.full_name || user.email}</div>
+              <button type="button" className="sidebar-logout" onClick={handleLogout}>
+                Log out
+              </button>
+            </>
+          )}
+        </div>
       </aside>
       <main className="main-content">{children}</main>
     </div>
