@@ -13,7 +13,8 @@
   "relevant_acts": [
     "Prevention of Corruption Act, 1988",
     "Lokayuktha Act of the respective State",
-    "Indian Penal Code, 1860 (for relevant offences)"
+    "Indian Penal Code, 1860 (only for offences before 1 July 2024)",
+    "Bharatiya Nyaya Sanhita (BNS), 2023 (for offences on or after 1 July 2024)"
   ],
-  "institution_rules": "Mention specific sections of the Prevention of Corruption Act if corrupt conduct is alleged. Clearly identify the public servant and the department. Describe the acts of omission, commission, or maladministration with specific dates and amounts. Request inquiry and departmental/criminal action. Include a list of supporting documents (FIR copy, written complaints, receipts, etc.)."
+  "institution_rules": "Mention specific sections of the Prevention of Corruption Act if corrupt conduct is alleged. Clearly identify the public servant and the department. Describe the acts of omission, commission, or maladministration with specific dates and amounts. Request inquiry and departmental/criminal action. Include a list of supporting documents (FIR copy, written complaints, receipts, etc.). For offences and procedures after 1 July 2024, cite the Bharatiya Nyaya Sanhita (BNS), Bharatiya Nagarik Suraksha Sanhita (BNSS), and Bharatiya Sakshya Adhiniyam (BSA) — NOT the repealed IPC 1860, CrPC 1973, or Indian Evidence Act 1872. The Prevention of Corruption Act 1988 and RTI Act 2005 remain in force and may be cited. If unsure of a new-code section number, use [VERIFY]."
 }

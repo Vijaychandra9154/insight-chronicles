@@ -13,9 +13,10 @@
   "relevant_acts": [
     "Protection of Women from Domestic Violence Act, 2005",
     "Sexual Harassment of Women at Workplace (Prevention, Prohibition and Redressal) Act, 2013",
-    "Indian Penal Code — Sections 354, 375, 376, 498A as applicable",
+    "Indian Penal Code — Sections 354, 375, 376, 498A (only for offences before 1 July 2024)",
+    "Bharatiya Nyaya Sanhita (BNS), 2023 — corresponding sections (for offences on or after 1 July 2024)",
     "POCSO Act, 2012 (if minor involved)",
     "Dowry Prohibition Act, 1961"
   ],
-  "institution_rules": "Focus on the specific nature of harassment, assault, or discrimination. Reference the applicable IPC/special act sections. Request immediate relief (shelter, medical aid, protection order) where applicable. Include details of any prior police complaints and their outcome. If the complainant cannot personally appear, state reasons."
+  "institution_rules": "Focus on the specific nature of harassment, assault, or discrimination. Reference the applicable IPC/BNS or special act sections. Request immediate relief (shelter, medical aid, protection order) where applicable. Include details of any prior police complaints and their outcome. If the complainant cannot personally appear, state reasons. For offences and procedures after 1 July 2024, cite the Bharatiya Nyaya Sanhita (BNS), Bharatiya Nagarik Suraksha Sanhita (BNSS), and Bharatiya Sakshya Adhiniyam (BSA) — NOT the repealed IPC 1860, CrPC 1973, or Indian Evidence Act 1872. The Prevention of Corruption Act 1988 and RTI Act 2005 remain in force and may be cited. If unsure of a new-code section number, use [VERIFY]."
 }

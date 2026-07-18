@@ -184,12 +184,12 @@ export default function CasePage() {
         <h2 className="section-title">Generate Draft</h2>
         <form onSubmit={handleGenerate}>
           <div className="form-group">
-            <label htmlFor="instruction">Instructions</label>
+            <label htmlFor="instruction">Case Facts & Instructions</label>
             <textarea
               id="instruction"
               value={instruction}
               onChange={(e) => setInstruction(e.target.value)}
-              placeholder="Describe what the draft should cover..."
+              placeholder="Describe what happened: who, what, when, where. The draft will be built from these facts."
               required
             />
           </div>

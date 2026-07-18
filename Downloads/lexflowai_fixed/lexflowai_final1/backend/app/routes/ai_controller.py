@@ -12,6 +12,44 @@ DISCLAIMER = (
     "Please have it reviewed by a qualified advocate before submission."
 )
 
+FORMATTING_RULES = (
+    "FORMATTING — output PLAIN TEXT ONLY. This is absolute, never violate it:\n"
+    "- Never use '#', '##', '###', or any other heading marker.\n"
+    "- Never use '**bold**', '__bold__', or '*italic*' markers.\n"
+    "- Never use '---', '***', '___', or any divider/rule line.\n"
+    "- Never use Markdown tables or the '|' character.\n"
+    "- Write each section heading in ALL CAPS on its own line, using exactly the heading names "
+    "given below (e.g. FACTS, GROUNDS, PRAYER) — nothing else marks a heading.\n"
+    "- Write the annexure list as plain numbered lines (e.g. '1. Copy of FIR'), never a table."
+)
+
+CITATION_RULE = (
+    "Determine the applicable criminal code from the date of the offence in the facts. "
+    "Offence on or after 1 July 2024: cite BNS 2023 sections (with [VERIFY] if unsure of the "
+    "number) and do NOT cite IPC 1860 at all. Only cite IPC for offences before that date. "
+    "Apply the same date rule for procedure — Bharatiya Nagarik Suraksha Sanhita (BNSS) instead "
+    "of CrPC 1973 — and for evidence — Bharatiya Sakshya Adhiniyam (BSA) instead of the Indian "
+    "Evidence Act 1872. The Prevention of Corruption Act 1988 and RTI Act 2005 remain in force "
+    "and may be cited regardless of date."
+)
+
+FACTS_RULE = (
+    "The text under 'Case Facts' below is the ACTUAL, REAL facts of this case as given by the "
+    "user. You MUST base the numbered FACTS section directly on these facts — do not invent a "
+    "different or fictional scenario. Only use placeholders like [Date] or [Amount] where a "
+    "specific detail is genuinely missing from what the user provided."
+)
+
+SECTION_HEADINGS = {
+    "cause_title": "CAUSE TITLE",
+    "numbered_facts": "FACTS",
+    "legal_grounds": "GROUNDS",
+    "prayer": "PRAYER",
+    "verification_clause": "VERIFICATION",
+    "annexure_list": "ANNEXURES",
+    "place_date_signature": "PLACE / DATE / SIGNATURE",
+}
+
 
 class DraftRequest(BaseModel):
     case_id: int
@@ -37,22 +75,31 @@ async def generate_draft(req: DraftRequest, db_session: Session = Depends(db.get
     template_block = ""
     if template:
         acts = ", ".join(template.get("relevant_acts", []))
-        sections = ", ".join(template.get("required_sections", []))
+        sections = [SECTION_HEADINGS.get(s, s.upper()) for s in template.get("required_sections", [])]
         template_block = (
             f"\nINSTITUTION TEMPLATE — you MUST follow this structure:\n"
             f"Institution: {template.get('institution', case.forum)}\n"
             f"Addressee block (use exactly, filling placeholders from context if known):\n{template.get('addressee_block', '')}\n"
-            f"Required sections, in this order: {sections}\n"
-            f"Relevant acts to ground citations in (do not invent others): {acts}\n"
+            f"Required sections, in this order, using exactly these ALL CAPS heading names: {', '.join(sections)}\n"
+            f"Relevant acts to ground citations in (do not invent others, and apply the citation rule below): {acts}\n"
             f"Institution-specific rules: {template.get('institution_rules', '')}\n"
         )
 
+    case_block = (
+        f"Case title: {case.title}\n"
+        f"Case number: {case.case_number or '[VERIFY: case number]'}\n"
+    )
+
     prompt = (
-        f"Context: {context}\n\n"
-        f"Instruction: {req.instruction}\n"
+        f"Additional context from uploaded case documents (if relevant): {context}\n\n"
+        f"{case_block}\n"
+        f"Case Facts: {req.instruction}\n"
         f"{template_block}\n"
-        "Produce a lawyer-ready draft reply in Indian legal tone. "
-        "Mark citations if referenced and flag anything that needs human verification. "
+        f"{FORMATTING_RULES}\n\n"
+        f"CITATION RULE: {CITATION_RULE}\n\n"
+        f"FACTS RULE: {FACTS_RULE}\n\n"
+        "Produce a lawyer-ready draft in Indian legal tone using the case title and case number "
+        "above in the cause title. Flag anything that needs human verification with [VERIFY]. "
         f'End the document with this exact disclaimer on its own line: "{DISCLAIMER}"'
     )
     try:

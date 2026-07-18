@@ -12,9 +12,11 @@
   ],
   "relevant_acts": [
     "Code of Civil Procedure, 1908 (for civil suits)",
-    "Code of Criminal Procedure, 1973 (for criminal matters)",
+    "Code of Criminal Procedure, 1973 (only for offences/procedure before 1 July 2024)",
+    "Bharatiya Nagarik Suraksha Sanhita (BNSS), 2023 (for procedure on or after 1 July 2024)",
     "Specific Relief Act, 1963 (for injunctions and specific performance)",
-    "Indian Evidence Act, 1872"
+    "Indian Evidence Act, 1872 (only for offences before 1 July 2024)",
+    "Bharatiya Sakshya Adhiniyam (BSA), 2023 (for evidence in matters on or after 1 July 2024)"
   ],
-  "institution_rules": "Specify whether the matter is civil or criminal. For civil suits, mention the territorial jurisdiction basis (CPC Order VII Rule 1). Calculate and state the court fee payable based on the claim value. For injunction applications, separately state urgency and irreparable harm. All facts must be in numbered paragraphs. An advocate's signature with enrollment number is required for formal plaints."
+  "institution_rules": "Specify whether the matter is civil or criminal. For civil suits, mention the territorial jurisdiction basis (CPC Order VII Rule 1). Calculate and state the court fee payable based on the claim value. For injunction applications, separately state urgency and irreparable harm. All facts must be in numbered paragraphs. An advocate's signature with enrollment number is required for formal plaints. For offences and procedures after 1 July 2024, cite the Bharatiya Nyaya Sanhita (BNS), Bharatiya Nagarik Suraksha Sanhita (BNSS), and Bharatiya Sakshya Adhiniyam (BSA) — NOT the repealed IPC 1860, CrPC 1973, or Indian Evidence Act 1872. The Prevention of Corruption Act 1988 and RTI Act 2005 remain in force and may be cited. If unsure of a new-code section number, use [VERIFY]."
 }
