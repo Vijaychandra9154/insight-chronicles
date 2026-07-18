@@ -1,0 +1,21 @@
+{
+  "institution": "State Women's Commission",
+  "addressee_block": "The Chairperson\nState Women's Commission\n[State Name]",
+  "required_sections": [
+    "cause_title",
+    "numbered_facts",
+    "legal_grounds",
+    "prayer",
+    "verification_clause",
+    "annexure_list",
+    "place_date_signature"
+  ],
+  "relevant_acts": [
+    "Protection of Women from Domestic Violence Act, 2005",
+    "Sexual Harassment of Women at Workplace (Prevention, Prohibition and Redressal) Act, 2013",
+    "Indian Penal Code — Sections 354, 375, 376, 498A as applicable",
+    "POCSO Act, 2012 (if minor involved)",
+    "Dowry Prohibition Act, 1961"
+  ],
+  "institution_rules": "Focus on the specific nature of harassment, assault, or discrimination. Reference the applicable IPC/special act sections. Request immediate relief (shelter, medical aid, protection order) where applicable. Include details of any prior police complaints and their outcome. If the complainant cannot personally appear, state reasons."
+}

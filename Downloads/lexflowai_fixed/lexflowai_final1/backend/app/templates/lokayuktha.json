@@ -1,0 +1,19 @@
+{
+  "institution": "Lokayuktha (State Anti-Corruption Ombudsman)",
+  "addressee_block": "The Lokayuktha\n[State Name]",
+  "required_sections": [
+    "cause_title",
+    "numbered_facts",
+    "legal_grounds",
+    "prayer",
+    "verification_clause",
+    "annexure_list",
+    "place_date_signature"
+  ],
+  "relevant_acts": [
+    "Prevention of Corruption Act, 1988",
+    "Lokayuktha Act of the respective State",
+    "Indian Penal Code, 1860 (for relevant offences)"
+  ],
+  "institution_rules": "Mention specific sections of the Prevention of Corruption Act if corrupt conduct is alleged. Clearly identify the public servant and the department. Describe the acts of omission, commission, or maladministration with specific dates and amounts. Request inquiry and departmental/criminal action. Include a list of supporting documents (FIR copy, written complaints, receipts, etc.)."
+}

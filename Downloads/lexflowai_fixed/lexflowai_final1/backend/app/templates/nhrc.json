@@ -1,0 +1,20 @@
+{
+  "institution": "National Human Rights Commission (NHRC)",
+  "addressee_block": "The Registrar\nNational Human Rights Commission\nManav Adhikar Bhawan, C-Block, GPO Complex, INA\nNew Delhi – 110 023",
+  "required_sections": [
+    "cause_title",
+    "numbered_facts",
+    "legal_grounds",
+    "prayer",
+    "verification_clause",
+    "annexure_list",
+    "place_date_signature"
+  ],
+  "relevant_acts": [
+    "Protection of Human Rights Act, 1993",
+    "Article 21 of the Constitution of India (Right to Life and Personal Liberty)",
+    "Article 14 (Right to Equality)",
+    "Article 19 (Freedom of Speech and Expression)"
+  ],
+  "institution_rules": "NHRC has jurisdiction over human rights violations by State agents (police, government officials, armed forces). Clearly cite Article 21 or other constitutional provisions violated. Complaints must be filed within one year of the incident. Attach copies of previous complaints to police/authorities. Specifically pray for compensation, inquiry, or action against erring officials."
+}

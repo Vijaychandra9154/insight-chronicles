@@ -1,0 +1,20 @@
+{
+  "institution": "Right to Information Application to CPIO/SPIO",
+  "addressee_block": "The Central Public Information Officer (CPIO) / State Public Information Officer (SPIO)\n[Department/Ministry Name]\n[Office Address]",
+  "required_sections": [
+    "cause_title",
+    "numbered_facts",
+    "legal_grounds",
+    "prayer",
+    "verification_clause",
+    "annexure_list",
+    "place_date_signature"
+  ],
+  "relevant_acts": [
+    "Right to Information Act, 2005",
+    "Section 6 — Application for obtaining information",
+    "Section 7 — Disposal of request",
+    "Section 19 — Appeal provisions"
+  ],
+  "institution_rules": "RTI applications must be addressed to the correct CPIO/SPIO of the public authority. Application fee is Rs. 10/- (rupees ten only) payable by IPO (Indian Postal Order), demand draft, or court fee stamp as prescribed by the authority. Below Poverty Line (BPL) applicants are exempt — attach BPL certificate. State each piece of information sought as a separate numbered point. Do NOT seek opinions, advice, or explanations — only factual information held by the authority. The authority must respond within 30 days (48 hours for life/liberty matters). NEVER invent sections beyond Section 6, 7, and 19 of the RTI Act without verification."
+}

@@ -62,21 +62,38 @@ class LocalVectorIndex:
         return results
 
 
-def llm_generate(prompt: str, max_tokens: int = 600, temperature: float = 0.2) -> str:
-    key = os.getenv("OPENAI_API_KEY")
+def llm_generate(prompt: str, max_tokens: int = 3000, temperature: float = 0.2) -> str:
+    # LLM_BASE_URL / LLM_MODEL / LLM_API_KEY let this point at any
+    # OpenAI-compatible endpoint (e.g. Gemini's OpenAI-compat API). Unset,
+    # it falls back to OpenAI's own endpoint via OPENAI_API_KEY/OPENAI_MODEL.
+    key = os.getenv("LLM_API_KEY") or os.getenv("OPENAI_API_KEY")
     if not key:
-        raise ValueError("OPENAI_API_KEY not set in environment")
+        raise ValueError("LLM_API_KEY (or OPENAI_API_KEY) not set in environment")
+    base_url = os.getenv("LLM_BASE_URL")
+    model = os.getenv("LLM_MODEL") or os.getenv("OPENAI_MODEL", "gpt-4o-mini")
+
+    extra_kwargs = {}
+    if base_url:
+        # Non-OpenAI providers behind an OpenAI-compat shim (e.g. Gemini's
+        # "thinking" models) can burn the whole max_tokens budget on hidden
+        # reasoning tokens before producing visible output, truncating the
+        # draft (finish_reason "length" with near-empty content). Keeping
+        # reasoning light avoids that. Plain OpenAI models don't accept/need
+        # this param, so it's only sent for non-default endpoints.
+        extra_kwargs["reasoning_effort"] = "low"
+
     # openai>=1.0 client API (openai.ChatCompletion was removed in v1.0)
     from openai import OpenAI
-    client = OpenAI(api_key=key)
+    client = OpenAI(api_key=key, base_url=base_url)
     resp = client.chat.completions.create(
-        model=os.getenv("OPENAI_MODEL", "gpt-4o-mini"),
+        model=model,
         messages=[
             {"role": "system", "content": "You are a legal drafting assistant for Indian law. Never invent case citations, act sections, or judgment numbers; mark uncertain provisions as [VERIFY]."},
             {"role": "user", "content": prompt},
         ],
         max_tokens=max_tokens,
         temperature=temperature,
+        **extra_kwargs,
     )
     return resp.choices[0].message.content
 

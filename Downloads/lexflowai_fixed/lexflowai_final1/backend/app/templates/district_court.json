@@ -1,0 +1,20 @@
+{
+  "institution": "District Court",
+  "addressee_block": "The Hon'ble District Judge\n[District Name] District Court\n[State Name]",
+  "required_sections": [
+    "cause_title",
+    "numbered_facts",
+    "legal_grounds",
+    "prayer",
+    "verification_clause",
+    "annexure_list",
+    "place_date_signature"
+  ],
+  "relevant_acts": [
+    "Code of Civil Procedure, 1908 (for civil suits)",
+    "Code of Criminal Procedure, 1973 (for criminal matters)",
+    "Specific Relief Act, 1963 (for injunctions and specific performance)",
+    "Indian Evidence Act, 1872"
+  ],
+  "institution_rules": "Specify whether the matter is civil or criminal. For civil suits, mention the territorial jurisdiction basis (CPC Order VII Rule 1). Calculate and state the court fee payable based on the claim value. For injunction applications, separately state urgency and irreparable harm. All facts must be in numbered paragraphs. An advocate's signature with enrollment number is required for formal plaints."
+}
