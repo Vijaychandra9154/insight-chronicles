@@ -11,7 +11,7 @@ export default function Dashboard() {
         </div>
         <Link href="/case/new" className="btn">+ New Case</Link>
       </div>
-      <CaseList />
+      <CaseList showStats />
     </div>
   )
 }

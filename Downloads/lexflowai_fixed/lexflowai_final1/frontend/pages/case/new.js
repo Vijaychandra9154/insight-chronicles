@@ -74,6 +74,7 @@ export default function NewCase() {
 
         <div className="form-actions">
           <button type="submit" className="btn" disabled={submitting}>
+            {submitting && <span className="spinner" />}
             {submitting ? 'Creating...' : 'Create Case'}
           </button>
           <button type="button" className="btn btn-secondary" onClick={() => router.push('/')}>

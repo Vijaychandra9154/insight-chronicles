@@ -199,10 +199,12 @@ export default function CasePage() {
   }
 
   if (caseError) return <p className="state-message error">Case not found.</p>
-  if (!caseData) return <p className="state-message">Loading case...</p>
+  if (!caseData) return <p className="state-message"><span className="spinner" /> Loading case...</p>
 
   const displayedText = activeLang === 'en' ? draft : translations[activeLang]
   const isCourtTracked = COURT_TRACKED_FORUMS.includes(caseData.forum)
+  const stageText = courtStatus?.stage || courtStatus?.case_status || ''
+  const isDisposed = /disposed/i.test(stageText)
 
   return (
     <div>
@@ -231,13 +233,14 @@ export default function CasePage() {
                   onClick={handleRefreshStatus}
                   disabled={refreshingStatus}
                 >
+                  {refreshingStatus && <span className="spinner" />}
                   {refreshingStatus ? 'Refreshing...' : 'Refresh'}
                 </button>
               </div>
               {statusError && <p className="form-error">{statusError}</p>}
               {courtStatus && courtStatus.fetched ? (
                 <div className="court-status-grid">
-                  <div className="court-status-primary">
+                  <div className={`court-status-primary${isDisposed ? ' is-disposed' : ''}`}>
                     <div className="court-status-label">Stage</div>
                     <div className="court-status-value">
                       {courtStatus.stage || courtStatus.case_status || 'Unknown'}
@@ -274,6 +277,7 @@ export default function CasePage() {
                 />
               </div>
               <button type="submit" className="btn" disabled={linkingCnr}>
+                {linkingCnr && <span className="spinner" />}
                 {linkingCnr ? 'Linking...' : 'Link CNR'}
               </button>
               {linkError && <p className="form-error">{linkError}</p>}
@@ -314,7 +318,7 @@ export default function CasePage() {
 
         <div className="upload-area">
           <label htmlFor="doc-upload">
-            {uploading ? 'Uploading...' : 'Click to upload a document'}
+            {uploading && <span className="spinner" />} {uploading ? 'Uploading...' : 'Click to upload a document'}
           </label>
           <input id="doc-upload" type="file" onChange={handleUpload} disabled={uploading} />
         </div>
@@ -335,6 +339,7 @@ export default function CasePage() {
             />
           </div>
           <button type="submit" className="btn" disabled={generating}>
+            {generating && <span className="spinner" />}
             {generating ? 'Generating...' : 'Generate Draft'}
           </button>
         </form>
@@ -396,7 +401,7 @@ export default function CasePage() {
           {translateError && <p className="form-error">{translateError}</p>}
 
           {translating ? (
-            <p className="state-message">Translating...</p>
+            <p className="state-message"><span className="spinner" /> Translating...</p>
           ) : (
             <div className="draft-view">{renderWithHighlights(displayedText || '')}</div>
           )}

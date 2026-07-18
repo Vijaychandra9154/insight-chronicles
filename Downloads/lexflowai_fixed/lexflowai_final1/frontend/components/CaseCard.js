@@ -11,9 +11,14 @@ function formatDate(value) {
 }
 
 export default function CaseCard({ caseItem }) {
+  const status = caseItem.manual_status || (caseItem.cnr_number ? 'Tracked' : null)
+
   return (
     <Link href={`/case/${caseItem.id}`} className="case-card">
-      <span className="forum-badge">{forumLabel(caseItem.forum)}</span>
+      <div className="case-card-top">
+        <span className="forum-badge">{forumLabel(caseItem.forum)}</span>
+        {status && <span className="status-chip">{status}</span>}
+      </div>
       <div className="case-card-title">{caseItem.title}</div>
       <div className="case-card-meta">
         Case No: {caseItem.case_number || 'Not assigned'}

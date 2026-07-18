@@ -29,7 +29,12 @@ export default function Signup() {
   return (
     <div className="auth-page">
       <div className="auth-card">
-        <div className="auth-logo">LexFlow AI</div>
+        <div className="auth-logo">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+            <path d="M12 3v18M7 6l-4 8a4 4 0 0 0 8 0l-4-8ZM17 6l-4 8a4 4 0 0 0 8 0l-4-8ZM4 21h16" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+          LexFlow AI
+        </div>
         <h1>Create account</h1>
         <form onSubmit={handleSubmit}>
           {error && <p className="form-error">{error}</p>}
@@ -64,6 +69,7 @@ export default function Signup() {
             />
           </div>
           <button type="submit" className="btn" disabled={submitting}>
+            {submitting && <span className="spinner" />}
             {submitting ? 'Creating account...' : 'Create account'}
           </button>
         </form>

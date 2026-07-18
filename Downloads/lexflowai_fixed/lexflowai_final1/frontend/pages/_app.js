@@ -12,22 +12,24 @@ function AuthGate({ children }) {
   const isPublicPath = PUBLIC_PATHS.includes(router.pathname)
 
   useEffect(() => {
-    if (loading) return
-    if (!user && !isPublicPath) {
+    if (loading || isPublicPath) return
+    if (!user) {
       router.replace('/login')
     }
   }, [loading, user, isPublicPath, router])
 
-  if (loading) {
-    return <div className="auth-loading">Loading...</div>
-  }
-
-  if (!user && !isPublicPath) {
-    return <div className="auth-loading">Redirecting to sign in...</div>
-  }
-
+  // Login/signup never wait on the auth check — they must always render
+  // immediately regardless of whether /api/me has resolved yet.
   if (isPublicPath) {
     return children
+  }
+
+  if (loading) {
+    return <div className="auth-loading"><span className="spinner" /> Loading...</div>
+  }
+
+  if (!user) {
+    return <div className="auth-loading"><span className="spinner" /> Redirecting to sign in...</div>
   }
 
   return <Layout>{children}</Layout>

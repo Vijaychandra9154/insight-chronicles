@@ -9,7 +9,7 @@ export function AuthProvider({ children }) {
 
   const refreshUser = useCallback(async () => {
     try {
-      const res = await axios.get('/api/me')
+      const res = await axios.get('/api/me', { timeout: 10000 })
       setUser(res.data)
     } catch {
       setUser(null)
