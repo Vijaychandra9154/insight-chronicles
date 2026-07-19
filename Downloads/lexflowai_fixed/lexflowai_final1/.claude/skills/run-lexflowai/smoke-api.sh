@@ -2,9 +2,9 @@
 # Backend API smoke test for LexFlow AI. Assumes the backend is already
 # running on :8000 (see SKILL.md "Run" section). Exercises the auth +
 # per-user case/document/draft ownership wiring, the Escalation Engine's
-# deadline computation, and the public Citation Checker's rate limiting,
-# directly against the API, independent of the frontend - the layer most
-# PRs to backend/app/routes/*.py actually touch.
+# deadline computation, the public Citation Checker's rate limiting, and the
+# free-tier billing quota gate, directly against the API, independent of the
+# frontend - the layer most PRs to backend/app/routes/*.py actually touch.
 #
 # Usage: bash smoke-api.sh
 
@@ -129,7 +129,36 @@ else
   echo "SKIP: citation-check rate-limit test (sqlite3 CLI or DB file not found at $DB_PATH)"
 fi
 
-# 9. Logout invalidates the session
+# 9. Billing: a fresh user is on the free plan (limit 1/month), and the
+# quota gate blocks a document before spending any LLM call once the monthly
+# limit is reached. Uses its own case, separate from $case_id above (section
+# 6 already seeded a draft into that one, on the same user, which the
+# drafts_used_this_month count below correctly reflects too - it's scoped
+# per-user across all their cases, not per-case).
+billing_case_resp=$(curl -s -b "$JAR" -X POST "$BASE/api/cases" \
+  -H "Content-Type: application/json" -d '{"title":"Smoke Test Billing Case","forum":"lokayuktha"}')
+billing_case_id=$(echo "$billing_case_resp" | grep -o '"id":[0-9]*' | head -1 | grep -o '[0-9]*')
+
+billing_status=$(curl -s -b "$JAR" "$BASE/api/billing/status")
+echo "$billing_status" | grep -q '"plan":"free"' && echo "$billing_status" | grep -q '"drafts_limit":1' \
+  && pass "GET /api/billing/status -> free plan, limit 1/month" || fail "Unexpected billing status for fresh user: $billing_status"
+
+# Seed 1 draft directly (avoids spending a real LLM call) to simulate
+# reaching the free tier's 1-document/month limit, then confirm the next
+# generation attempt is rejected before any LLM call is made.
+if [ -f "$DB_PATH" ] && command -v sqlite3 >/dev/null 2>&1; then
+  sqlite3 "$DB_PATH" "INSERT INTO drafts (case_id, instruction, content, language) VALUES ($billing_case_id, 'smoke seed', 'seed content', 'en');"
+  code=$(curl -s -b "$JAR" -o /dev/null -w "%{http_code}" -X POST "$BASE/api/ai/draft" \
+    -H "Content-Type: application/json" -d "{\"case_id\":$billing_case_id,\"prompt_context\":\"x\",\"instruction\":\"x\"}")
+  [ "$code" = "402" ] && pass "Free-tier quota exhausted -> 402 (rejected before any LLM call)" || fail "Free-tier quota gate did not trigger: $code"
+else
+  echo "SKIP: billing quota gate check (sqlite3 CLI or DB file not found at $DB_PATH)"
+fi
+
+code=$(curl -s -b "$JAR" -o /dev/null -w "%{http_code}" -X POST "$BASE/api/billing/checkout")
+[ "$code" = "503" ] && pass "POST /api/billing/checkout -> 503 while Razorpay is unconfigured" || fail "Billing checkout status unexpected -> $code"
+
+# 10. Logout invalidates the session
 curl -s -b "$JAR" -c "$JAR" -o /dev/null -X POST "$BASE/api/logout"
 code=$(curl -s -b "$JAR" -o /dev/null -w "%{http_code}" "$BASE/api/cases")
 [ "$code" = "401" ] && pass "POST /api/logout then GET /api/cases -> 401" || fail "Post-logout request -> $code"
