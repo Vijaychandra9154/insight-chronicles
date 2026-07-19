@@ -1,4 +1,4 @@
-from datetime import date as date_
+from datetime import date as date_, datetime as datetime_, timezone as timezone_
 from sqlalchemy import Column, Integer, String, Text, DateTime, Date, ForeignKey, JSON
 from sqlalchemy.sql import func
 from .db import Base
@@ -11,6 +11,17 @@ class User(Base):
     hashed_password = Column(String)
     full_name = Column(String, nullable=True)
     role = Column(String, default="lawyer")
+    plan = Column(String, default="free")  # "free" | "individual"
+    plan_expires_at = Column(DateTime(timezone=True), nullable=True)
+
+    @property
+    def is_paid_active(self) -> bool:
+        if self.plan != "individual" or not self.plan_expires_at:
+            return False
+        expires = self.plan_expires_at
+        if expires.tzinfo is None:
+            expires = expires.replace(tzinfo=timezone_.utc)
+        return expires > datetime_.now(timezone_.utc)
 
 
 class Case(Base):
@@ -75,4 +86,15 @@ class CitationCheckLog(Base):
     __tablename__ = "citation_check_logs"
     id = Column(Integer, primary_key=True, index=True)
     ip_address = Column(String, index=True)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+
+class Payment(Base):
+    __tablename__ = "payments"
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), index=True)
+    razorpay_order_id = Column(String, index=True)
+    razorpay_payment_id = Column(String, unique=True, index=True, nullable=True)
+    amount = Column(Integer)  # paise (smallest currency unit)
+    status = Column(String, default="created")  # created | paid | failed
     created_at = Column(DateTime(timezone=True), server_default=func.now())

@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 
 from fastapi import APIRouter, Depends, HTTPException, Response
 from pydantic import BaseModel
@@ -33,6 +34,8 @@ class UserOut(BaseModel):
     id: int
     email: str
     full_name: str | None = None
+    plan: str = "free"
+    plan_expires_at: datetime | None = None
 
 
 def _set_auth_cookie(response: Response, token: str) -> None:
