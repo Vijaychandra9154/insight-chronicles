@@ -69,3 +69,10 @@ class CaseStatusUpdate(Base):
     stage = Column(String, nullable=True)
     next_hearing = Column(String, nullable=True)
     raw_json = Column(JSON, nullable=True)
+
+
+class CitationCheckLog(Base):
+    __tablename__ = "citation_check_logs"
+    id = Column(Integer, primary_key=True, index=True)
+    ip_address = Column(String, index=True)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
