@@ -11,6 +11,7 @@ function StatsBar({ cases }) {
     byForum[c.forum] = (byForum[c.forum] || 0) + 1
   })
   const topForums = Object.entries(byForum).sort((a, b) => b[1] - a[1])
+  const awaitingResponse = cases.filter((c) => c.is_overdue).length
 
   return (
     <div className="stats-bar">
@@ -18,7 +19,11 @@ function StatsBar({ cases }) {
         <div className="stat-value">{cases.length}</div>
         <div className="stat-label">Total Cases</div>
       </div>
-      {topForums.slice(0, 3).map(([forum, count]) => (
+      <div className={`stat-tile${awaitingResponse > 0 ? ' is-alert' : ''}`}>
+        <div className="stat-value">{awaitingResponse}</div>
+        <div className="stat-label">Awaiting Response</div>
+      </div>
+      {topForums.slice(0, 2).map(([forum, count]) => (
         <div className="stat-tile" key={forum}>
           <div className="stat-value">{count}</div>
           <div className="stat-label">{forumLabel(forum)}</div>

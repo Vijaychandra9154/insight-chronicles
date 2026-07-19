@@ -319,6 +319,9 @@ h1, h2, h3 {
   line-height: 1.1;
 }
 
+.stat-tile.is-alert { border-left: 3px solid var(--danger); }
+.stat-tile.is-alert .stat-value { color: var(--danger); }
+
 .stat-label {
   font-size: 0.78rem;
   color: var(--ink-faint);
@@ -707,6 +710,26 @@ h1, h2, h3 {
 
 .court-status-primary.is-disposed .court-status-value {
   color: var(--success);
+}
+
+.court-status-primary.is-overdue {
+  border-left-color: var(--danger);
+}
+
+.court-status-primary.is-overdue .court-status-value {
+  color: var(--danger);
+}
+
+.escalation-badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  background: var(--gold-soft);
+  color: #6b5316;
+  white-space: nowrap;
+  margin-left: 0.5rem;
 }
 
 .court-status-label {

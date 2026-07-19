@@ -70,6 +70,15 @@ export default function CasePage() {
   const [draft, setDraft] = useState(null)
   const [draftId, setDraftId] = useState(null)
 
+  const [filedDateInput, setFiledDateInput] = useState('')
+  const [settingFiled, setSettingFiled] = useState(false)
+  const [filedError, setFiledError] = useState(null)
+  const [manualDeadlineInput, setManualDeadlineInput] = useState('')
+  const [settingDeadline, setSettingDeadline] = useState(false)
+  const [deadlineError, setDeadlineError] = useState(null)
+  const [escalating, setEscalating] = useState(false)
+  const [escalateError, setEscalateError] = useState(null)
+
   const [activeLang, setActiveLang] = useState('en')
   const [translations, setTranslations] = useState({})
   const [translating, setTranslating] = useState(false)
@@ -158,6 +167,56 @@ export default function CasePage() {
       setDraftError('Could not generate draft. Please try again.')
     } finally {
       setGenerating(false)
+    }
+  }
+
+  async function handleSetFiled(e) {
+    e.preventDefault()
+    if (settingFiled || !filedDateInput) return
+    setFiledError(null)
+    setSettingFiled(true)
+    try {
+      const res = await axios.post(`/api/cases/${id}/filed`, { filed_date: filedDateInput })
+      mutateCase(res.data, false)
+    } catch (err) {
+      setFiledError('Could not save the filing date. Please try again.')
+    } finally {
+      setSettingFiled(false)
+    }
+  }
+
+  async function handleSetDeadline(e) {
+    e.preventDefault()
+    if (settingDeadline || !manualDeadlineInput) return
+    setDeadlineError(null)
+    setSettingDeadline(true)
+    try {
+      const res = await axios.post(`/api/cases/${id}/escalation-deadline`, {
+        escalation_deadline: manualDeadlineInput,
+      })
+      mutateCase(res.data, false)
+    } catch (err) {
+      setDeadlineError('Could not save the reminder date. Please try again.')
+    } finally {
+      setSettingDeadline(false)
+    }
+  }
+
+  async function handleEscalate() {
+    if (escalating) return
+    setEscalateError(null)
+    setEscalating(true)
+    try {
+      const res = await axios.post('/api/ai/escalate', { case_id: Number(id) })
+      setDraft(res.data.draft)
+      setDraftId(res.data.draft_id)
+      setTranslations({})
+      setActiveLang('en')
+      mutateDrafts()
+    } catch (err) {
+      setEscalateError('Could not generate an escalation draft. Please try again.')
+    } finally {
+      setEscalating(false)
     }
   }
 
@@ -302,6 +361,94 @@ export default function CasePage() {
       </div>
 
       <div className="section">
+        <h2 className="section-title">Response Deadline</h2>
+        {!caseData.filed_date ? (
+          <form className="cnr-link-form" onSubmit={handleSetFiled}>
+            <div className="form-group">
+              <label htmlFor="filed-date">Date Filed</label>
+              <input
+                id="filed-date"
+                type="date"
+                value={filedDateInput}
+                onChange={(e) => setFiledDateInput(e.target.value)}
+                required
+              />
+            </div>
+            <button type="submit" className="btn" disabled={settingFiled}>
+              {settingFiled && <span className="spinner" />}
+              {settingFiled ? 'Saving...' : 'Mark as Filed'}
+            </button>
+            {filedError && <p className="form-error">{filedError}</p>}
+          </form>
+        ) : (
+          <div>
+            <div className="court-status-grid">
+              <div className={`court-status-primary${caseData.is_overdue ? ' is-overdue' : ''}`}>
+                <div className="court-status-label">
+                  {caseData.escalation_deadline ? 'Response Due' : 'Reminder'}
+                </div>
+                <div className="court-status-value">
+                  {caseData.escalation_deadline
+                    ? formatDate(caseData.escalation_deadline)
+                    : 'No fixed statutory deadline'}
+                </div>
+              </div>
+              <div className="court-status-primary">
+                <div className="court-status-label">Filed On</div>
+                <div className="court-status-value">{formatDate(caseData.filed_date)}</div>
+              </div>
+            </div>
+
+            {caseData.escalation_deadline_basis && (
+              <p className="case-header-meta">{caseData.escalation_deadline_basis}</p>
+            )}
+
+            {caseData.is_overdue ? (
+              <p className="state-message error">
+                Overdue by {Math.abs(caseData.days_remaining)} day
+                {Math.abs(caseData.days_remaining) === 1 ? '' : 's'}.
+              </p>
+            ) : caseData.days_remaining != null ? (
+              <p className="state-message">
+                {caseData.days_remaining} day{caseData.days_remaining === 1 ? '' : 's'} remaining.
+              </p>
+            ) : null}
+
+            {!caseData.escalation_deadline && (
+              <form className="cnr-link-form" onSubmit={handleSetDeadline}>
+                <div className="form-group">
+                  <label htmlFor="manual-deadline">Set a follow-up reminder</label>
+                  <input
+                    id="manual-deadline"
+                    type="date"
+                    value={manualDeadlineInput}
+                    onChange={(e) => setManualDeadlineInput(e.target.value)}
+                    required
+                  />
+                </div>
+                <button type="submit" className="btn btn-secondary" disabled={settingDeadline}>
+                  {settingDeadline && <span className="spinner" />}
+                  {settingDeadline ? 'Saving...' : 'Set Reminder'}
+                </button>
+                {deadlineError && <p className="form-error">{deadlineError}</p>}
+              </form>
+            )}
+
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={handleEscalate}
+              disabled={escalating}
+            >
+              {escalating && <span className="spinner" />}
+              {escalating ? 'Generating...' : 'Generate Escalation Draft'}
+            </button>
+            {escalateError && <p className="form-error">{escalateError}</p>}
+          </div>
+        )}
+      </div>
+
+      <div className="section">
         <h2 className="section-title">Documents</h2>
         {documents && documents.length > 0 ? (
           <ul className="doc-list">
@@ -357,7 +504,10 @@ export default function CasePage() {
                   className="draft-list-item"
                   onClick={() => handleLoadDraft(d)}
                 >
-                  <span className="doc-item-name">{(d.instruction || '').split('\n')[0]}</span>
+                  <span className="doc-item-name">
+                    {(d.instruction || '').split('\n')[0]}
+                    {d.kind === 'escalation' && <span className="escalation-badge">Follow-up</span>}
+                  </span>
                   <span className="doc-item-date">{formatDate(d.created_at)}</span>
                 </button>
               </li>
