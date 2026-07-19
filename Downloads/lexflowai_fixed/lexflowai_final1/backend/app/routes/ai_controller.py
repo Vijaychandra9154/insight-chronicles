@@ -7,6 +7,7 @@ from .. import db, models
 from ..auth import get_current_user
 from ..ai_utils import VECTOR_INDEX, llm_generate
 from ..services import translation, institution_templates
+from .billing import documents_used_this_month, FREE_MONTHLY_DOCUMENT_LIMIT
 
 router = APIRouter(prefix="/api/ai", tags=["ai"])
 
@@ -70,6 +71,21 @@ class EscalateRequest(BaseModel):
     instruction: Optional[str] = None
 
 
+def _enforce_document_quota(db_session: Session, current_user: models.User) -> None:
+    if current_user.is_paid_active:
+        return
+    used = documents_used_this_month(db_session, current_user.id)
+    if used >= FREE_MONTHLY_DOCUMENT_LIMIT:
+        raise HTTPException(
+            status_code=402,
+            detail=(
+                f"Free plan limit reached ({FREE_MONTHLY_DOCUMENT_LIMIT} AI document"
+                f"{'s' if FREE_MONTHLY_DOCUMENT_LIMIT != 1 else ''} per month). "
+                "Upgrade at /billing to continue."
+            ),
+        )
+
+
 @router.post("/draft")
 async def generate_draft(
     req: DraftRequest,
@@ -83,6 +99,8 @@ async def generate_draft(
     )
     if not case:
         raise HTTPException(status_code=404, detail="Case not found")
+
+    _enforce_document_quota(db_session, current_user)
 
     passages = VECTOR_INDEX.query(req.prompt_context, k=5)
     context = "\n\n".join(passages)
@@ -152,6 +170,8 @@ async def generate_escalation(
     )
     if not case:
         raise HTTPException(status_code=404, detail="Case not found")
+
+    _enforce_document_quota(db_session, current_user)
 
     template = institution_templates.load_template(case.forum) or {}
     escalation = template.get("escalation") or {}
