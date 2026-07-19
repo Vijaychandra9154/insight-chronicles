@@ -21,12 +21,19 @@ const ICONS = {
       <path d="M12 5v14M5 12h14" strokeLinecap="round" />
     </svg>
   ),
+  billing: (
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <rect x="3" y="5" width="18" height="14" rx="2" />
+      <path d="M3 10h18" strokeLinecap="round" />
+    </svg>
+  ),
 }
 
 const NAV_ITEMS = [
   { href: '/', label: 'Dashboard', icon: ICONS.dashboard },
   { href: '/cases', label: 'Cases', icon: ICONS.cases },
   { href: '/case/new', label: 'New Case', icon: ICONS.new },
+  { href: '/billing', label: 'Billing', icon: ICONS.billing },
 ]
 
 function initials(nameOrEmail) {
@@ -74,6 +81,9 @@ export default function Layout({ children }) {
             <span className="sidebar-avatar">{initials(user.full_name || user.email)}</span>
             <div className="sidebar-user-info">
               <div className="sidebar-user-name">{user.full_name || user.email}</div>
+              <span className={`sidebar-plan-badge${user.plan === 'individual' ? ' is-paid' : ''}`}>
+                {user.plan === 'individual' ? 'Individual' : 'Free'}
+              </span>
               <button type="button" className="sidebar-logout" onClick={handleLogout}>
                 Log out
               </button>

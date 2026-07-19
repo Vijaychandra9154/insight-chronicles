@@ -174,6 +174,24 @@ h1, h2, h3 {
   white-space: nowrap;
 }
 
+.sidebar-plan-badge {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 0.1rem 0.4rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #b8c2cf;
+  margin: 0.2rem 0 0.35rem;
+}
+
+.sidebar-plan-badge.is-paid {
+  background: var(--gold-soft);
+  color: #6b5316;
+}
+
 .sidebar-logout {
   background: none;
   border: none;
@@ -434,6 +452,14 @@ h1, h2, h3 {
 }
 
 .state-message.error { color: var(--danger); }
+
+.plan-price {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--gold-dark);
+  margin: 0.5rem 0 1.25rem;
+}
 
 /* ---- Forms ---- */
 
