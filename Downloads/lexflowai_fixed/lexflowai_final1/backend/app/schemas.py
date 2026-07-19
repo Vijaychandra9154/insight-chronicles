@@ -1,6 +1,6 @@
 from pydantic import BaseModel, ConfigDict, Field
 from typing import Optional, Dict, List
-from datetime import datetime
+from datetime import date, datetime
 
 
 class CaseCreate(BaseModel):
@@ -21,6 +21,11 @@ class CaseOut(BaseModel):
     created_at: Optional[datetime] = None
     cnr_number: Optional[str] = None
     manual_status: Optional[str] = None
+    filed_date: Optional[date] = None
+    escalation_deadline: Optional[date] = None
+    escalation_deadline_basis: Optional[str] = None
+    is_overdue: bool = False
+    days_remaining: Optional[int] = None
 
 
 class DocumentOut(BaseModel):
@@ -39,6 +44,7 @@ class DraftOut(BaseModel):
     instruction: str
     content: str
     language: str
+    kind: str = "draft"
     created_at: Optional[datetime] = None
 
 
@@ -48,6 +54,14 @@ class LinkCnrRequest(BaseModel):
 
 class ManualStatusRequest(BaseModel):
     manual_status: str
+
+
+class FiledRequest(BaseModel):
+    filed_date: date
+
+
+class EscalationDeadlineRequest(BaseModel):
+    escalation_deadline: date
 
 
 class CourtStatusOut(BaseModel):

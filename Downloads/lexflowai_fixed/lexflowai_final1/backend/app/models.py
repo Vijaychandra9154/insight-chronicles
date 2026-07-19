@@ -1,4 +1,5 @@
-from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey, JSON
+from datetime import date as date_
+from sqlalchemy import Column, Integer, String, Text, DateTime, Date, ForeignKey, JSON
 from sqlalchemy.sql import func
 from .db import Base
 
@@ -23,6 +24,21 @@ class Case(Base):
     cnr_number = Column(String, index=True, nullable=True)
     manual_status = Column(String, nullable=True)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=True, index=True)
+    filed_date = Column(Date, nullable=True)
+    escalation_deadline = Column(Date, nullable=True)
+    escalation_deadline_basis = Column(String, nullable=True)
+
+    @property
+    def is_overdue(self) -> bool:
+        if not self.escalation_deadline:
+            return False
+        return date_.today() > self.escalation_deadline
+
+    @property
+    def days_remaining(self):
+        if not self.escalation_deadline:
+            return None
+        return (self.escalation_deadline - date_.today()).days
 
 
 class Document(Base):
@@ -41,6 +57,7 @@ class Draft(Base):
     instruction = Column(Text)
     content = Column(Text)
     language = Column(String, default="en")
+    kind = Column(String, default="draft")  # "draft" | "escalation"
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
 
