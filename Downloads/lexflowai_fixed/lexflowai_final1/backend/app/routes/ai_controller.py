@@ -1,3 +1,5 @@
+from typing import Optional
+
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
@@ -61,6 +63,11 @@ class DraftRequest(BaseModel):
 class TranslateRequest(BaseModel):
     text: str
     target_lang: str
+
+
+class EscalateRequest(BaseModel):
+    case_id: int
+    instruction: Optional[str] = None
 
 
 @router.post("/draft")
@@ -130,6 +137,85 @@ async def generate_draft(
     db_session.refresh(draft_row)
 
     return {"draft": draft, "sources": passages, "draft_id": draft_row.id}
+
+
+@router.post("/escalate")
+async def generate_escalation(
+    req: EscalateRequest,
+    db_session: Session = Depends(db.get_db),
+    current_user: models.User = Depends(get_current_user),
+):
+    case = (
+        db_session.query(models.Case)
+        .filter(models.Case.id == req.case_id, models.Case.user_id == current_user.id)
+        .first()
+    )
+    if not case:
+        raise HTTPException(status_code=404, detail="Case not found")
+
+    template = institution_templates.load_template(case.forum) or {}
+    escalation = template.get("escalation") or {}
+    framing = escalation.get("framing", "reminder_representation")
+
+    if case.filed_date:
+        filed_note = f"This complaint/application was originally filed on {case.filed_date.isoformat()}."
+    else:
+        filed_note = "The original filing date is not recorded — use [VERIFY: original filing date]."
+
+    if framing == "first_appeal":
+        escalation_block = (
+            "This is a FIRST APPEAL, not a fresh application.\n"
+            f"Addressee: {escalation.get('addressee_block', '')}\n"
+            f"Legal basis: {escalation.get('legal_basis', '')}\n"
+            f"{escalation.get('instructions', '')}"
+        )
+    else:
+        escalation_block = (
+            "This is a FOLLOW-UP / REMINDER representation addressed to the SAME original addressee as the "
+            "original complaint, reiterating the original request and noting that no response has been "
+            "received within a reasonable time. Do NOT invent a formal statutory appeal mechanism for this "
+            "institution — frame it as a reminder requesting expedited action, not a legal appeal."
+        )
+
+    case_block = (
+        f"Case title: {case.title}\n"
+        f"Case number: {case.case_number or '[VERIFY: case number]'}\n"
+        f"{filed_note}"
+    )
+
+    extra_instruction = req.instruction or "No response has been received to date."
+
+    prompt = (
+        f"{case_block}\n\n"
+        f"ESCALATION CONTEXT: {escalation_block}\n\n"
+        f"Additional notes from the user: {extra_instruction}\n\n"
+        f"{FORMATTING_RULES}\n\n"
+        f"CITATION RULE: {CITATION_RULE}\n\n"
+        "Produce a lawyer-ready follow-up/escalation document in Indian legal tone, referencing the original "
+        "filing above. Flag anything needing human verification with [VERIFY]. "
+        f'End the document with this exact disclaimer on its own line: "{DISCLAIMER}"'
+    )
+
+    try:
+        draft = llm_generate(prompt)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+    if DISCLAIMER not in draft:
+        draft = f"{draft.rstrip()}\n\n{DISCLAIMER}"
+
+    draft_row = models.Draft(
+        case_id=req.case_id,
+        instruction=extra_instruction,
+        content=draft,
+        language="en",
+        kind="escalation",
+    )
+    db_session.add(draft_row)
+    db_session.commit()
+    db_session.refresh(draft_row)
+
+    return {"draft": draft, "draft_id": draft_row.id}
 
 
 @router.post("/translate")

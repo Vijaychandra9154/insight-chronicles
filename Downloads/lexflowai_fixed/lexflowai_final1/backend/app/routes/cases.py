@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, UploadFile, File, HTTPException
 from sqlalchemy.orm import Session
 from .. import db, models, schemas
 from ..auth import get_current_user
-from ..services import court_tracker
+from ..services import court_tracker, institution_templates
 
 router = APIRouter(prefix="/api/cases", tags=["cases"])
 
@@ -136,6 +136,50 @@ def list_drafts(
         .order_by(models.Draft.created_at.desc())
         .all()
     )
+
+
+@router.post("/{case_id}/filed", response_model=schemas.CaseOut)
+def mark_filed(
+    case_id: int,
+    req: schemas.FiledRequest,
+    db: Session = Depends(db.get_db),
+    current_user: models.User = Depends(get_current_user),
+):
+    c = _get_owned_case(db, case_id, current_user)
+    c.filed_date = req.filed_date
+
+    template = institution_templates.load_template(c.forum) or {}
+    deadline_days = template.get("response_deadline_days")
+    if deadline_days:
+        c.escalation_deadline = req.filed_date + timedelta(days=deadline_days)
+        basis = (template.get("escalation") or {}).get("legal_basis")
+        c.escalation_deadline_basis = (
+            f"{basis} — {deadline_days} days" if basis else f"{deadline_days}-day statutory response window"
+        )
+    else:
+        c.escalation_deadline = None
+        c.escalation_deadline_basis = None
+
+    db.add(c)
+    db.commit()
+    db.refresh(c)
+    return c
+
+
+@router.post("/{case_id}/escalation-deadline", response_model=schemas.CaseOut)
+def set_escalation_deadline(
+    case_id: int,
+    req: schemas.EscalationDeadlineRequest,
+    db: Session = Depends(db.get_db),
+    current_user: models.User = Depends(get_current_user),
+):
+    c = _get_owned_case(db, case_id, current_user)
+    c.escalation_deadline = req.escalation_deadline
+    c.escalation_deadline_basis = "Manually set reminder"
+    db.add(c)
+    db.commit()
+    db.refresh(c)
+    return c
 
 
 @router.post("/{case_id}/link-cnr", response_model=schemas.CourtStatusOut)
