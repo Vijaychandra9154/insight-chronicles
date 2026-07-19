@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import Layout from '../components/Layout'
 import { AuthProvider, useAuth } from '../lib/AuthContext'
 
-const PUBLIC_PATHS = ['/login', '/signup']
+const PUBLIC_PATHS = ['/login', '/signup', '/citation-checker']
 
 function AuthGate({ children }) {
   const router = useRouter()

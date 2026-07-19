@@ -630,6 +630,16 @@ h1, h2, h3 {
   -webkit-box-decoration-break: clone;
 }
 
+.outdated-highlight {
+  background: #f6d9d3;
+  color: var(--danger);
+  font-weight: 600;
+  padding: 0.05em 0.25em;
+  border-radius: 3px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
 .draft-toolbar {
   display: flex;
   align-items: center;
@@ -791,6 +801,18 @@ h1, h2, h3 {
   width: 100%;
   max-width: 400px;
 }
+
+.auth-card.wide { max-width: 720px; }
+
+.citation-checker-intro {
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+}
+
+.citation-result { margin-top: 1.75rem; }
+
+.citation-result .state-message { margin-bottom: 0.75rem; }
 
 .auth-logo {
   display: flex;

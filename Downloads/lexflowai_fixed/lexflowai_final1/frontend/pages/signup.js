@@ -76,6 +76,9 @@ export default function Signup() {
         <p className="auth-switch">
           Already have an account? <Link href="/login">Sign in</Link>
         </p>
+        <p className="auth-switch">
+          <Link href="/citation-checker">Check a document for outdated citations</Link> — free, no sign-up.
+        </p>
       </div>
     </div>
   )
