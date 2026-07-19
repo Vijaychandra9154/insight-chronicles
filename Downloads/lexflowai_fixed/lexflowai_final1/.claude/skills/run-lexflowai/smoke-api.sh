@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 # Backend API smoke test for LexFlow AI. Assumes the backend is already
 # running on :8000 (see SKILL.md "Run" section). Exercises the auth +
-# per-user case/document/draft ownership wiring, and the Escalation Engine's
-# deadline computation, directly against the API, independent of the
-# frontend - the layer most PRs to backend/app/routes/*.py actually touch.
+# per-user case/document/draft ownership wiring, the Escalation Engine's
+# deadline computation, and the public Citation Checker's rate limiting,
+# directly against the API, independent of the frontend - the layer most
+# PRs to backend/app/routes/*.py actually touch.
 #
 # Usage: bash smoke-api.sh
 
@@ -106,7 +107,29 @@ code=$(curl -s -b "$JAR2" -o /dev/null -w "%{http_code}" -X POST "$BASE/api/ai/e
   -H "Content-Type: application/json" -d "{\"case_id\":$rti_id}")
 [ "$code" = "404" ] && pass "User B generating an escalation draft on User A's case -> 404 (rejected before any LLM call)" || fail "User B generating an escalation draft on User A's case -> $code"
 
-# 8. Logout invalidates the session
+# 8. Citation Checker: genuinely public (no auth needed), correctly flags an
+# outdated IPC citation, and is rate-limited per IP.
+CIT_IP="203.0.113.$$"
+cit_resp=$(curl -s -X POST "$BASE/api/citation-check" \
+  -H "Content-Type: application/json" -H "X-Forwarded-For: $CIT_IP" \
+  -d '{"text":"Charged under Section 302 of the Indian Penal Code, 1860."}')
+echo "$cit_resp" | grep -q '\[OUTDATED:' && pass "POST /api/citation-check (no auth) flags an outdated IPC citation" || fail "Citation checker did not flag outdated citation: $cit_resp"
+
+# Seed 4 more log rows directly (the request above already logged 1) to reach
+# the 5/hour cap without spending 4 more real LLM calls, then confirm the 6th
+# request is rejected before any LLM call is made.
+if [ -f "$DB_PATH" ] && command -v sqlite3 >/dev/null 2>&1; then
+  for i in 1 2 3 4; do
+    sqlite3 "$DB_PATH" "INSERT INTO citation_check_logs (ip_address, created_at) VALUES ('$CIT_IP', datetime('now'));"
+  done
+  code=$(curl -s -o /dev/null -w "%{http_code}" -X POST "$BASE/api/citation-check" \
+    -H "Content-Type: application/json" -H "X-Forwarded-For: $CIT_IP" -d '{"text":"test"}')
+  [ "$code" = "429" ] && pass "6th citation-check request from same IP in an hour -> 429" || fail "Citation checker rate limit not enforced: $code"
+else
+  echo "SKIP: citation-check rate-limit test (sqlite3 CLI or DB file not found at $DB_PATH)"
+fi
+
+# 9. Logout invalidates the session
 curl -s -b "$JAR" -c "$JAR" -o /dev/null -X POST "$BASE/api/logout"
 code=$(curl -s -b "$JAR" -o /dev/null -w "%{http_code}" "$BASE/api/cases")
 [ "$code" = "401" ] && pass "POST /api/logout then GET /api/cases -> 401" || fail "Post-logout request -> $code"
