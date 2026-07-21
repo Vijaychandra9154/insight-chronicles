@@ -1,0 +1,19 @@
+{
+  "institution": "Motor Accident Claims Tribunal (MACT)",
+  "addressee_block": "The Hon'ble Presiding Officer\nMotor Accident Claims Tribunal\n[District Name], [State Name]",
+  "required_sections": [
+    "cause_title",
+    "numbered_facts",
+    "legal_grounds",
+    "prayer",
+    "verification_clause",
+    "annexure_list",
+    "place_date_signature"
+  ],
+  "relevant_acts": [
+    "Motor Vehicles Act, 1988 (as amended by the Motor Vehicles (Amendment) Act, 2019)",
+    "Section 166 — application for compensation",
+    "Section 165 — constitution of Claims Tribunals"
+  ],
+  "institution_rules": "State the date, time, and place of the accident; the registration number(s) of the offending vehicle(s) and, if known, the insurer; the nature of injury or, in a fatal case, the deceased's age, income, and the claimants' relationship to the deceased. Attach the FIR copy, post-mortem/medical reports and bills, income proof, and the offending vehicle's insurance policy details if available. Since the 2019 amendment, a claim petition under Section 166 has no limitation period, but note plainly if the claim is being filed after a long delay. NEVER invent a specific compensation figure or multiplier — insert [VERIFY: compensation computation per applicable Supreme Court guidelines (e.g. Sarla Verma / National Insurance Co. Ltd. v. Pranay Sethi)] instead of guessing a multiplier or amount. For offences and procedures after 1 July 2024, cite the Bharatiya Nyaya Sanhita (BNS), Bharatiya Nagarik Suraksha Sanhita (BNSS), and Bharatiya Sakshya Adhiniyam (BSA) — NOT the repealed IPC 1860, CrPC 1973, or Indian Evidence Act 1872. The Prevention of Corruption Act 1988 and RTI Act 2005 remain in force and may be cited. If unsure of a new-code section number, use [VERIFY]."
+}

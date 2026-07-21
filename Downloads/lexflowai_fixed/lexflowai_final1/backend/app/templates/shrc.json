@@ -1,0 +1,20 @@
+{
+  "institution": "State Human Rights Commission (SHRC)",
+  "addressee_block": "The Registrar\nState Human Rights Commission\n[State Name]",
+  "required_sections": [
+    "cause_title",
+    "numbered_facts",
+    "legal_grounds",
+    "prayer",
+    "verification_clause",
+    "annexure_list",
+    "place_date_signature"
+  ],
+  "relevant_acts": [
+    "Protection of Human Rights Act, 1993",
+    "Article 21 of the Constitution of India (Right to Life and Personal Liberty)",
+    "Article 14 (Right to Equality)",
+    "Article 19 (Freedom of Speech and Expression)"
+  ],
+  "institution_rules": "SHRC has jurisdiction over human rights violations by public servants of the State Government (police, state officials, state institutions) within that State — it does NOT have jurisdiction over the armed forces; even NHRC's role there is limited to calling for a report from the Central Government under Section 19 of the Protection of Human Rights Act, 1993, not a full inquiry. Clearly cite Article 21 or other constitutional provisions violated. Complaints must ordinarily be filed within one year of the incident; state and explain any delay. Attach copies of previous complaints to police/authorities. Specifically pray for compensation, inquiry, or action against erring officials. If it is unclear whether the matter falls under State or Central (NHRC) jurisdiction, insert [VERIFY: correct forum — SHRC or NHRC]. For offences and procedures after 1 July 2024, cite the Bharatiya Nyaya Sanhita (BNS), Bharatiya Nagarik Suraksha Sanhita (BNSS), and Bharatiya Sakshya Adhiniyam (BSA) — NOT the repealed IPC 1860, CrPC 1973, or Indian Evidence Act 1872. The Prevention of Corruption Act 1988 and RTI Act 2005 remain in force and may be cited. If unsure of a new-code section number, use [VERIFY]."
+}
