@@ -2,9 +2,10 @@
 # Backend API smoke test for LexFlow AI. Assumes the backend is already
 # running on :8000 (see SKILL.md "Run" section). Exercises the auth +
 # per-user case/document/draft ownership wiring, the Escalation Engine's
-# deadline computation, the public Citation Checker's rate limiting, and the
-# free-tier billing quota gate, directly against the API, independent of the
-# frontend - the layer most PRs to backend/app/routes/*.py actually touch.
+# deadline computation, the public Citation Checker's rate limiting, the
+# free-tier billing quota gate, and Firm/Team case-sharing, directly against
+# the API, independent of the frontend - the layer most PRs to
+# backend/app/routes/*.py actually touch.
 #
 # Usage: bash smoke-api.sh
 
@@ -158,7 +159,48 @@ fi
 code=$(curl -s -b "$JAR" -o /dev/null -w "%{http_code}" -X POST "$BASE/api/billing/checkout")
 [ "$code" = "503" ] && pass "POST /api/billing/checkout -> 503 while Razorpay is unconfigured" || fail "Billing checkout status unexpected -> $code"
 
-# 10. Logout invalidates the session
+code=$(curl -s -b "$JAR" -o /dev/null -w "%{http_code}" -X POST "$BASE/api/billing/checkout" \
+  -H "Content-Type: application/json" -d '{"plan":"team"}')
+[ "$code" = "503" ] && pass "POST /api/billing/checkout {plan:team} -> 503 while Razorpay is unconfigured" || fail "Team checkout status unexpected -> $code"
+
+# 10. Firms/Teams: a paid firm's owner can invite a member by code, shared
+# cases become visible to that member, and a case NOT explicitly shared stays
+# private even within the same firm. Seeds a paid Firm directly in the DB
+# (bypassing Razorpay, same pattern as the billing quota seed above).
+if [ -f "$DB_PATH" ] && command -v sqlite3 >/dev/null 2>&1; then
+  EMAIL3="smoketest3-$$@example.com"
+  JAR3=$(mktemp)
+  curl -s -c "$JAR3" -o /dev/null -X POST "$BASE/api/signup" \
+    -H "Content-Type: application/json" -d "{\"email\":\"$EMAIL3\",\"password\":\"pass123\"}"
+
+  code=$(curl -s -b "$JAR3" -o /dev/null -w "%{http_code}" "$BASE/api/firms/me")
+  [ "$code" = "404" ] && pass "GET /api/firms/me with no firm -> 404" || fail "GET /api/firms/me with no firm -> $code"
+
+  OWNER_ID=$(sqlite3 "$DB_PATH" "SELECT id FROM users WHERE email='$EMAIL';")
+  sqlite3 "$DB_PATH" "INSERT INTO firms (name, owner_user_id, invite_code, plan, plan_expires_at) VALUES ('Smoke Test Firm', $OWNER_ID, 'SMOKECODE$$', 'team', datetime('now', '+30 days'));"
+  FIRM_ID=$(sqlite3 "$DB_PATH" "SELECT id FROM firms WHERE invite_code='SMOKECODE$$';")
+  sqlite3 "$DB_PATH" "UPDATE users SET firm_id=$FIRM_ID, firm_role='owner' WHERE id=$OWNER_ID;"
+
+  join_resp=$(curl -s -b "$JAR3" -X POST "$BASE/api/firms/join" \
+    -H "Content-Type: application/json" -d "{\"invite_code\":\"SMOKECODE$$\"}")
+  echo "$join_resp" | grep -q '"my_role":"member"' && pass "POST /api/firms/join with a valid code -> joins as member" || fail "Firm join failed: $join_resp"
+
+  shared_resp=$(curl -s -b "$JAR" -X POST "$BASE/api/cases" \
+    -H "Content-Type: application/json" -d '{"title":"Smoke Test Shared Case","forum":"lokayuktha","share_with_firm":true}')
+  shared_id=$(echo "$shared_resp" | grep -o '"id":[0-9]*' | head -1 | grep -o '[0-9]*')
+
+  code=$(curl -s -b "$JAR3" -o /dev/null -w "%{http_code}" "$BASE/api/cases/$shared_id")
+  [ "$code" = "200" ] && pass "Firm member fetching owner's firm-shared case -> 200" || fail "Firm member could not see shared case -> $code"
+
+  code=$(curl -s -b "$JAR3" -o /dev/null -w "%{http_code}" "$BASE/api/cases/$case_id")
+  [ "$code" = "404" ] && pass "Firm member fetching owner's non-shared case -> 404" || fail "Firm member unexpectedly saw a non-shared case -> $code"
+
+  rm -f "$JAR3"
+else
+  echo "SKIP: Firms/Teams checks (sqlite3 CLI or DB file not found at $DB_PATH)"
+fi
+
+# 11. Logout invalidates the session
 curl -s -b "$JAR" -c "$JAR" -o /dev/null -X POST "$BASE/api/logout"
 code=$(curl -s -b "$JAR" -o /dev/null -w "%{http_code}" "$BASE/api/cases")
 [ "$code" = "401" ] && pass "POST /api/logout then GET /api/cases -> 401" || fail "Post-logout request -> $code"

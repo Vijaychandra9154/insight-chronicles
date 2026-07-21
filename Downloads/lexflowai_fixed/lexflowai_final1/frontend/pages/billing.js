@@ -1,24 +1,11 @@
 import { useState } from 'react'
+import Link from 'next/link'
 import useSWR from 'swr'
 import axios from 'axios'
 import { useAuth } from '../lib/AuthContext'
+import { loadRazorpayScript } from '../lib/razorpay'
 
 const fetcher = (url) => axios.get(url).then((r) => r.data)
-
-function loadRazorpayScript() {
-  return new Promise((resolve) => {
-    if (document.getElementById('razorpay-checkout-js')) {
-      resolve(true)
-      return
-    }
-    const script = document.createElement('script')
-    script.id = 'razorpay-checkout-js'
-    script.src = 'https://checkout.razorpay.com/v1/checkout.js'
-    script.onload = () => resolve(true)
-    script.onerror = () => resolve(false)
-    document.body.appendChild(script)
-  })
-}
 
 function formatDate(value) {
   if (!value) return 'Unknown date'
@@ -33,6 +20,7 @@ export default function Billing() {
   const { refreshUser } = useAuth()
   const { data: status, mutate } = useSWR('/api/billing/status', fetcher)
   const [upgrading, setUpgrading] = useState(false)
+  const [cancelling, setCancelling] = useState(false)
   const [error, setError] = useState(null)
 
   async function handleUpgrade() {
@@ -47,19 +35,17 @@ export default function Billing() {
       }
 
       const checkoutRes = await axios.post('/api/billing/checkout')
-      const { order_id, amount, currency, key_id } = checkoutRes.data
+      const { subscription_id, key_id } = checkoutRes.data
 
       const rzp = new window.Razorpay({
         key: key_id,
-        order_id,
-        amount,
-        currency,
+        subscription_id,
         name: 'LexFlow AI',
-        description: 'Individual plan — 1 month',
+        description: 'Individual plan — billed monthly, cancel any time',
         handler: async (response) => {
           try {
             await axios.post('/api/billing/verify', {
-              razorpay_order_id: response.razorpay_order_id,
+              razorpay_subscription_id: response.razorpay_subscription_id,
               razorpay_payment_id: response.razorpay_payment_id,
               razorpay_signature: response.razorpay_signature,
             })
@@ -83,6 +69,19 @@ export default function Billing() {
     } catch (err) {
       setError(err.response?.data?.detail || 'Could not start checkout. Please try again.')
       setUpgrading(false)
+    }
+  }
+
+  async function handleCancel() {
+    setError(null)
+    setCancelling(true)
+    try {
+      await axios.post('/api/billing/cancel')
+      await mutate()
+    } catch (err) {
+      setError(err.response?.data?.detail || 'Could not cancel subscription. Please try again.')
+    } finally {
+      setCancelling(false)
     }
   }
 
@@ -120,11 +119,30 @@ export default function Billing() {
           {isPaid && (
             <div className="stat-tile">
               <div className="stat-value">{formatDate(status.plan_expires_at)}</div>
-              <div className="stat-label">Renews / expires</div>
+              <div className="stat-label">
+                {status.cancel_at_cycle_end ? 'Access ends' : 'Renews automatically'}
+              </div>
             </div>
           )}
         </div>
       </div>
+
+      {isPaid && !status.cancel_at_cycle_end && (
+        <div className="section">
+          <h2 className="section-title">Manage Subscription</h2>
+          <div className="form-card">
+            <p>
+              Your Individual plan renews automatically each month. You can cancel any time —
+              you'll keep access until the current billing period ends.
+            </p>
+            {error && <p className="form-error">{error}</p>}
+            <button type="button" className="btn btn-secondary" onClick={handleCancel} disabled={cancelling}>
+              {cancelling && <span className="spinner" />}
+              {cancelling ? 'Cancelling...' : 'Cancel subscription'}
+            </button>
+          </div>
+        </div>
+      )}
 
       {!isPaid && (
         <div className="section">
@@ -140,6 +158,18 @@ export default function Billing() {
               {upgrading && <span className="spinner" />}
               {upgrading ? 'Processing...' : 'Upgrade — ₹199/month'}
             </button>
+          </div>
+        </div>
+      )}
+
+      {!status.firm && (
+        <div className="section">
+          <h2 className="section-title">Running a firm?</h2>
+          <div className="form-card">
+            <p>
+              Put your whole team on one plan — shared cases, one invite code, one bill.
+            </p>
+            <Link href="/firm" className="btn btn-secondary">Set up a Team plan</Link>
           </div>
         </div>
       )}

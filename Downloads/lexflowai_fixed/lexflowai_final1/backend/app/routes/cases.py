@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta, timezone
 
 from fastapi import APIRouter, Depends, UploadFile, File, HTTPException
+from sqlalchemy import or_
 from sqlalchemy.orm import Session
 from .. import db, models, schemas
 from ..auth import get_current_user
@@ -46,10 +47,16 @@ def _store_snapshot(db: Session, case_id: int, status: court_tracker.CourtStatus
     return snapshot
 
 
+def _accessible_case_filter(user: models.User):
+    if user.firm_id:
+        return or_(models.Case.user_id == user.id, models.Case.firm_id == user.firm_id)
+    return models.Case.user_id == user.id
+
+
 def _get_owned_case(db: Session, case_id: int, user: models.User) -> models.Case:
     c = (
         db.query(models.Case)
-        .filter(models.Case.id == case_id, models.Case.user_id == user.id)
+        .filter(models.Case.id == case_id, _accessible_case_filter(user))
         .first()
     )
     if not c:
@@ -79,6 +86,7 @@ def create_case(
         forum=case.forum,
         extra_data=case.extra_data or {},
         user_id=current_user.id,
+        firm_id=current_user.firm_id if (case.share_with_firm and current_user.firm_id) else None,
     )
     db.add(c)
     db.commit()
@@ -93,7 +101,7 @@ def list_cases(
 ):
     return (
         db.query(models.Case)
-        .filter(models.Case.user_id == current_user.id)
+        .filter(_accessible_case_filter(current_user))
         .order_by(models.Case.created_at.desc())
         .all()
     )

@@ -36,6 +36,8 @@ class UserOut(BaseModel):
     full_name: str | None = None
     plan: str = "free"
     plan_expires_at: datetime | None = None
+    firm_id: int | None = None
+    firm_role: str | None = None
 
 
 def _set_auth_cookie(response: Response, token: str) -> None:

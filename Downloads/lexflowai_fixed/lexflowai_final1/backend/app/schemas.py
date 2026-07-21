@@ -8,6 +8,7 @@ class CaseCreate(BaseModel):
     case_number: Optional[str] = None
     forum: Optional[str] = None
     extra_data: Optional[Dict] = Field(default_factory=dict)
+    share_with_firm: bool = False
 
 
 class CaseOut(BaseModel):
@@ -26,6 +27,29 @@ class CaseOut(BaseModel):
     escalation_deadline_basis: Optional[str] = None
     is_overdue: bool = False
     days_remaining: Optional[int] = None
+    firm_id: Optional[int] = None
+
+
+class FirmMemberOut(BaseModel):
+    id: int
+    email: str
+    full_name: Optional[str] = None
+    firm_role: Optional[str] = None
+
+
+class FirmOut(BaseModel):
+    id: int
+    name: str
+    plan: str = "free"
+    plan_expires_at: Optional[datetime] = None
+    is_paid_active: bool = False
+    my_role: str
+    invite_code: Optional[str] = None  # only populated for the owner
+    members: List[FirmMemberOut] = Field(default_factory=list)
+
+
+class JoinFirmRequest(BaseModel):
+    invite_code: str
 
 
 class DocumentOut(BaseModel):

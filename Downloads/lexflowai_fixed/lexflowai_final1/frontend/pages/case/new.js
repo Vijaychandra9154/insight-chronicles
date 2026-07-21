@@ -2,12 +2,15 @@ import { useState } from 'react'
 import { useRouter } from 'next/router'
 import axios from 'axios'
 import { FORUMS } from '../../lib/forums'
+import { useAuth } from '../../lib/AuthContext'
 
 export default function NewCase() {
   const router = useRouter()
+  const { user } = useAuth()
   const [title, setTitle] = useState('')
   const [caseNumber, setCaseNumber] = useState('')
   const [forum, setForum] = useState(FORUMS[0].value)
+  const [shareWithFirm, setShareWithFirm] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState(null)
 
@@ -21,6 +24,7 @@ export default function NewCase() {
         title,
         case_number: caseNumber || null,
         forum,
+        share_with_firm: shareWithFirm,
       })
       router.push('/')
     } catch (err) {
@@ -71,6 +75,19 @@ export default function NewCase() {
             ))}
           </select>
         </div>
+
+        {user?.firm_id && (
+          <div className="form-group">
+            <label>
+              <input
+                type="checkbox"
+                checked={shareWithFirm}
+                onChange={(e) => setShareWithFirm(e.target.checked)}
+              />
+              {' '}Share this case with my firm
+            </label>
+          </div>
+        )}
 
         <div className="form-actions">
           <button type="submit" className="btn" disabled={submitting}>

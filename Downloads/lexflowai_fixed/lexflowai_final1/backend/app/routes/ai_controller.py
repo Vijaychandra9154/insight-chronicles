@@ -7,7 +7,7 @@ from .. import db, models
 from ..auth import get_current_user
 from ..ai_utils import VECTOR_INDEX, llm_generate
 from ..services import translation, institution_templates
-from .billing import documents_used_this_month, FREE_MONTHLY_DOCUMENT_LIMIT
+from .billing import documents_used_this_month, user_has_unlimited_access, FREE_MONTHLY_DOCUMENT_LIMIT
 
 router = APIRouter(prefix="/api/ai", tags=["ai"])
 
@@ -72,7 +72,7 @@ class EscalateRequest(BaseModel):
 
 
 def _enforce_document_quota(db_session: Session, current_user: models.User) -> None:
-    if current_user.is_paid_active:
+    if user_has_unlimited_access(db_session, current_user):
         return
     used = documents_used_this_month(db_session, current_user.id)
     if used >= FREE_MONTHLY_DOCUMENT_LIMIT:

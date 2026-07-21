@@ -13,10 +13,32 @@ class User(Base):
     role = Column(String, default="lawyer")
     plan = Column(String, default="free")  # "free" | "individual"
     plan_expires_at = Column(DateTime(timezone=True), nullable=True)
+    firm_id = Column(Integer, ForeignKey("firms.id"), nullable=True, index=True)
+    firm_role = Column(String, nullable=True)  # "owner" | "member"
 
     @property
     def is_paid_active(self) -> bool:
         if self.plan != "individual" or not self.plan_expires_at:
+            return False
+        expires = self.plan_expires_at
+        if expires.tzinfo is None:
+            expires = expires.replace(tzinfo=timezone_.utc)
+        return expires > datetime_.now(timezone_.utc)
+
+
+class Firm(Base):
+    __tablename__ = "firms"
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String)
+    owner_user_id = Column(Integer, ForeignKey("users.id"), index=True)
+    invite_code = Column(String, unique=True, index=True)
+    plan = Column(String, default="free")  # "free" | "team"
+    plan_expires_at = Column(DateTime(timezone=True), nullable=True)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+    @property
+    def is_paid_active(self) -> bool:
+        if self.plan != "team" or not self.plan_expires_at:
             return False
         expires = self.plan_expires_at
         if expires.tzinfo is None:
@@ -35,6 +57,7 @@ class Case(Base):
     cnr_number = Column(String, index=True, nullable=True)
     manual_status = Column(String, nullable=True)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=True, index=True)
+    firm_id = Column(Integer, ForeignKey("firms.id"), nullable=True, index=True)
     filed_date = Column(Date, nullable=True)
     escalation_deadline = Column(Date, nullable=True)
     escalation_deadline_basis = Column(String, nullable=True)
@@ -93,8 +116,24 @@ class Payment(Base):
     __tablename__ = "payments"
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("users.id"), index=True)
-    razorpay_order_id = Column(String, index=True)
+    razorpay_order_id = Column(String, index=True, nullable=True)
+    razorpay_subscription_id = Column(String, index=True, nullable=True)
     razorpay_payment_id = Column(String, unique=True, index=True, nullable=True)
     amount = Column(Integer)  # paise (smallest currency unit)
     status = Column(String, default="created")  # created | paid | failed
     created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+
+class Subscription(Base):
+    __tablename__ = "subscriptions"
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), index=True)  # the paying account holder
+    firm_id = Column(Integer, ForeignKey("firms.id"), nullable=True, index=True)  # set only for plan_type="team"
+    plan_type = Column(String, default="individual")  # "individual" | "team"
+    razorpay_subscription_id = Column(String, unique=True, index=True)
+    razorpay_plan_id = Column(String)
+    status = Column(String, default="created")  # created | authenticated | active | past_due | halted | cancelled | completed
+    current_end = Column(DateTime(timezone=True), nullable=True)
+    cancel_at_cycle_end = Column(Integer, default=0)  # 0/1 - SQLite has no native bool here elsewhere in this file
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
