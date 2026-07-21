@@ -1,0 +1,22 @@
+{
+  "institution": "Protection of Women from Domestic Violence Act — Application to Magistrate",
+  "addressee_block": "The Hon'ble Judicial Magistrate First Class / Metropolitan Magistrate\n[Court complex], [District/City], [State]\n(Through: Protection Officer, [District], if the application is being routed via a Protection Officer)",
+  "required_sections": [
+    "cause_title",
+    "numbered_facts",
+    "legal_grounds",
+    "prayer",
+    "verification_clause",
+    "annexure_list",
+    "place_date_signature"
+  ],
+  "relevant_acts": [
+    "Protection of Women from Domestic Violence Act, 2005 — Section 12 (application to Magistrate)",
+    "Protection of Women from Domestic Violence Act, 2005 — Section 18 (protection orders)",
+    "Protection of Women from Domestic Violence Act, 2005 — Section 19 (residence orders)",
+    "Protection of Women from Domestic Violence Act, 2005 — Section 20 (monetary relief)",
+    "Protection of Women from Domestic Violence Act, 2005 — Section 22 (compensation orders)",
+    "Protection of Women from Domestic Violence Act, 2005 — Section 23 (interim and ex parte orders)"
+  ],
+  "institution_rules": "The applicant must be an 'aggrieved person' — a woman in a domestic relationship (marriage, family, live-in relationship in the nature of marriage, or as specified) with the respondent — and the respondent an adult male person (relief may also be sought against female/other relatives of the male partner in limited circumstances; if this is disputed or unclear on the facts, use [VERIFY]). Describe the domestic relationship, the shared household, and specific incidents of physical, verbal, emotional, economic, or sexual abuse with dates, in a clear chronological account. The application must be filed in the prescribed statutory form (Form II under the Protection of Women from Domestic Violence Rules, 2006) — reproduce its structure faithfully. Identify precisely which relief(s) are sought: protection order restraining further abuse/contact (Section 18), residence order regarding the shared household (Section 19), monetary relief for loss of earnings, medical expenses, and maintenance (Section 20), custody of children if relevant, and compensation for injury including mental torture (Section 22); interim/ex parte relief under Section 23 may be sought pending final disposal where there is urgency. Attach any medical reports, photographs of injuries, prior police complaints, and evidence of the domestic relationship and shared household. NEVER invent a specific compensation or maintenance figure — state the amount actually claimed by the client or use [VERIFY: amount] if not provided. Note that breach of a protection order is a separate cognizable, non-bailable criminal offence under Section 31 of this Act, prosecuted under the Bharatiya Nagarik Suraksha Sanhita (BNSS), 2023 procedure for breaches occurring on or after 1 July 2024 (or the CrPC, 1973 procedure for breaches before that date) — flag this as a distinct future remedy if the client describes an existing order being violated, rather than folding it into this application. If unsure of a new-code section number, use [VERIFY]."
+}

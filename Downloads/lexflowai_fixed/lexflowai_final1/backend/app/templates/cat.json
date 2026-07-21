@@ -1,0 +1,19 @@
+{
+  "institution": "Central Administrative Tribunal (CAT)",
+  "addressee_block": "The Registrar\nCentral Administrative Tribunal, [Bench Name] Bench\n[Bench address]",
+  "required_sections": [
+    "cause_title",
+    "numbered_facts",
+    "legal_grounds",
+    "prayer",
+    "verification_clause",
+    "annexure_list",
+    "place_date_signature"
+  ],
+  "relevant_acts": [
+    "Administrative Tribunals Act, 1985 — Section 19 (application to Tribunal)",
+    "Administrative Tribunals Act, 1985 — Section 20 (exhaustion of departmental/statutory remedies)",
+    "Administrative Tribunals Act, 1985 — Section 21 (limitation)"
+  ],
+  "institution_rules": "CAT has jurisdiction only over service matters of persons appointed to civil services/posts connected with the affairs of the Union, and certain All-India Services and notified statutory/public sector bodies — it does NOT have jurisdiction over State Government employees (whose remedy is the State Administrative Tribunal where one is constituted, or the High Court under Article 226) or over matters not relating to 'recruitment' or 'conditions of service' as defined under the Act; use [VERIFY: whether this matter falls within CAT's jurisdiction] if the applicant's service or the nature of the grievance is unclear. Under Section 20, the applicant must ordinarily have first made a representation/statutory appeal through the departmental remedy available to them and either received a rejection or waited out the prescribed period without a response before approaching the Tribunal — state clearly what departmental remedy was availed, when, and its outcome (or the date from which no response has been received). Limitation under Section 21 is time-sensitive and runs differently depending on whether a final departmental order exists or the applicant is relying on the deemed-rejection route after a representation — state the relevant dates precisely and use [VERIFY: applicable limitation period on these facts] rather than asserting a specific day count if there is any doubt. Set out the impugned order or inaction, the service rule or instruction allegedly violated, and the relief sought (quashing of the order, direction to consider representation, seniority/promotion/pension relief, etc.) precisely — do not invent a specific service rule number or precedent; use [VERIFY: applicable service rule] if uncertain. Attach the impugned order, the representation/appeal filed and any reply, and service records relevant to the claim. NEVER invent a specific rule citation, precedent, or figure (arrears, pension amount) not supplied by the client. For offences and procedures after 1 July 2024, cite the Bharatiya Nyaya Sanhita (BNS), Bharatiya Nagarik Suraksha Sanhita (BNSS), and Bharatiya Sakshya Adhiniyam (BSA) — NOT the repealed IPC 1860, CrPC 1973, or Indian Evidence Act 1872 — if any related disciplinary/criminal matter is referenced. If unsure of a new-code section number, use [VERIFY]."
+}

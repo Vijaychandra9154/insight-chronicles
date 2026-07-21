@@ -1,0 +1,20 @@
+{
+  "institution": "Cheque Dishonour Complaint (Section 138, Negotiable Instruments Act)",
+  "addressee_block": "The Hon'ble Judicial Magistrate First Class / Metropolitan Magistrate\n[Court complex], [District/City], [State]\n(Jurisdiction: where the cheque was presented for collection through the payee's bank branch, per Section 142(2), NI Act, as amended in 2015)",
+  "required_sections": [
+    "cause_title",
+    "numbered_facts",
+    "legal_grounds",
+    "prayer",
+    "verification_clause",
+    "annexure_list",
+    "place_date_signature"
+  ],
+  "relevant_acts": [
+    "Negotiable Instruments Act, 1881 — Section 138 (dishonour of cheque for insufficiency of funds)",
+    "Negotiable Instruments Act, 1881 — Section 142 (cognizance of offences; limitation and jurisdiction, as amended by the Negotiable Instruments (Amendment) Act, 2015)",
+    "Negotiable Instruments Act, 1881 — Section 139 (presumption in favour of holder)",
+    "Bharatiya Nagarik Suraksha Sanhita (BNSS), 2023 — complaint procedure before a Magistrate (for complaints filed on or after 1 July 2024)"
+  ],
+  "institution_rules": "This is a criminal complaint, not a civil suit — state the underlying legally enforceable debt/liability, the cheque details (number, date, amount, drawee bank, account), the date of presentation and dishonour, and the dishonour reason exactly as stated in the bank's return memo/slip (e.g. 'funds insufficient', 'account closed'; a cheque returned for reasons unrelated to the drawer's own funds — e.g. signature mismatch, if not curable — may not attract Section 138 and should be flagged with [VERIFY: whether this dishonour reason falls within Section 138]). Confirm and state each limitation step precisely: the cheque was presented within its validity period (3 months from the date on the cheque, per current RBI/banking practice — [VERIFY] if the cheque is older or the applicable validity period is in doubt), a written demand notice was sent to the drawer within 30 days of receiving the dishonour memo, and the complaint is being filed within one month of the expiry of 15 days from the drawer's receipt of that notice without payment (Section 142(1)(b)); if any of these deadlines were missed, say so plainly and note that the Magistrate has discretion to condone delay only for sufficient cause — do not assume condonation. Jurisdiction lies with the court in whose local area the payee's bank branch (where the cheque was presented for collection) is situated, per the 2015 amendment to Section 142(2) — not necessarily where the cheque was drawn or signed. Attach the original cheque (or its copy), the bank's dishonour memo, a copy of the demand notice with proof of dispatch/service, and any reply received. Pray for conviction and sentence under Section 138 (imprisonment up to 2 years, or fine up to twice the cheque amount, or both) and for the cheque amount with interest as compensation under Section 357 Cr.P.C./BNSS. NEVER invent a specific compensation figure beyond the cheque amount and simple interest actually claimed. For the complaint-filing procedure itself, cite the BNSS, 2023 for complaints filed on or after 1 July 2024, or the CrPC, 1973 for complaints filed before that date — use [VERIFY: exact BNSS section on complaints to a Magistrate] if unsure of the precise renumbered section. The Prevention of Corruption Act 1988 and RTI Act 2005 remain in force and may be cited where relevant. If unsure of a new-code section number, use [VERIFY]."
+}

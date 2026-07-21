@@ -1,0 +1,21 @@
+{
+  "institution": "Internal Committee / Local Committee (Workplace Sexual Harassment)",
+  "addressee_block": "The Presiding Officer, Internal Committee (IC)\n[Organisation Name]\n(OR: The Chairperson, Local Committee, [District], if the workplace has fewer than 10 employees or the complaint is against the employer)",
+  "required_sections": [
+    "cause_title",
+    "numbered_facts",
+    "legal_grounds",
+    "prayer",
+    "verification_clause",
+    "annexure_list",
+    "place_date_signature"
+  ],
+  "relevant_acts": [
+    "Sexual Harassment of Women at Workplace (Prevention, Prohibition and Redressal) Act, 2013 — Section 9 (complaint to Internal/Local Committee)",
+    "Sexual Harassment of Women at Workplace (Prevention, Prohibition and Redressal) Act, 2013 — Section 11 (inquiry procedure)",
+    "Sexual Harassment of Women at Workplace (Prevention, Prohibition and Redressal) Act, 2013 — Section 12 (interim relief)",
+    "Sexual Harassment of Women at Workplace (Prevention, Prohibition and Redressal) Act, 2013 — Section 13 (inquiry report)",
+    "Sexual Harassment of Women at Workplace (Prevention, Prohibition and Redressal) Act, 2013 — Section 16 (confidentiality)"
+  ],
+  "institution_rules": "Confirm whether the complaint should go to the employer's Internal Committee (mandatory for any workplace with 10 or more employees, under Section 4) or the district-level Local Committee (for smaller workplaces, domestic workers, or where the complaint is against the employer themselves); use [VERIFY] if this is unclear from the facts. The complaint must ordinarily be filed within 3 months of the incident (or the last in a series of incidents), extendable by the Committee for a further 3 months for reasons recorded in writing (Section 9) — state and explain any delay beyond 6 months total. Give a clear chronological account of each incident with dates, location, and any witnesses, and specify the relationship between the complainant and the respondent (which must be a workplace one — direct employment, contractor, client visit, work-related travel, etc.). If urgent, request interim relief under Section 12 (transfer of the complainant or respondent, leave for the complainant up to 3 months, restraining the respondent from assessing the complainant's work performance) explicitly and separately from final relief. Remind the drafter/reader that proceedings, the complainant's identity, and the inquiry report are confidential under Section 16 and must not be publicised. Attach any written evidence — messages, emails, CCTV references, medical reports, witness statements — and note that the inquiry should conclude within 90 days with a report to the employer within 10 days of completion (Section 13). NEVER invent specific disciplinary action or compensation figures — the Committee recommends action per the employer's service rules or, absent such rules, as prescribed under the Act; use [VERIFY] rather than assuming a specific quantum. If the complainant is dissatisfied with the Committee's recommendations or the employer's action (or inaction), note that an appeal lies under Section 18 to the court/tribunal designated under the applicable service rules within 90 days of the recommendations. For offences and procedures after 1 July 2024, cite the Bharatiya Nyaya Sanhita (BNS), Bharatiya Nagarik Suraksha Sanhita (BNSS), and Bharatiya Sakshya Adhiniyam (BSA) — NOT the repealed IPC 1860, CrPC 1973, or Indian Evidence Act 1872 — if the conduct described may also separately amount to a criminal offence. If unsure of a new-code section number, use [VERIFY]."
+}

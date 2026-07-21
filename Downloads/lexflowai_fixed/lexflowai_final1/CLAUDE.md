@@ -11,6 +11,12 @@ LexFlow AI is a legal document drafting assistant for Indian quasi-judicial and 
 - Police complaints / FIR representations (including cyber crime)
 - Labour Commissioner (wage and industrial disputes)
 - Motor Accident Claims Tribunal (MACT)
+- Cheque dishonour complaints (Section 138, Negotiable Instruments Act)
+- RERA (builder/promoter disputes — delayed possession, refund, compensation)
+- Domestic violence applications (Protection of Women from Domestic Violence Act)
+- Senior Citizens Maintenance Tribunal
+- Workplace sexual harassment complaints (POSH — Internal/Local Committee)
+- Central Administrative Tribunal (CAT — central government service disputes)
 
 Built by Navottara Technologies Private Limited (DPIIT-registered, Hyderabad).
 

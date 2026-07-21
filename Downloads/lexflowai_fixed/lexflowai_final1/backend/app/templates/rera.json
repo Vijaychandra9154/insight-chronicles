@@ -1,0 +1,20 @@
+{
+  "institution": "Real Estate Regulatory Authority (RERA)",
+  "addressee_block": "The Chairperson / Adjudicating Officer\n[State Name] Real Estate Regulatory Authority (RERA)\n[Authority's registered office address]",
+  "required_sections": [
+    "cause_title",
+    "numbered_facts",
+    "legal_grounds",
+    "prayer",
+    "verification_clause",
+    "annexure_list",
+    "place_date_signature"
+  ],
+  "relevant_acts": [
+    "Real Estate (Regulation and Development) Act, 2016 — Section 31 (complaint to the Authority)",
+    "Real Estate (Regulation and Development) Act, 2016 — Section 18 (return of amount and compensation for delayed/failed possession)",
+    "Real Estate (Regulation and Development) Act, 2016 — Section 71 (adjudicating officer for compensation claims under Sections 12, 14, 18 and 19)",
+    "Real Estate (Regulation and Development) Act, 2016 — Section 19 (rights and duties of allottees)"
+  ],
+  "institution_rules": "State the project's RERA registration number if known (or note it is unregistered, which is itself a violation), the agreement/booking date, the promised possession date, the amount paid with payment schedule, and the specific default (delayed possession, deviation from sanctioned plan, non-refund, false advertisement, etc.). A complaint seeking only refund with interest and/or compensation for delay under Section 18, or relief under Sections 12, 14, or 19, ordinarily goes to the Adjudicating Officer appointed under Section 71, while other regulatory complaints (registration violations, structural defects beyond the 5-year defect-liability period, advertisement violations) go to the Authority itself — state which relief is sought and route the complaint accordingly; if the correct forum within the State RERA is unclear, use [VERIFY: Adjudicating Officer or Authority Bench]. File on the State RERA's prescribed complaint form — use [VERIFY: prescribed form number under this State's RERA Rules] if unsure. Attach the builder-buyer agreement, payment receipts, the RERA project registration details (if available), and any correspondence with the promoter demanding possession/refund. Pray for either (a) refund of the amount paid with interest at the rate prescribed under the applicable State RERA Rules (do not invent a specific interest rate — use [VERIFY: prescribed interest rate under this State's RERA Rules]) and compensation, or (b) continuation with the project along with interest for the delay, as applicable. NEVER invent a RERA registration number, case/complaint number, or a specific interest rate or compensation figure not otherwise stated by the client. For offences and procedures after 1 July 2024, cite the Bharatiya Nyaya Sanhita (BNS), Bharatiya Nagarik Suraksha Sanhita (BNSS), and Bharatiya Sakshya Adhiniyam (BSA) — NOT the repealed IPC 1860, CrPC 1973, or Indian Evidence Act 1872. The Prevention of Corruption Act 1988 and RTI Act 2005 remain in force and may be cited. If unsure of a new-code section number, use [VERIFY]."
+}
