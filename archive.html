@@ -1,1 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Archive – Insight Chronicles</title>
+  <meta name="description" content="Every Insight Chronicles article, grouped by year." />
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4014745723891069" crossorigin="anonymous"></script>
 
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+</head>
+<body class="ic-body">
+  <div class="ic-topstrip">Independent analysis on history, geopolitics & technology</div>
+
+  <header class="ic-header">
+    <div class="ic-container ic-header-inner">
+      <a href="index.html" class="ic-logo">
+        <span class="ic-logo-mark">IC</span>
+        <span><span class="ic-logo-title">Insight Chronicles</span><span class="ic-logo-sub">Long-form global analysis</span></span>
+      </a>
+      <button class="ic-hamburger" id="hamburger" aria-label="Menu">&#9776;</button>
+      <nav class="ic-nav" id="mainNav">
+        <a href="index.html" class="ic-nav-link">Home</a>
+        <a href="articles.html" class="ic-nav-link">Articles</a>
+        <a href="archive.html" class="ic-nav-link ic-nav-link-active">Archive</a>
+        <a href="about.html" class="ic-nav-link">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="ic-main">
+    <div class="ic-container" style="max-width:760px;">
+      <section class="ic-sidebar-block">
+        <h1 style="margin-top:0;">Archive</h1>
+        <p style="color:#cbd5f5;">Every article, grouped by year and month.</p>
+      </section>
+
+      <section id="archive-root" class="ic-sidebar-block" style="margin-top:16px;">
+        <p style="color:#9ca3af;">Loading…</p>
+      </section>
+    </div>
+  </main>
+
+  <footer class="ic-footer">
+    <div class="ic-container ic-footer-grid">
+      <div><h4>Insight Chronicles</h4><p>Independent writing on history, geopolitics and technology.</p></div>
+      <div><h4>Pages</h4><ul><li><a href="index.html">Home</a></li><li><a href="articles.html">Articles</a></li><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+      <div><h4>Legal</h4><ul><li><a href="privacy.html">Privacy</a></li><li><a href="terms.html">Terms</a></li><li><a href="disclaimer.html">Disclaimer</a></li></ul></div>
+      <div><h4>Contact</h4><p><a href="mailto:moonoriginblue@gmail.com">moonoriginblue@gmail.com</a></p></div>
+    </div>
+    <div class="ic-footer-bottom">© 2026 Insight Chronicles. All rights reserved.</div>
+  </footer>
+
+  <script>
+    document.getElementById('hamburger').addEventListener('click', () => document.getElementById('mainNav').classList.toggle('open'));
+
+    function escapeHtml(str) {
+      return (str || "").replace(/[&<>"']/g, function (m) {
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" }[m];
+      });
+    }
+
+    fetch("articles.json")
+      .then(function (res) { return res.json(); })
+      .then(function (articles) {
+        var root = document.getElementById("archive-root");
+        var sorted = articles.slice().sort(function (a, b) {
+          return (b.date || "").localeCompare(a.date || "");
+        });
+
+        var groups = {};
+        sorted.forEach(function (a) {
+          var year = (a.date || "").slice(0, 4) || "Undated";
+          groups[year] = groups[year] || [];
+          groups[year].push(a);
+        });
+
+        var years = Object.keys(groups).sort().reverse();
+        var html = "";
+
+        years.forEach(function (year) {
+          html += '<h2 style="margin-top:22px;">' + escapeHtml(year) + "</h2><ul style=\"line-height:2;\">";
+          groups[year].forEach(function (a) {
+            html +=
+              '<li><span style="color:#9ca3af;">' + escapeHtml(a.date || "") + "</span> — " +
+              '<a href="' + escapeHtml(a.slug) + '" style="color:#93c5fd;text-decoration:none;">' +
+              escapeHtml(a.title) + "</a></li>";
+          });
+          html += "</ul>";
+        });
+
+        root.innerHTML = html || "<p style=\"color:#9ca3af;\">No articles yet.</p>";
+      })
+      .catch(function () {
+        document.getElementById("archive-root").innerHTML =
+          "<p style=\"color:#9ca3af;\">Couldn't load the archive right now.</p>";
+      });
+  </script>
+</body>
+</html>

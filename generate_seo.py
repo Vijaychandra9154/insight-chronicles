@@ -1,12 +1,22 @@
 import json
 import os
 import re
-from datetime import datetime
+from datetime import datetime, timezone
 from xml.sax.saxutils import escape
 
 SITE_URL = "https://insight-chronicles.com"
 SITE_NAME = "Insight Chronicles"
 SITE_DESC = "Independent long-form analysis on history, geopolitics, and technology."
+
+# Replace G-XXXXXXXXXX with the real GA4 Measurement ID once you create a
+# property at https://analytics.google.com (Admin -> Create Property).
+GA_SNIPPET = """<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>"""
 
 DRAFTS_DIR = "drafts"
 TEMPLATE_FILE = "article_template.html"
@@ -25,7 +35,7 @@ CATEGORIES = {
 def load_articles_json():
     if not os.path.exists("articles.json"):
         return []
-    with open("articles.json", "r", encoding="utf-8") as f:
+    with open("articles.json", "r", encoding="utf-8-sig") as f:
         return json.load(f)
 
 def save_articles_json(articles):
@@ -120,7 +130,7 @@ def make_sitemap(articles):
 """
 
 def make_rss(articles):
-    now = datetime.utcnow().strftime("%a, %d %b %Y %H:%M:%S +0000")
+    now = datetime.now(timezone.utc).strftime("%a, %d %b %Y %H:%M:%S +0000")
     items = []
 
     for a in sorted(articles, key=lambda x: x.get("date", ""), reverse=True):
@@ -248,6 +258,7 @@ def make_articles_page(articles):
   <title>Articles – {SITE_NAME}</title>
   <meta name="description" content="All long-form articles published on {SITE_NAME}." />
   <link rel="stylesheet" href="styles.css" />
+  {GA_SNIPPET}
 </head>
 <body class="ic-body">
   <div class="ic-topstrip">All articles • {SITE_NAME}</div>
@@ -326,6 +337,7 @@ def make_category_page(tag_name, info, articles):
   <title>{escape(info["title"])} – {SITE_NAME}</title>
   <meta name="description" content="{escape(info["desc"])}" />
   <link rel="stylesheet" href="styles.css" />
+  {GA_SNIPPET}
 </head>
 <body class="ic-body">
 
@@ -407,6 +419,7 @@ def make_search_page():
   <title>Search – {SITE_NAME}</title>
   <meta name="description" content="Search articles on Insight Chronicles." />
   <link rel="stylesheet" href="styles.css" />
+  {GA_SNIPPET}
 </head>
 <body class="ic-body">
 
@@ -543,6 +556,7 @@ def make_404():
   <title>404 – Page Not Found | {SITE_NAME}</title>
   <meta name="robots" content="noindex"/>
   <link rel="stylesheet" href="styles.css"/>
+  {GA_SNIPPET}
 </head>
 <body class="ic-body">
   <div class="ic-topstrip">404 • Not Found</div>
@@ -598,7 +612,7 @@ def main():
     with open("site.json", "w", encoding="utf-8") as f:
         f.write(make_site_json(articles))
 
-    print("✅ Generated everything successfully")
+    print("Generated everything successfully")
 
 if __name__ == "__main__":
     main()

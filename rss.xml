@@ -5,18 +5,34 @@
     <link>https://insight-chronicles.com/</link>
     <description>Independent long-form analysis on history, geopolitics, and technology.</description>
     <language>en</language>
-    <lastBuildDate>Sat, 24 Jan 2026 15:39:37 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 21 Jul 2026 08:58:24 +0000</lastBuildDate>
 
     <item>
-      <title>Test Article 3 – Automation Publishing Check</title>
-      <link>https://insight-chronicles.com/article-3.html</link>
-      <guid>https://insight-chronicles.com/article-3.html</guid>
-      <description>This is a test post generated automatically from drafts using GitHub Actions.</description>
-      <pubDate>Fri, 03 Jan 2025 00:00:00 +0000</pubDate>
+      <title>Account Aggregators and OCEN: India's Third Rail After UPI and ONDC</title>
+      <link>https://insight-chronicles.com/article-account-aggregators.html</link>
+      <guid>https://insight-chronicles.com/article-account-aggregators.html</guid>
+      <description>After building open rails for payments and commerce, India built one for financial data and credit — the Account Aggregator framework and the Open Credit Enablement Network.</description>
+      <pubDate>Thu, 16 Jul 2026 00:00:00 +0000</pubDate>
     </item>
 
     <item>
-      <title>Democratization of India’s Hardware, Manufacturing &amp; Bio Labs Infrastructure</title>
+      <title>GeM: How India Turned Government Procurement Into Open Infrastructure</title>
+      <link>https://insight-chronicles.com/article-gem-marketplace.html</link>
+      <guid>https://insight-chronicles.com/article-gem-marketplace.html</guid>
+      <description>Government e-Marketplace (GeM) rebuilt how India's public sector buys goods and services — turning a slow, opaque tendering process into an open, competitive digital marketplace.</description>
+      <pubDate>Wed, 15 Jul 2026 00:00:00 +0000</pubDate>
+    </item>
+
+    <item>
+      <title>The Valuation Game: How the Top 10% Use the Middle Class as Their Exit Strategy</title>
+      <link>https://insight-chronicles.com/article-valuation-game.html</link>
+      <guid>https://insight-chronicles.com/article-valuation-game.html</guid>
+      <description>How India's wealthy elite use retail investors in stock markets and real estate to sustain inflated valuations and quietly cash out before the crash comes.</description>
+      <pubDate>Wed, 06 May 2026 00:00:00 +0000</pubDate>
+    </item>
+
+    <item>
+      <title>Democratization of India's Hardware, Manufacturing and Bio Labs Infrastructure</title>
       <link>https://insight-chronicles.com/article-hardware-bio.html</link>
       <guid>https://insight-chronicles.com/article-hardware-bio.html</guid>
       <description>Why India must democratize access to machine tools, CNC facilities, 3D printing hubs and public bio labs.</description>
@@ -24,7 +40,7 @@
     </item>
 
     <item>
-      <title>How India’s Plan of Democratizing Public Services Will Guide Other Countries</title>
+      <title>How India's Plan of Democratizing Public Services Will Guide Other Countries</title>
       <link>https://insight-chronicles.com/article-1.html</link>
       <guid>https://insight-chronicles.com/article-1.html</guid>
       <description>A breakdown of how UPI, ONDC, Aadhaar and ABHA form a model of open digital infrastructure.</description>

@@ -8,6 +8,14 @@
   <link rel="stylesheet" href="styles.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4014745723891069" crossorigin="anonymous"></script>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
 </head>
 <body class="ic-body">
   <div class="ic-topstrip">Independent analysis on history, geopolitics & technology</div>
@@ -75,8 +83,16 @@
     document.getElementById('hamburger').addEventListener('click', () => document.getElementById('mainNav').classList.toggle('open'));
     function handleContact(e) {
       e.preventDefault();
-      // Shows success. To actually send emails, replace the form action with your Formspree URL:
-      // e.g. form.action = "https://formspree.io/f/YOUR_ID" and remove this function
+      // Opens a pre-filled mailto: so the message actually reaches you today.
+      // To collect messages without opening the visitor's email client, connect
+      // a free Formspree form (https://formspree.io) and post to it instead.
+      var name = document.getElementById('cName').value;
+      var email = document.getElementById('cEmail').value;
+      var msg = document.getElementById('cMsg').value;
+      var subject = 'Website contact from ' + name;
+      var body = msg + '\n\nFrom: ' + name + ' <' + email + '>';
+      window.location.href = 'mailto:moonoriginblue@gmail.com?subject=' +
+        encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
       document.getElementById('contactForm').style.display = 'none';
       document.getElementById('contactSuccess').style.display = 'block';
     }
