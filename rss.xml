@@ -5,7 +5,15 @@
     <link>https://insight-chronicles.com/</link>
     <description>Independent long-form analysis on history, geopolitics, and technology.</description>
     <language>en</language>
-    <lastBuildDate>Tue, 21 Jul 2026 08:58:24 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 21 Jul 2026 21:11:21 +0000</lastBuildDate>
+
+    <item>
+      <title>ULI: India's Attempt at a UPI Moment for Credit</title>
+      <link>https://insight-chronicles.com/article-uli-lending.html</link>
+      <guid>https://insight-chronicles.com/article-uli-lending.html</guid>
+      <description>The Reserve Bank's Unified Lending Interface links land records, GST data and credit bureaus into one API layer for lenders — 64 institutions have joined so far, but two unglamorous bottlenecks are slowing it down.</description>
+      <pubDate>Wed, 22 Jul 2026 00:00:00 +0000</pubDate>
+    </item>
 
     <item>
       <title>Account Aggregators and OCEN: India's Third Rail After UPI and ONDC</title>
