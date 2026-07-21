@@ -8,14 +8,13 @@ SITE_URL = "https://insight-chronicles.com"
 SITE_NAME = "Insight Chronicles"
 SITE_DESC = "Independent long-form analysis on history, geopolitics, and technology."
 
-# Replace G-XXXXXXXXXX with the real GA4 Measurement ID once you create a
-# property at https://analytics.google.com (Admin -> Create Property).
-GA_SNIPPET = """<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+# GA4 Measurement ID for the insight-chronicles.com property.
+GA_SNIPPET = """<script async src="https://www.googletagmanager.com/gtag/js?id=G-GVGEM9R6Q5"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'G-XXXXXXXXXX');
+    gtag('config', 'G-GVGEM9R6Q5');
   </script>"""
 
 DRAFTS_DIR = "drafts"
