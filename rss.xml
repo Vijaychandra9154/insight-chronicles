@@ -8,30 +8,6 @@
     <lastBuildDate>Tue, 21 Jul 2026 21:11:21 +0000</lastBuildDate>
 
     <item>
-      <title>ULI: India's Attempt at a UPI Moment for Credit</title>
-      <link>https://insight-chronicles.com/article-uli-lending.html</link>
-      <guid>https://insight-chronicles.com/article-uli-lending.html</guid>
-      <description>The Reserve Bank's Unified Lending Interface links land records, GST data and credit bureaus into one API layer for lenders — 64 institutions have joined so far, but two unglamorous bottlenecks are slowing it down.</description>
-      <pubDate>Wed, 22 Jul 2026 00:00:00 +0000</pubDate>
-    </item>
-
-    <item>
-      <title>Account Aggregators and OCEN: India's Third Rail After UPI and ONDC</title>
-      <link>https://insight-chronicles.com/article-account-aggregators.html</link>
-      <guid>https://insight-chronicles.com/article-account-aggregators.html</guid>
-      <description>After building open rails for payments and commerce, India built one for financial data and credit — the Account Aggregator framework and the Open Credit Enablement Network.</description>
-      <pubDate>Thu, 16 Jul 2026 00:00:00 +0000</pubDate>
-    </item>
-
-    <item>
-      <title>GeM: How India Turned Government Procurement Into Open Infrastructure</title>
-      <link>https://insight-chronicles.com/article-gem-marketplace.html</link>
-      <guid>https://insight-chronicles.com/article-gem-marketplace.html</guid>
-      <description>Government e-Marketplace (GeM) rebuilt how India's public sector buys goods and services — turning a slow, opaque tendering process into an open, competitive digital marketplace.</description>
-      <pubDate>Wed, 15 Jul 2026 00:00:00 +0000</pubDate>
-    </item>
-
-    <item>
       <title>The Valuation Game: How the Top 10% Use the Middle Class as Their Exit Strategy</title>
       <link>https://insight-chronicles.com/article-valuation-game.html</link>
       <guid>https://insight-chronicles.com/article-valuation-game.html</guid>
