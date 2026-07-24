@@ -6,6 +6,9 @@
   <title>Start Here – Insight Chronicles</title>
   <meta name="description" content="Start here to explore the best Insight Chronicles articles across history, geopolitics, technology, and governance." />
   <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4014745723891069" crossorigin="anonymous"></script>
 
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-GVGEM9R6Q5"></script>
@@ -17,6 +20,9 @@
   </script>
 </head>
 <body class="ic-body">
+  <div class="ic-reading-progress" id="readingProgressBar"></div>
+
+  <div class="ic-topstrip">Independent analysis on history, geopolitics & technology</div>
 
   <header class="ic-header">
     <div class="ic-container ic-header-inner">
@@ -28,11 +34,13 @@
         </span>
       </a>
 
-      <nav class="ic-nav">
+      <button class="ic-hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">&#9776;</button>
+      <nav class="ic-nav" id="mainNav">
         <a href="index.html" class="ic-nav-link">Home</a>
-        <a href="index.html#latest" class="ic-nav-link">Articles</a>
+        <a href="start-here.html" class="ic-nav-link ic-nav-link-active">Start Here</a>
+        <a href="articles.html" class="ic-nav-link">Articles</a>
+        <a href="about.html" class="ic-nav-link">About</a>
         <a href="contact.html" class="ic-nav-link">Contact</a>
-        <a href="newsletter.html" class="ic-nav-link">Newsletter</a>
       </nav>
     </div>
   </header>
@@ -62,12 +70,12 @@
                 <span class="ic-tag ic-tag-gov">Governance</span>
               </div>
               <h3 class="ic-article-title">
-                <a href="article-1.html">How India’s Plan of Democratizing Public Services Will Guide Other Countries</a>
+                <a href="article-uli-lending.html">ULI: India’s Attempt at a UPI Moment for Credit</a>
               </h3>
               <p class="ic-article-excerpt">
-                A deep dive into India’s Digital Public Infrastructure (UPI, ONDC, Aadhaar, ABHA) and what it means for global governance.
+                The Reserve Bank’s Unified Lending Interface links land records, GST data and credit bureaus into one API layer for lenders.
               </p>
-              <a class="ic-article-read" href="article-1.html">Read article →</a>
+              <a class="ic-article-read" href="article-uli-lending.html">Read article →</a>
             </div>
           </div>
 
@@ -78,12 +86,12 @@
                 <span class="ic-tag ic-tag-gov">Governance</span>
               </div>
               <h3 class="ic-article-title">
-                <a href="article-hardware-bio.html">Democratization of India’s Hardware, Manufacturing & Bio Labs Infrastructure</a>
+                <a href="article-gem-marketplace.html">GeM: How India Turned Government Procurement Into Open Infrastructure</a>
               </h3>
               <p class="ic-article-excerpt">
-                Why the next phase of India’s growth depends on public machine-tool labs, CNC access, 3D printing hubs, furnaces and bio labs.
+                Government e-Marketplace rebuilt how India’s public sector buys goods and services — turning slow tendering into an open marketplace.
               </p>
-              <a class="ic-article-read" href="article-hardware-bio.html">Read article →</a>
+              <a class="ic-article-read" href="article-gem-marketplace.html">Read article →</a>
             </div>
           </div>
 
@@ -134,5 +142,7 @@
     <div class="ic-footer-bottom">© 2025 Insight Chronicles. All rights reserved.</div>
   </footer>
 
+  <button class="ic-backtotop" id="backToTop" aria-label="Back to top">↑</button>
+  <script src="scripts.js" defer></script>
 </body>
 </html>

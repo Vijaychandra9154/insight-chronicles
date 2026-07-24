@@ -6,6 +6,9 @@
   <title>404 – Page Not Found | Insight Chronicles</title>
   <meta name="robots" content="noindex"/>
   <link rel="stylesheet" href="styles.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-GVGEM9R6Q5"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -15,12 +18,34 @@
   </script>
 </head>
 <body class="ic-body">
+  <div class="ic-reading-progress" id="readingProgressBar"></div>
   <div class="ic-topstrip">404 • Not Found</div>
+
+  <header class="ic-header">
+    <div class="ic-container ic-header-inner">
+      <a href="index.html" class="ic-logo">
+        <span class="ic-logo-mark">IC</span>
+        <span>
+          <span class="ic-logo-title">Insight Chronicles</span>
+          <span class="ic-logo-sub">Long-form global analysis</span>
+        </span>
+      </a>
+      <button class="ic-hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">&#9776;</button>
+      <nav class="ic-nav" id="mainNav">
+        <a href="index.html" class="ic-nav-link">Home</a>
+        <a href="start-here.html" class="ic-nav-link">Start Here</a>
+        <a href="articles.html" class="ic-nav-link">Articles</a>
+        <a href="about.html" class="ic-nav-link">About</a>
+        <a href="contact.html" class="ic-nav-link">Contact</a>
+      </nav>
+    </div>
+  </header>
+
   <main class="ic-main">
     <div class="ic-container" style="padding:50px 0;">
       <h1 style="font-size:42px;margin-bottom:10px;">Page not found</h1>
       <p style="max-width:650px;opacity:0.85;line-height:1.7;">
-        The page you opened doesn’t exist. You can go back home or browse all articles.
+        The page you opened doesn't exist. You can go back home or browse all articles.
       </p>
       <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap;">
         <a class="ic-btn-primary" href="index.html">Go to Homepage</a>
@@ -28,8 +53,11 @@
       </div>
     </div>
   </main>
+
   <footer class="ic-footer">
     <div class="ic-container ic-footer-bottom">© 2025 Insight Chronicles. All rights reserved.</div>
   </footer>
+  <button class="ic-backtotop" id="backToTop" aria-label="Back to top">↑</button>
+  <script src="scripts.js" defer></script>
 </body>
 </html>

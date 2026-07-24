@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Disclaimer – Insight Chronicles</title>
   <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4014745723891069" crossorigin="anonymous"></script>
 
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-GVGEM9R6Q5"></script>
@@ -16,14 +19,26 @@
   </script>
 </head>
 <body class="ic-body">
+  <div class="ic-reading-progress" id="readingProgressBar"></div>
+  <div class="ic-topstrip">Independent analysis on history, geopolitics & technology</div>
+
   <header class="ic-header">
     <div class="ic-container ic-header-inner">
       <a href="index.html" class="ic-logo">
         <span class="ic-logo-mark">IC</span>
-        <span class="ic-logo-text">
+        <span>
           <span class="ic-logo-title">Insight Chronicles</span>
+          <span class="ic-logo-sub">Long-form global analysis</span>
         </span>
       </a>
+          <button class="ic-hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">&#9776;</button>
+      <nav class="ic-nav" id="mainNav">
+        <a href="index.html" class="ic-nav-link">Home</a>
+        <a href="start-here.html" class="ic-nav-link">Start Here</a>
+        <a href="articles.html" class="ic-nav-link">Articles</a>
+        <a href="about.html" class="ic-nav-link">About</a>
+        <a href="contact.html" class="ic-nav-link">Contact</a>
+      </nav>
     </div>
   </header>
 
@@ -47,5 +62,7 @@
   <footer class="ic-footer">
     <div class="ic-footer-bottom">© 2025 Insight Chronicles.</div>
   </footer>
+  <button class="ic-backtotop" id="backToTop" aria-label="Back to top">↑</button>
+  <script src="scripts.js" defer></script>
 </body>
 </html>

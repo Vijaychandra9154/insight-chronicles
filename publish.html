@@ -683,13 +683,8 @@ function buildArticleHTML({ title, desc, date, thumb, slug, readTime, tags, cont
     <div class="ic-footer-bottom">© 2026 Insight Chronicles. All rights reserved.</div>
   </footer>
 
-  <button class="ic-backtotop" id="backToTop">↑ Top</button>
-  <script>
-    document.getElementById('hamburger').addEventListener('click', () => document.getElementById('mainNav').classList.toggle('open'));
-    const btn = document.getElementById("backToTop");
-    window.addEventListener("scroll", () => { btn.style.display = window.scrollY > 500 ? "block" : "none"; });
-    btn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
-  <\/script>
+  <button class="ic-backtotop" id="backToTop" aria-label="Back to top">↑</button>
+  <script src="scripts.js" defer><\/script>
 </body>
 </html>`;
 }
