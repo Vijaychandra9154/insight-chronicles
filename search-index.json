@@ -39,5 +39,45 @@
       "Technology"
     ],
     "body": "Government procurement is one of the least glamorous parts of public administration, and one of the most consequential. Every year, central and state government departments, public sector undertakings, and autonomous bodies buy an enormous volume of goods and services — office supplies, IT equipment, vehicles, construction materials, consulting work. For decades in India, most of that buying happened through a patchwork of paper tenders, department-specific rate contracts, and manual approval chains. It was slow, hard to audit, and structurally friendly to insiders who understood how to navigate it. The Government e-Marketplace, launched in 2016, set out to change that by treating procurement itself as infrastructure — a shared, digital, rules-based system that any eligible seller could plug into, and any government buyer could use without reinventing the process each time. 1) The problem GeM was built to solve GeM replaced fragmented, paper-based tendering with a single digital marketplace. Before GeM, a government office that needed, say, 50 laptops would typically issue a tender, wait for physical bids, evaluate them manually, and negotiate a rate — a process that could take weeks or months for a routine purchase. Because each department ran its own process, prices for identical items varied wildly across ministries, and there was no easy way to compare what one office paid against another. That opacity wasn't necessarily always corrupt, but it made corruption easy to hide inside, and it made honest price discovery nearly impossible. 2) The design: a marketplace, not a portal The distinction matters. Many government digitisation efforts amount to putting a paper form online — a portal. GeM was designed as an actual marketplace: sellers list products and services with prices, buyers compare listings, and standard categories exist so a laptop from one vendor can be compared against a laptop from another on roughly equal terms. Reverse auctions and demand aggregation let government buyers pool purchasing power the way a large private enterprise would, pushing prices down. Every transaction leaves a digital trail — what was bought, from whom, at what price, approved by whom — which is a meaningful upgrade for auditability even if it doesn't eliminate all forms of gaming. 3) Who benefits, and how much The most consequential shift may be on the seller side. Traditional government tendering favoured large, well-resourced vendors who could handle the paperwork and relationships. GeM's standardised, online listing process lowered that barrier considerably, opening the door for small and medium enterprises, and in some categories for individual artisans and self-help groups, to sell directly to government buyers without an intermediary. That's a meaningfully different distribution of opportunity than the tendering system it replaced, even though large vendors still do substantial volume on the platform. On the buyer side, government departments get faster procurement cycles, comparable pricing across categories, and — because everything is logged — a much easier basis for internal and external audit. 4) The limits GeM is not a cure-all. Marketplaces are only as good as the competition within them — if too few sellers list in a given category, price discovery weakens. Quality assurance is a persistent challenge: a photo and a listed spec sheet are a weaker signal than an in-person vendor evaluation, and complaints about mismatched quality do surface. And digitising a process doesn't automatically digitise the incentives behind it — departments under pressure to spend a budget by a fiscal year-end can still make rushed purchasing decisions, just now through a faster interface. GeM reduces certain categories of friction and opacity; it doesn't by itself guarantee that every purchase is optimal. 5) Why this fits the larger India Stack pattern GeM follows the same institutional logic as UPI for payments or ONDC for commerce: build a shared, open, rules-based rail rather than a bespoke system for each participant, and let competition happen on top of it rather than around it. The pattern recurs across Indian public infrastructure because it solves a specific problem well — coordinating a very large number of participants (thousands of government buying entities, lakhs of sellers) without requiring any single actor to build bilateral relationships with every other one. Procurement was a natural, if unglamorous, candidate for the same treatment, and the results — faster cycles, wider seller access, and an auditable record — suggest the model generalises beyond payments and identity into the more mundane, high-volume machinery of the state."
+  },
+  {
+    "title": "The Valuation Game: How the Top 10% Use the Middle Class as Their Exit Strategy",
+    "slug": "article-valuation-game.html",
+    "url": "https://insight-chronicles.com/article-valuation-game.html",
+    "desc": "How India's wealthy elite use retail investors in stock markets and real estate to sustain inflated valuations and quietly cash out before the crash comes.",
+    "date": "2026-05-06",
+    "thumb": "images/governance-model.webp",
+    "tags": [
+      "Geopolitics",
+      "Governance"
+    ],
+    "body": ""
+  },
+  {
+    "title": "Democratization of India's Hardware, Manufacturing and Bio Labs Infrastructure",
+    "slug": "article-hardware-bio.html",
+    "url": "https://insight-chronicles.com/article-hardware-bio.html",
+    "desc": "Why India must democratize access to machine tools, CNC facilities, 3D printing hubs and public bio labs.",
+    "date": "2025-01-02",
+    "thumb": "images/hardware-bio.webp",
+    "tags": [
+      "Technology",
+      "Governance"
+    ],
+    "body": ""
+  },
+  {
+    "title": "How India's Plan of Democratizing Public Services Will Guide Other Countries",
+    "slug": "article-1.html",
+    "url": "https://insight-chronicles.com/article-1.html",
+    "desc": "A breakdown of how UPI, ONDC, Aadhaar and ABHA form a model of open digital infrastructure.",
+    "date": "2025-01-01",
+    "thumb": "images/upi.webp",
+    "tags": [
+      "Geopolitics",
+      "Technology",
+      "Governance"
+    ],
+    "body": ""
   }
 ]

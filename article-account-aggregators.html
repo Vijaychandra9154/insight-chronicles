@@ -19,7 +19,6 @@
 
   <link rel="stylesheet" href="styles.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4014745723891069" crossorigin="anonymous"></script>
 
@@ -33,8 +32,6 @@
 </head>
 <body class="ic-body">
 
-  <div class="ic-reading-progress" id="readingProgressBar"></div>
-
   <div class="ic-topstrip">Independent analysis on history, geopolitics & technology</div>
 
   <header class="ic-header">
@@ -46,7 +43,6 @@
       <button class="ic-hamburger" id="hamburger" aria-label="Menu">&#9776;</button>
       <nav class="ic-nav" id="mainNav">
         <a href="index.html" class="ic-nav-link">Home</a>
-        <a href="start-here.html" class="ic-nav-link">Start Here</a>
         <a href="articles.html" class="ic-nav-link ic-nav-link-active">Articles</a>
         <a href="about.html" class="ic-nav-link">About</a>
         <a href="contact.html" class="ic-nav-link">Contact</a>
@@ -178,7 +174,12 @@
     <div class="ic-footer-bottom">© 2026 Insight Chronicles. All rights reserved.</div>
   </footer>
 
-  <button class="ic-backtotop" id="backToTop" aria-label="Back to top">↑</button>
-  <script src="scripts.js" defer></script>
+  <button class="ic-backtotop" id="backToTop">↑ Top</button>
+  <script>
+    document.getElementById('hamburger').addEventListener('click', () => document.getElementById('mainNav').classList.toggle('open'));
+    const btn = document.getElementById("backToTop");
+    window.addEventListener("scroll", () => { btn.style.display = window.scrollY > 500 ? "block" : "none"; });
+    btn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+  </script>
 </body>
 </html>

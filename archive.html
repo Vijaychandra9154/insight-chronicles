@@ -6,9 +6,6 @@
   <title>Archive – Insight Chronicles</title>
   <meta name="description" content="Every Insight Chronicles article, grouped by year." />
   <link rel="stylesheet" href="styles.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4014745723891069" crossorigin="anonymous"></script>
 
@@ -21,7 +18,6 @@
   </script>
 </head>
 <body class="ic-body">
-  <div class="ic-reading-progress" id="readingProgressBar"></div>
   <div class="ic-topstrip">Independent analysis on history, geopolitics & technology</div>
 
   <header class="ic-header">
@@ -30,7 +26,7 @@
         <span class="ic-logo-mark">IC</span>
         <span><span class="ic-logo-title">Insight Chronicles</span><span class="ic-logo-sub">Long-form global analysis</span></span>
       </a>
-      <button class="ic-hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">&#9776;</button>
+      <button class="ic-hamburger" id="hamburger" aria-label="Menu">&#9776;</button>
       <nav class="ic-nav" id="mainNav">
         <a href="index.html" class="ic-nav-link">Home</a>
         <a href="articles.html" class="ic-nav-link">Articles</a>
@@ -64,7 +60,7 @@
   </footer>
 
   <script>
-    
+    document.getElementById('hamburger').addEventListener('click', () => document.getElementById('mainNav').classList.toggle('open'));
 
     function escapeHtml(str) {
       return (str || "").replace(/[&<>"']/g, function (m) {
@@ -108,6 +104,5 @@
           "<p style=\"color:#9ca3af;\">Couldn't load the archive right now.</p>";
       });
   </script>
-  <script src="scripts.js" defer></script>
 </body>
 </html>

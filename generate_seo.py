@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import json
 import os
 import re
@@ -24,45 +23,6 @@ INDEX_FILE = "index.html"
 
 AUTO_START = "<!-- AUTO-LATEST-ARTICLES:START -->"
 AUTO_END = "<!-- AUTO-LATEST-ARTICLES:END -->"
-
-FONT_PREAMBLE = """<link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">"""
-
-HEADER_HTML = """<header class="ic-header">
-    <div class="ic-container ic-header-inner">
-      <a href="index.html" class="ic-logo">
-        <span class="ic-logo-mark">IC</span>
-        <span>
-          <span class="ic-logo-title">Insight Chronicles</span>
-          <span class="ic-logo-sub">Long-form global analysis</span>
-        </span>
-      </a>
-      <button class="ic-hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">&#9776;</button>
-      <nav class="ic-nav" id="mainNav">
-        <a href="index.html" class="ic-nav-link">Home</a>
-        <a href="start-here.html" class="ic-nav-link">Start Here</a>
-        <a href="articles.html" class="ic-nav-link ic-nav-link-active">Articles</a>
-        <a href="about.html" class="ic-nav-link">About</a>
-        <a href="contact.html" class="ic-nav-link">Contact</a>
-      </nav>
-    </div>
-  </header>"""
-
-HEADER_HTML_ARTICLES_ACTIVE = HEADER_HTML
-
-HEADER_HTML_SEARCH_ACTIVE = HEADER_HTML.replace(
-    'class="ic-nav-link ic-nav-link-active">Articles',
-    'class="ic-nav-link">Articles'
-).replace(
-    'class="ic-nav-link">Search',
-    'class="ic-nav-link ic-nav-link-active">Search'
-)
-
-FOOTER_SCRIPTS = """<button class="ic-backtotop" id="backToTop" aria-label="Back to top">↑</button>
-  <script src="scripts.js" defer></script>"""
-
-READING_PROGRESS = '<div class="ic-reading-progress" id="readingProgressBar"></div>'
 
 CATEGORIES = {
     "History": {"file": "history.html", "title": "History & Civilisations", "desc": "Long-form essays exploring empires, trade networks, institutions and the foundations of power."},
@@ -230,7 +190,7 @@ def make_homepage_cards(articles, limit=6):
         blocks.append(f"""
         <article class="ic-article-card">
           <a href="{slug}" class="ic-article-thumb-link">
-            <img src="{thumb}" alt="{title}" class="ic-article-thumb" width="320" height="200" />
+            <img src="{thumb}" alt="{title}" class="ic-article-thumb" />
           </a>
           <div>
             <div class="ic-article-tags">{tag_spans}</div>
@@ -277,7 +237,7 @@ def make_articles_page(articles):
         cards.append(f"""
         <article class="card">
           <a href="{slug}" class="thumbwrap">
-            <img src="{thumb}" alt="{title}" width="600" height="350" />
+            <img src="{thumb}" alt="{title}" />
           </a>
           <div class="cardbody">
             <div class="tags">{tags_html}</div>
@@ -289,24 +249,36 @@ def make_articles_page(articles):
         </article>
         """)
 
-    cards_html = "".join(cards)
-
-    return """<!doctype html>
+    return f"""<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Articles – """ + SITE_NAME + """</title>
-  <meta name="description" content="All long-form articles published on """ + SITE_NAME + """." />
+  <title>Articles – {SITE_NAME}</title>
+  <meta name="description" content="All long-form articles published on {SITE_NAME}." />
   <link rel="stylesheet" href="styles.css" />
-  """ + FONT_PREAMBLE + """
-  """ + GA_SNIPPET + """
+  {GA_SNIPPET}
 </head>
 <body class="ic-body">
-  """ + READING_PROGRESS + """
-  <div class="ic-topstrip">All articles • """ + SITE_NAME + """</div>
+  <div class="ic-topstrip">All articles • {SITE_NAME}</div>
 
-  """ + HEADER_HTML + """
+  <header class="ic-header">
+    <div class="ic-container ic-header-inner">
+      <a href="index.html" class="ic-logo">
+        <span class="ic-logo-mark">IC</span>
+        <span>
+          <span class="ic-logo-title">{SITE_NAME}</span>
+          <span class="ic-logo-sub">Long-form global analysis</span>
+        </span>
+      </a>
+
+      <nav class="ic-nav">
+        <a href="index.html" class="ic-nav-link">Home</a>
+        <a href="articles.html" class="ic-nav-link ic-nav-link-active">Articles</a>
+        <a href="search.html" class="ic-nav-link">Search</a>
+      </nav>
+    </div>
+  </header>
 
   <main class="ic-main">
     <div class="ic-container">
@@ -316,15 +288,14 @@ def make_articles_page(articles):
       </div>
 
       <div class="ic-articles-grid">
-        """ + cards_html + """
+        {''.join(cards)}
       </div>
     </div>
   </main>
 
   <footer class="ic-footer">
-    <div class="ic-container ic-footer-bottom">© 2025 """ + SITE_NAME + """. All rights reserved.</div>
+    <div class="ic-container ic-footer-bottom">© 2025 {SITE_NAME}. All rights reserved.</div>
   </footer>
-  """ + FOOTER_SCRIPTS + """
 </body>
 </html>
 """
@@ -344,7 +315,7 @@ def make_category_page(tag_name, info, articles):
         cards.append(f"""
         <article class="ic-article-card">
           <a href="{slug}" class="ic-article-thumb-link">
-            <img src="{thumb}" alt="{title}" class="ic-article-thumb" width="320" height="200" />
+            <img src="{thumb}" alt="{title}" class="ic-article-thumb" />
           </a>
           <div>
             <h3 class="ic-article-title"><a href="{slug}">{title}</a></h3>
@@ -357,41 +328,54 @@ def make_category_page(tag_name, info, articles):
 
     cards_html = "\n".join(cards) if cards else "<p style='color:#9ca3af;'>No articles published yet. Coming soon.</p>"
 
-    return """<!doctype html>
+    return f"""<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>""" + escape(info["title"]) + """ – """ + SITE_NAME + """</title>
-  <meta name="description" content=\"""" + escape(info["desc"]) + """" />
+  <title>{escape(info["title"])} – {SITE_NAME}</title>
+  <meta name="description" content="{escape(info["desc"])}" />
   <link rel="stylesheet" href="styles.css" />
-  """ + FONT_PREAMBLE + """
-  """ + GA_SNIPPET + """
+  {GA_SNIPPET}
 </head>
 <body class="ic-body">
-  """ + READING_PROGRESS + """
-  <div class="ic-topstrip">Independent analysis on history, geopolitics & technology</div>
 
-  """ + HEADER_HTML.replace('class="ic-nav-link ic-nav-link-active">Articles', 'class="ic-nav-link">Articles') + """
+<header class="ic-header">
+  <div class="ic-container ic-header-inner">
+    <a href="index.html" class="ic-logo">
+      <span class="ic-logo-mark">IC</span>
+      <span>
+        <span class="ic-logo-title">{SITE_NAME}</span>
+        <span class="ic-logo-sub">Long-form global analysis</span>
+      </span>
+    </a>
 
-  <main class="ic-main">
-    <div class="ic-container">
-      <section class="ic-sidebar-block">
-        <h1 style="margin-top:0;">""" + escape(info["title"]) + """</h1>
-        <p style="color:#cbd5f5;">""" + escape(info["desc"]) + """</p>
-      </section>
+    <nav class="ic-nav">
+      <a href="index.html" class="ic-nav-link">Home</a>
+      <a href="articles.html" class="ic-nav-link">Articles</a>
+      <a href="search.html" class="ic-nav-link">Search</a>
+    </nav>
+  </div>
+</header>
 
-      <section class="ic-sidebar-block">
-        <h2 style="margin-top:0;">Articles</h2>
-        """ + cards_html + """
-      </section>
-    </div>
-  </main>
+<main class="ic-main">
+  <div class="ic-container">
+    <section class="ic-sidebar-block">
+      <h1 style="margin-top:0;">{escape(info["title"])}</h1>
+      <p style="color:#cbd5f5;">{escape(info["desc"])}</p>
+    </section>
 
-  <footer class="ic-footer">
-    <div class="ic-container ic-footer-bottom">© 2025 """ + SITE_NAME + """. All rights reserved.</div>
-  </footer>
-  """ + FOOTER_SCRIPTS + """
+    <section class="ic-sidebar-block">
+      <h2 style="margin-top:0;">Articles</h2>
+      {cards_html}
+    </section>
+  </div>
+</main>
+
+<footer class="ic-footer">
+  <div class="ic-container ic-footer-bottom">© 2025 {SITE_NAME}. All rights reserved.</div>
+</footer>
+
 </body>
 </html>
 """
@@ -425,117 +409,132 @@ def make_search_index(articles):
     return json.dumps(data, indent=2, ensure_ascii=False)
 
 def make_search_page():
-    return """<!doctype html>
+    # ✅ FIXED: No Python code inside JS
+    return f"""<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Search – """ + SITE_NAME + """</title>
+  <title>Search – {SITE_NAME}</title>
   <meta name="description" content="Search articles on Insight Chronicles." />
   <link rel="stylesheet" href="styles.css" />
-  """ + FONT_PREAMBLE + """
-  """ + GA_SNIPPET + """
+  {GA_SNIPPET}
 </head>
 <body class="ic-body">
-  """ + READING_PROGRESS + """
-  <div class="ic-topstrip">Search • """ + SITE_NAME + """</div>
 
-  """ + HEADER_HTML_SEARCH_ACTIVE + """
+<div class="ic-topstrip">Search • {SITE_NAME}</div>
 
-  <main class="ic-main">
-    <div class="ic-container">
-      <section class="ic-sidebar-block">
-        <h1 style="margin-top:0;">Search Articles</h1>
-        <p style="color:#cbd5f5;">Type keywords to search across all published posts.</p>
+<header class="ic-header">
+  <div class="ic-container ic-header-inner">
+    <a href="index.html" class="ic-logo">
+      <span class="ic-logo-mark">IC</span>
+      <span>
+        <span class="ic-logo-title">{SITE_NAME}</span>
+        <span class="ic-logo-sub">Long-form global analysis</span>
+      </span>
+    </a>
 
-        <input id="q" type="text" placeholder="Search (UPI, ONDC, labs, geopolitics...)"
-          style="width:100%;padding:14px;border-radius:14px;border:1px solid rgba(148,163,184,0.25);background:#020617;color:#e5e7eb;" />
+    <nav class="ic-nav">
+      <a href="index.html" class="ic-nav-link">Home</a>
+      <a href="articles.html" class="ic-nav-link">Articles</a>
+      <a href="search.html" class="ic-nav-link ic-nav-link-active">Search</a>
+    </nav>
+  </div>
+</header>
 
-        <p id="count" style="margin-top:10px;color:#9ca3af;">Loading…</p>
-      </section>
+<main class="ic-main">
+  <div class="ic-container">
+    <section class="ic-sidebar-block">
+      <h1 style="margin-top:0;">Search Articles</h1>
+      <p style="color:#cbd5f5;">Type keywords to search across all published posts.</p>
 
-      <section class="ic-sidebar-block">
-        <h2 style="margin-top:0;">Results</h2>
-        <div id="results" style="display:grid;gap:14px;"></div>
-      </section>
-    </div>
-  </main>
+      <input id="q" type="text" placeholder="Search (UPI, ONDC, labs, geopolitics...)" 
+        style="width:100%;padding:14px;border-radius:14px;border:1px solid rgba(148,163,184,0.25);background:#020617;color:#e5e7eb;" />
 
-  <footer class="ic-footer">
-    <div class="ic-container ic-footer-bottom">© 2025 """ + SITE_NAME + """. All rights reserved.</div>
-  </footer>
-  """ + FOOTER_SCRIPTS + """
+      <p id="count" style="margin-top:10px;color:#9ca3af;">Loading…</p>
+    </section>
 
-  <script>
-    let data = [];
+    <section class="ic-sidebar-block">
+      <h2 style="margin-top:0;">Results</h2>
+      <div id="results" style="display:grid;gap:14px;"></div>
+    </section>
+  </div>
+</main>
 
-    async function loadIndex() {
-      const res = await fetch("search-index.json");
-      data = await res.json();
-      document.getElementById("count").textContent = data.length + " articles indexed";
-      render("");
-    }
+<footer class="ic-footer">
+  <div class="ic-container ic-footer-bottom">© 2025 {SITE_NAME}. All rights reserved.</div>
+</footer>
 
-    function escapeHtml(str) {
-      return (str || "").replace(/[&<>"']/g, function (m) {
-        return {
-          "&": "&amp;",
-          "<": "&lt;",
-          ">": "&gt;",
-          '"': "&quot;",
-          "'": "&#039;"
-        }[m];
-      });
-    }
+<script>
+  let data = [];
 
-    function makeTagsHtml(tags) {
-      if (!tags || !tags.length) return "";
-      return tags.slice(0,3).map(t => `<span class="ic-tag">${escapeHtml(t)}</span>`).join("");
-    }
+  async function loadIndex() {{
+    const res = await fetch("search-index.json");
+    data = await res.json();
+    document.getElementById("count").textContent = data.length + " articles indexed";
+    render("");
+  }}
 
-    function render(q) {
-      const results = document.getElementById("results");
-      results.innerHTML = "";
+  function escapeHtml(str) {{
+    return (str || "").replace(/[&<>"']/g, function (m) {{
+      return {{
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+      }}[m];
+    }});
+  }}
 
-      const query = q.trim().toLowerCase();
+  function makeTagsHtml(tags) {{
+    if (!tags || !tags.length) return "";
+    return tags.slice(0,3).map(t => `<span class="ic-tag">${{escapeHtml(t)}}</span>`).join("");
+  }}
 
-      const filtered = data.filter(a => {
-        const hay = (
-          a.title + " " +
-          a.desc + " " +
-          (a.tags||[]).join(" ") + " " +
-          a.date + " " +
-          (a.body || "")
-        ).toLowerCase();
-        return query === "" || hay.includes(query);
-      });
+  function render(q) {{
+    const results = document.getElementById("results");
+    results.innerHTML = "";
 
-      document.getElementById("count").textContent = filtered.length + " result(s)";
+    const query = q.trim().toLowerCase();
 
-      filtered.forEach(a => {
-        const div = document.createElement("div");
-        div.className = "ic-article-card";
-        div.style.gridTemplateColumns = "140px 1fr";
+    const filtered = data.filter(a => {{
+      const hay = (
+        a.title + " " +
+        a.desc + " " +
+        (a.tags||[]).join(" ") + " " +
+        a.date + " " +
+        (a.body || "")
+      ).toLowerCase();
+      return query === "" || hay.includes(query);
+    }});
 
-        div.innerHTML = `
-          <a href="${a.slug}" class="ic-article-thumb-link">
-            <img src="${a.thumb}" alt="${escapeHtml(a.title)}" class="ic-article-thumb" />
-          </a>
-          <div>
-            <div class="ic-article-tags">${makeTagsHtml(a.tags)}</div>
-            <h3 class="ic-article-title"><a href="${a.slug}">${escapeHtml(a.title)}</a></h3>
-            <p class="ic-article-meta">${escapeHtml(a.date)}</p>
-            <p class="ic-article-excerpt">${escapeHtml(a.desc)}</p>
-            <a href="${a.slug}" class="ic-article-read">Read article →</a>
-          </div>
-        `;
-        results.appendChild(div);
-      });
-    }
+    document.getElementById("count").textContent = filtered.length + " result(s)";
 
-    document.getElementById("q").addEventListener("input", e => render(e.target.value));
-    loadIndex();
-  </script>
+    filtered.forEach(a => {{
+      const div = document.createElement("div");
+      div.className = "ic-article-card";
+      div.style.gridTemplateColumns = "140px 1fr";
+
+      div.innerHTML = `
+        <a href="${{a.slug}}" class="ic-article-thumb-link">
+          <img src="${{a.thumb}}" alt="${{escapeHtml(a.title)}}" class="ic-article-thumb" />
+        </a>
+        <div>
+          <div class="ic-article-tags">${{makeTagsHtml(a.tags)}}</div>
+          <h3 class="ic-article-title"><a href="${{a.slug}}">${{escapeHtml(a.title)}}</a></h3>
+          <p class="ic-article-meta">${{escapeHtml(a.date)}}</p>
+          <p class="ic-article-excerpt">${{escapeHtml(a.desc)}}</p>
+          <a href="${{a.slug}}" class="ic-article-read">Read article →</a>
+        </div>
+      `;
+      results.appendChild(div);
+    }});
+  }}
+
+  document.getElementById("q").addEventListener("input", e => render(e.target.value));
+  loadIndex();
+</script>
 
 </body>
 </html>
@@ -548,28 +547,23 @@ def make_site_json(articles):
     }, indent=2, ensure_ascii=False)
 
 def make_404():
-    return """<!doctype html>
+    return f"""<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>404 – Page Not Found | """ + SITE_NAME + """</title>
+  <title>404 – Page Not Found | {SITE_NAME}</title>
   <meta name="robots" content="noindex"/>
   <link rel="stylesheet" href="styles.css"/>
-  """ + FONT_PREAMBLE + """
-  """ + GA_SNIPPET + """
+  {GA_SNIPPET}
 </head>
 <body class="ic-body">
-  """ + READING_PROGRESS + """
   <div class="ic-topstrip">404 • Not Found</div>
-
-  """ + HEADER_HTML.replace('class="ic-nav-link ic-nav-link-active">Articles', 'class="ic-nav-link">Articles') + """
-
   <main class="ic-main">
     <div class="ic-container" style="padding:50px 0;">
       <h1 style="font-size:42px;margin-bottom:10px;">Page not found</h1>
       <p style="max-width:650px;opacity:0.85;line-height:1.7;">
-        The page you opened doesn't exist. You can go back home or browse all articles.
+        The page you opened doesn’t exist. You can go back home or browse all articles.
       </p>
       <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap;">
         <a class="ic-btn-primary" href="index.html">Go to Homepage</a>
@@ -577,11 +571,9 @@ def make_404():
       </div>
     </div>
   </main>
-
   <footer class="ic-footer">
-    <div class="ic-container ic-footer-bottom">© 2025 """ + SITE_NAME + """. All rights reserved.</div>
+    <div class="ic-container ic-footer-bottom">© 2025 {SITE_NAME}. All rights reserved.</div>
   </footer>
-  """ + FOOTER_SCRIPTS + """
 </body>
 </html>
 """
@@ -623,3 +615,13 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+
+
+
+
+
+
+
+
