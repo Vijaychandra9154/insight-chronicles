@@ -7,6 +7,20 @@
   },
   "articles": [
     {
+      "title": "UPI: How India Built the World's Largest Real-Time Payment System",
+      "slug": "article-upi-digital-payments.html",
+      "url": "https://insight-chronicles.com/article-upi-digital-payments.html",
+      "desc": "How UPI grew from 34% to 83% of all digital payments in India in just five years — and why the world is now copying it.",
+      "date": "2026-05-10",
+      "thumb": "images/upi.webp",
+      "thumb_og": "images/upi.webp",
+      "tags": [
+        "Technology",
+        "Governance"
+      ],
+      "content_html": ""
+    },
+    {
       "title": "The Valuation Game: How the Top 10% Use the Middle Class as Their Exit Strategy",
       "slug": "article-valuation-game.html",
       "url": "https://insight-chronicles.com/article-valuation-game.html",
