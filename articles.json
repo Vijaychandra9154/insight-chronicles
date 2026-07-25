@@ -1,5 +1,20 @@
 [
   {
+    "title": "ONDC: India's Plan to Break Amazon and Flipkart's Monopoly",
+    "slug": "article-ondc-ecommerce.html",
+    "url": "https://insight-chronicles.com/article-ondc-ecommerce.html",
+    "desc": "How India's Open Network for Digital Commerce is democratizing e-commerce by letting any seller reach any buyer on any app — without platform lock-in.",
+    "date": "2026-05-12",
+    "thumb": "images/ondc.webp",
+    "thumb_og": "images/ondc.webp",
+    "tags": [
+      "Technology",
+      "Governance",
+      "Geopolitics"
+    ],
+    "content_html": ""
+  },
+  {
     "title": "UPI: How India Built the World's Largest Real-Time Payment System",
     "slug": "article-upi-digital-payments.html",
     "url": "https://insight-chronicles.com/article-upi-digital-payments.html",
