@@ -1,5 +1,19 @@
 [
   {
+    "title": "Digi Yatra: India's Plan to Democratize Airport Services",
+    "slug": "article-digi-yatra-travel.html",
+    "url": "https://insight-chronicles.com/article-digi-yatra-travel.html",
+    "desc": "How India's biometric-based digital travel system is rewiring airport journeys — and what it means for the future of seamless, privacy-first travel infrastructure.",
+    "date": "2026-07-25",
+    "thumb": "images/digi-yatra.webp",
+    "tags": [
+      "Technology",
+      "Governance",
+      "Geopolitics"
+    ],
+    "body": "Every year, over 500 million passengers pass through Indian airports. Digi Yatra is a biometric-based digital travel system that enables paperless, contactless airport entry and boarding using facial recognition technology. Built on a decentralised digital identity architecture using W3C open standards, Self-Sovereign Identity, Verifiable Credentials, and Decentralized Identifiers, the platform has crossed 10 crore passenger journeys across 38 airports. Average airport entry processing time has been reduced from 15 seconds to just 5 seconds per passenger. The system stores identity data on the user's phone, not on a central server, and airport biometric data is purged within 24 hours of departure. Despite privacy concerns, a 2024 data breach, and questions about its legal structure as a Section 8 not-for-profit private company, Digi Yatra represents one of the world's largest implementations of self-sovereign identity at national scale."
+  },
+  {
     "title": "UPI: How India Built the World's Largest Real-Time Payment System",
     "slug": "article-upi-digital-payments.html",
     "url": "https://insight-chronicles.com/article-upi-digital-payments.html",
