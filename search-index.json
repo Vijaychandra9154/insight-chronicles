@@ -1,5 +1,19 @@
 [
   {
+    "title": "iDEX: India's Plan to Democratize Defence Innovation",
+    "slug": "article-idex-defence-innovation.html",
+    "url": "https://insight-chronicles.com/article-idex-defence-innovation.html",
+    "desc": "How India's defence innovation programme is rewiring who builds military technology — breaking the legacy vendor monopoly and creating a pathway for startups to become defence suppliers.",
+    "date": "2026-07-25",
+    "thumb": "images/idex.webp",
+    "tags": [
+      "Technology",
+      "Governance",
+      "Geopolitics"
+    ],
+    "body": "Until 2018, India's defence innovation ecosystem was a closed fortress dominated by DPSUs, large conglomerates, and foreign OEMs. iDEX (Innovations for Defence Excellence) changed that by creating an open, challenge-based innovation marketplace. Launched in 2018 and implemented by the Defence Innovation Organisation, iDEX has engaged 676 startups, MSMEs and individual innovators with 551 design-and-development contracts signed worth around $344 million. The programme operates through Defence India Startup Challenges (DISC), SPARK grants up to ₹25 crore, and a codified procurement pathway under the Defence Acquisition Procedure 2020. Success stories include Sagar Defence winning the Dubai Airshow 2025 autonomous robotics challenge, QNu Labs achieving record Quantum Key Distribution distances, and startups signing CRADAs with the U.S. Space Force. With 58 prototypes receiving procurement clearance and 45 contracts worth ₹2,326 crore signed, iDEX is building a pipeline from startup innovation to military deployment — though the prototype-to-production gap remains the programme's defining challenge."
+  },
+  {
     "title": "Digi Yatra: India's Plan to Democratize Airport Services",
     "slug": "article-digi-yatra-travel.html",
     "url": "https://insight-chronicles.com/article-digi-yatra-travel.html",
