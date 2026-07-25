@@ -1,5 +1,19 @@
 [
   {
+    "title": "Aadhaar: Democratization of Identity in India",
+    "slug": "article-aadhaar-identity.html",
+    "url": "https://insight-chronicles.com/article-aadhaar-identity.html",
+    "desc": "How Aadhaar's digital identity layer rewired identity verification for 1.3 billion Indians, enabling Direct Benefit Transfer and eliminating ghost beneficiaries at unprecedented scale.",
+    "date": "2026-05-15",
+    "thumb": "images/aadhaar.webp",
+    "thumb_og": "images/aadhaar.webp",
+    "tags": [
+      "Technology",
+      "Governance"
+    ],
+    "content_html": ""
+  },
+  {
     "title": "ONDC: India's Plan to Break Amazon and Flipkart's Monopoly",
     "slug": "article-ondc-ecommerce.html",
     "url": "https://insight-chronicles.com/article-ondc-ecommerce.html",
