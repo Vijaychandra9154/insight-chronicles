@@ -1,5 +1,16 @@
 [
   {
+    "title": "Education: India's Plan to Democratize Learning",
+    "slug": "article-education-learning.html",
+    "url": "https://insight-chronicles.com/article-education-learning.html",
+    "desc": "How India's digital education infrastructure is breaking the elite campus monopoly, taking classrooms to every village, and rewiring who gets access to knowledge.",
+    "date": "2026-07-26",
+    "thumb": "images/education.webp",
+    "thumb_og": "images/education.webp",
+    "tags": ["Technology", "Governance", "Geopolitics"],
+    "content_html": ""
+  },
+  {
     "title": "DBT: India's Plan to Democratize Welfare Delivery",
     "slug": "article-dbt-welfare.html",
     "url": "https://insight-chronicles.com/article-dbt-welfare.html",

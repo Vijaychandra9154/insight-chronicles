@@ -1,5 +1,15 @@
 [
   {
+    "title": "Education: India's Plan to Democratize Learning",
+    "slug": "article-education-learning.html",
+    "url": "https://insight-chronicles.com/article-education-learning.html",
+    "desc": "How India's digital education infrastructure is breaking the elite campus monopoly, taking classrooms to every village, and rewiring who gets access to knowledge.",
+    "date": "2026-07-26",
+    "thumb": "images/education.webp",
+    "tags": ["Technology", "Governance", "Geopolitics"],
+    "body": "India has 24.8 crore school-going children and 4.33 crore higher education students, but quality education was locked inside elite campuses. The PM e-VIDYA initiative integrates multiple platforms: SWAYAM (5.80 crore enrolments, 4,400+ courses, 52.88 lakh certifications), NPTEL (54,000+ hours of IIT content, 82 crore YouTube views), DIKSHA (2 crore+ users), SWAYAM Prabha (48 DTH channels), and IIT Madras online BS degrees in Data Science, Electronic Systems, Aeronautics, and Management. Bodhan AI, launched February 2026 with ₹500 crore funding, is an interoperable AI backbone for education modeled on UPI. The UGC allows up to 40% of degree credits through SWAYAM. Challenges include the digital divide (only 42% urban and 15% rural households had internet per NSSO), the language barrier for STEM content, quality consistency across 4,400+ courses, and the teacher training gap across India's 10 million+ teachers."
+  },
+  {
     "title": "DBT: India's Plan to Democratize Welfare Delivery",
     "slug": "article-dbt-welfare.html",
     "url": "https://insight-chronicles.com/article-dbt-welfare.html",
