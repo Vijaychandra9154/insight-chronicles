@@ -1,5 +1,25 @@
 [
   {
+    "title": "ABHA: India's Plan to Democratize Health Records",
+    "slug": "article-abha-health.html",
+    "url": "https://insight-chronicles.com/article-abha-health.html",
+    "desc": "How India's Ayushman Bharat Digital Mission is rewiring healthcare, empowering patients, and breaking the information monopoly of hospitals and insurers.",
+    "date": "2026-07-26",
+    "thumb": "images/abha.webp",
+    "tags": ["Technology", "Governance", "Geopolitics"],
+    "body": "Medical records in India are scattered across hospitals, clinics, and labs — stored in paper files or locked in proprietary systems. The Ayushman Bharat Health Account (ABHA), launched in September 2021 under the Ayushman Bharat Digital Mission, is a 14-digit digital health identity that gives patients control over their own health data. As of July 2026, over 93.95 crore ABHA accounts have been created with 105 crore health records linked. The ecosystem includes 5.33 lakh registered health facilities and 9.85 lakh healthcare professionals. The Scan and Share service reduced OPD waiting times from one hour to 2-5 minutes. Women account for 49.75% of ABHA holders. The Digital Health Incentive Scheme has disbursed over ₹107 crore to hospitals. Built on a consent-manager architecture, ABHA ensures no one can access health records without explicit, revocable consent. Challenges include the digital divide in remote areas, data security concerns, public confusion with PM-JAY, and uneven integration with legacy healthcare systems."
+  },
+  {
+    "title": "ONOE: India's Plan to Democratize Elections",
+    "slug": "article-onoe-elections.html",
+    "url": "https://insight-chronicles.com/article-onoe-elections.html",
+    "desc": "How India's One Nation, One Election proposal is rewiring the electoral calendar, reducing governance disruption, and what it means for federal democracy.",
+    "date": "2026-07-26",
+    "thumb": "images/onoe.webp",
+    "tags": ["Governance", "Geopolitics", "Technology"],
+    "body": "India holds elections almost every year, creating a permanent campaign mode. One Nation, One Election (ONOE) is a proposed constitutional reform to synchronise Lok Sabha and State Assembly elections. Based on the Kovind Committee's 18,626-page report recommending 18 constitutional amendments, ONOE would use an appointed date mechanism, remainder-term provisions, and a constructive vote of no confidence to maintain synchronised cycles. Supporters cite ₹7 lakh crore in potential savings and governance continuity. Opponents argue it threatens federalism by curtailing state assembly terms, nationalises local electoral narratives, and bypasses state ratification requirements. The 2024 election results reduced the NDA to 293 seats, making the two-thirds supermajority needed for constitutional amendments contingent on opposition support. The JPC targets 2029 implementation, but legal challenges on Basic Structure grounds are expected."
+  },
+  {
     "title": "ONOS: India's Plan to Democratize Research",
     "slug": "article-onos-research.html",
     "url": "https://insight-chronicles.com/article-onos-research.html",

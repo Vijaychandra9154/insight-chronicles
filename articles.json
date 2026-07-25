@@ -1,5 +1,27 @@
 [
   {
+    "title": "ABHA: India's Plan to Democratize Health Records",
+    "slug": "article-abha-health.html",
+    "url": "https://insight-chronicles.com/article-abha-health.html",
+    "desc": "How India's Ayushman Bharat Digital Mission is rewiring healthcare, empowering patients, and breaking the information monopoly of hospitals and insurers.",
+    "date": "2026-07-26",
+    "thumb": "images/abha.webp",
+    "thumb_og": "images/abha.webp",
+    "tags": ["Technology", "Governance", "Geopolitics"],
+    "content_html": ""
+  },
+  {
+    "title": "ONOE: India's Plan to Democratize Elections",
+    "slug": "article-onoe-elections.html",
+    "url": "https://insight-chronicles.com/article-onoe-elections.html",
+    "desc": "How India's One Nation, One Election proposal is rewiring the electoral calendar, reducing governance disruption, and what it means for federal democracy.",
+    "date": "2026-07-26",
+    "thumb": "images/onoe.webp",
+    "thumb_og": "images/onoe.webp",
+    "tags": ["Governance", "Geopolitics", "Technology"],
+    "content_html": ""
+  },
+  {
     "title": "ONOS: India's Plan to Democratize Research",
     "slug": "article-onos-research.html",
     "url": "https://insight-chronicles.com/article-onos-research.html",
