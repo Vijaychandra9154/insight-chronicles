@@ -1,5 +1,19 @@
 [
   {
+    "title": "GeM: India's Plan to Democratize Government Procurement",
+    "slug": "article-gem-procurement.html",
+    "url": "https://insight-chronicles.com/article-gem-procurement.html",
+    "desc": "How India's digital marketplace is rewiring public spending, breaking middlemen cartels, and opening government markets to millions of small businesses.",
+    "date": "2026-07-25",
+    "thumb": "images/gem.webp",
+    "tags": [
+      "Technology",
+      "Governance",
+      "Geopolitics"
+    ],
+    "body": "Before 2016, selling to the Indian government required navigating opaque tenders, middlemen, and corruption. The Government e-Marketplace (GeM), launched in August 2016 and incorporated as a Section 8 non-profit under the Ministry of Commerce, changed that by creating a unified digital marketplace where 1.36 lakh government buyers can purchase directly from over 25 lakh registered sellers. GeM has recorded cumulative GMV of ₹18.4 lakh crore, with FY 2025-26 alone crossing ₹5 lakh crore. Over 11 lakh MSEs are registered, securing 68% of total orders. Women-led enterprises have received cumulative orders worth ₹83,323 crore, and startups ₹54,006 crore through the SWAYATT initiative. AI-driven tools including Price Gap Analysis and a sanity framework monitor collusion, cartelisation, and price anomalies, saving approximately 8% on procurement costs. The platform integrates with UPI, Aadhaar, and DigiLocker as part of India Stack. Challenges include payment delays, catalogue quality control, and the unresolved question of extending the platform to works contracts."
+  },
+  {
     "title": "iDEX: India's Plan to Democratize Defence Innovation",
     "slug": "article-idex-defence-innovation.html",
     "url": "https://insight-chronicles.com/article-idex-defence-innovation.html",
