@@ -1,5 +1,19 @@
 [
   {
+    "title": "ULIP: India's Plan to Democratize Logistics",
+    "slug": "article-ulip-logistics.html",
+    "url": "https://insight-chronicles.com/article-ulip-logistics.html",
+    "desc": "How India's Unified Logistics Interface Platform is breaking data silos, empowering small players, and rewiring the nation's supply chains through API-based integration.",
+    "date": "2026-07-25",
+    "thumb": "images/ulip.webp",
+    "tags": [
+      "Technology",
+      "Governance",
+      "Geopolitics"
+    ],
+    "body": "India's logistics costs were estimated at 13-14% of GDP — significantly higher than the global benchmark of 7-8%. The Unified Logistics Interface Platform (ULIP), launched in September 2022 under the National Logistics Policy, is a digital gateway that integrates 45 systems across 11 central ministries through 137 APIs covering over 2,000 data fields. Operated by NICDC Logistics Data Services Limited (NLDSL), a 50:50 joint venture between the Government of India and NEC Corporation, ULIP has recorded over 300 crore API transactions with 1,300+ registered companies and 240+ applications built on the platform. Major manufacturers like Tata Steel and Asian Paints use it for supply chain optimisation. The Track Your Transport app extends digital tools to small transporters. State governments including Andhra Pradesh and Maharashtra have signed MoUs to build integrated logistics dashboards. Challenges include institutional fragmentation across transport modes, the digital divide among small operators, and data quality across source systems."
+  },
+  {
     "title": "GeM: India's Plan to Democratize Government Procurement",
     "slug": "article-gem-procurement.html",
     "url": "https://insight-chronicles.com/article-gem-procurement.html",

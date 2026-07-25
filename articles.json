@@ -1,5 +1,20 @@
 [
   {
+    "title": "ULIP: India's Plan to Democratize Logistics",
+    "slug": "article-ulip-logistics.html",
+    "url": "https://insight-chronicles.com/article-ulip-logistics.html",
+    "desc": "How India's Unified Logistics Interface Platform is breaking data silos, empowering small players, and rewiring the nation's supply chains through API-based integration.",
+    "date": "2026-07-25",
+    "thumb": "images/ulip.webp",
+    "thumb_og": "images/ulip.webp",
+    "tags": [
+      "Technology",
+      "Governance",
+      "Geopolitics"
+    ],
+    "content_html": ""
+  },
+  {
     "title": "GeM: India's Plan to Democratize Government Procurement",
     "slug": "article-gem-procurement.html",
     "url": "https://insight-chronicles.com/article-gem-procurement.html",
