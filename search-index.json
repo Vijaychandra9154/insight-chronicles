@@ -1,5 +1,15 @@
 [
   {
+    "title": "DBT: India's Plan to Democratize Welfare Delivery",
+    "slug": "article-dbt-welfare.html",
+    "url": "https://insight-chronicles.com/article-dbt-welfare.html",
+    "desc": "How India's Direct Benefit Transfer system is rewiring government spending, eliminating leakages, and transforming the lives of 176 crore beneficiaries through the JAM Trinity.",
+    "date": "2026-07-25",
+    "thumb": "images/dbt.webp",
+    "tags": ["Technology", "Governance", "Geopolitics"],
+    "body": "For decades, India's welfare system was a leaky pipeline where subsidies meant for the poor were siphoned off by middlemen. Direct Benefit Transfer (DBT), built on the JAM Trinity — Jan Dhan bank accounts (58 crore), Aadhaar unique IDs (141 crore), and Mobile connectivity (97 crore internet subscribers) — is a fundamental redesign of welfare delivery. Cumulative transfers have exceeded ₹49 lakh crore across 450 central and 1,200 state schemes, with leakage reduction reaching ₹3.48 lakh crore by eliminating over 10 crore ghost beneficiaries. The Public Financial Management System (PFMS) routes payments through the Aadhaar Payment Bridge. Sectoral savings include ₹1.85 lakh crore from food subsidies, ₹42,534 crore from MGNREGS, and ₹22,106 crore from PM-KISAN. The Welfare Efficiency Index rose from 0.32 in 2014 to 0.91 in 2023. During COVID-19, ₹27,442 crore was transferred to 11.42 crore beneficiaries. Challenges include implementation gaps across states, the digital divide, Aadhaar seeding errors, and the emergence of cash transfers as electoral tools."
+  },
+  {
     "title": "ULIP: India's Plan to Democratize Logistics",
     "slug": "article-ulip-logistics.html",
     "url": "https://insight-chronicles.com/article-ulip-logistics.html",
