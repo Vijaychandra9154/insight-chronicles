@@ -44,7 +44,8 @@
       <button class="ic-hamburger" id="hamburger" aria-label="Menu">&#9776;</button>
       <nav class="ic-nav" id="mainNav">
         <a href="index.html" class="ic-nav-link">Home</a>
-        <a href="articles.html" class="ic-nav-link ic-nav-link-active">Articles</a>
+        <a href="articles.html" class="ic-nav-link">Articles</a>
+        <a href="telugu-articles.html" class="ic-nav-link ic-nav-link-active">తెలుగు Articles</a>
         <a href="about.html" class="ic-nav-link">About</a>
         <a href="contact.html" class="ic-nav-link">Contact</a>
       </nav>
@@ -82,46 +83,14 @@
         </article>
       </section>
 
-      <!-- All Telugu Articles -->
+      <!-- All Articles (dynamic) -->
       <section class="ic-section-header">
-        <h2>అన్ని తెలుగు ఆర్టికల్స్ • All Telugu Articles</h2>
-        <p>కొత్తవి ముందుగా చూపించబడ్డాయి.</p>
+        <h2>అన్ని ఆర్టికల్స్ • All Articles</h2>
+        <p>కొత్తవి ముందుగా చూపించబడ్డాయి. Newest shown first.</p>
       </section>
 
-      <div class="ic-articles-grid">
-
-        <!-- Controllers Article 2 -->
-        <article class="card">
-          <a href="article-history-controllers-2.html" class="thumbwrap">
-            <img src="images/ur-article2.webp" alt="ఊర్ నగరం — ప్రాచీన సుమేరియా" loading="lazy" />
-          </a>
-          <div class="cardbody">
-            <div class="tags"><span class="tag">History</span> <span class="tag">Geopolitics</span> <span class="tag">సిరీస్</span></div>
-            <h2><a href="article-history-controllers-2.html">సుమేరియా: నాగరికత మరియు నియంత్రణ వ్యవస్థల జన్మస్థలం</a></h2>
-            <p class="meta">2026-07-26 • ఆర్టికల్ 2</p>
-            <p class="desc">క్రీ.పూ. 3500లో సుమేరియన్లు మానవ అవగాహనను నియంత్రించడమే అసలైన శక్తి అని ఎలా కనుగొన్నారు — పూజారి-పండితుల ఆవిర్భావం మరియు వారి నాలుగు నియంత్రణ పద్ధతులు.</p>
-            <a class="read" href="article-history-controllers-2.html">చదవండి &rarr;</a>
-          </div>
-        </article>
-
-        <!-- Controllers Article 1 -->
-        <article class="card">
-          <a href="article-history-controllers-1.html" class="thumbwrap">
-            <img src="images/ziggurat-of-ur.jpg" alt="ఉర్ యొక్క జిగ్గురాట్ — ప్రాచీన సుమేరియా" loading="lazy" />
-          </a>
-          <div class="cardbody">
-            <div class="tags"><span class="tag">History</span> <span class="tag">Geopolitics</span> <span class="tag">సిరీస్</span></div>
-            <h2><a href="article-history-controllers-1.html">ది మ్యాట్రిక్స్ రివీల్డ్: రియాలిటీ ఒక కంట్రోల్డ్ మోడల్</a></h2>
-            <p class="meta">2026-07-26 • ఆర్టికల్ 1</p>
-            <p class="desc">వాస్తవం అనేది మనం అనుకున్నది కాదు. ప్రాచీన సుమేరియాలో పూజారులు మానవ అవగాహనను ఎలా నియంత్రణ సాధనంగా మార్చారో తెలిపే విశ్లేషణ.</p>
-            <a class="read" href="article-history-controllers-1.html">చదవండి &rarr;</a>
-          </div>
-        </article>
-
-      </div>
-
-      <div style="text-align:center; margin:40px 0;">
-        <a href="articles.html" class="ic-affiliate-btn" style="font-size:1rem;">← అన్ని ఆర్టికల్స్‌కి తిరిగి వెళ్ళండి</a>
+      <div class="ic-articles-grid" id="articlesGrid">
+        <p style="color:#9ca3af; text-align:center; padding:40px;">Loading articles...</p>
       </div>
 
     </div>
@@ -134,7 +103,7 @@
       <div><h4>Categories</h4><ul><li><a href="history.html">History</a></li><li><a href="geopolitics.html">Geopolitics</a></li><li><a href="technology.html">Technology</a></li><li><a href="governance.html">Governance</a></li><li><a href="telugu-articles.html">తెలుగు Articles</a></li></ul></div>
       <div><h4>Contact</h4><p><a href="mailto:moonoriginblue@gmail.com">moonoriginblue@gmail.com</a></p></div>
     </div>
-    <div class="ic-footer-bottom">© 2026 Insight Chronicles. All rights reserved.</div>
+    <div class="ic-footer-bottom">&copy; 2026 Insight Chronicles. All rights reserved.</div>
   </footer>
 
   <button class="ic-backtotop" id="backToTop">↑ Top</button>
@@ -143,6 +112,52 @@
     const btn = document.getElementById("backToTop");
     window.addEventListener("scroll", () => { btn.style.display = window.scrollY > 500 ? "block" : "none"; });
     btn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+
+    // --- Dynamic article loading from articles.json ---
+    (async function loadArticles() {
+      const grid = document.getElementById('articlesGrid');
+      try {
+        const res = await fetch('articles.json');
+        if (!res.ok) throw new Error('Failed to fetch articles.json');
+        const articles = await res.json();
+
+        // Filter only Telugu-language articles
+        const teluguArticles = articles.filter(a => a.lang === 'te');
+
+        if (!teluguArticles.length) {
+          grid.innerHTML = '<p style="color:#9ca3af; text-align:center; padding:40px;">ఇంకా తెలుగు ఆర్టికల్స్ లేవు. త్వరలో వస్తాయి!</p>';
+          return;
+        }
+
+        // Sort by date descending (newest first)
+        teluguArticles.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        grid.innerHTML = teluguArticles.map(a => {
+          const tagsHtml = (a.tags || []).map(t => `<span class="tag">${escapeHtml(t)}</span>`).join(' ');
+          const dateStr = a.date || '';
+          return `
+            <article class="card">
+              <a href="${escapeHtml(a.slug)}" class="thumbwrap">
+                <img src="${escapeHtml(a.thumb || 'images/ziggurat-of-ur.jpg')}" alt="${escapeHtml(a.title)}" loading="lazy" />
+              </a>
+              <div class="cardbody">
+                <div class="tags">${tagsHtml}</div>
+                <h2><a href="${escapeHtml(a.slug)}">${escapeHtml(a.title)}</a></h2>
+                <p class="meta">${escapeHtml(dateStr)}</p>
+                <p class="desc">${escapeHtml(a.desc)}</p>
+                <a class="read" href="${escapeHtml(a.slug)}">చదవండి &rarr;</a>
+              </div>
+            </article>`;
+        }).join('');
+      } catch (err) {
+        console.error(err);
+        grid.innerHTML = '<p style="color:#f87171; text-align:center; padding:40px;">Articles లోడ్ చేయడంలో లోపం. దయచేసి తర్వాత ప్రయత్నించండి.</p>';
+      }
+    })();
+
+    function escapeHtml(str) {
+      return (str || '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+    }
   </script>
 </body>
 </html>

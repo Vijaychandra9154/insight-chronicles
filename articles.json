@@ -1,260 +1,287 @@
-[
-  {
-    "title": "ది మ్యాట్రిక్స్ రివీల్డ్: రియాలిటీ ఒక కంట్రోల్డ్ మోడల్ అని తెలిపే ప్రాచీన ఆధారాలు (The Matrix Revealed — Telugu)",
-    "slug": "article-history-controllers-1.html",
-    "url": "https://insight-chronicles.com/article-history-controllers-1.html",
-    "desc": "వాస్తవం అనేది మనం అనుకున్నది కాదు. ప్రాచీన సుమేరియాలో పూజారులు మానవ అవగాహనను ఎలా నియంత్రణ సాధనంగా మార్చారో తెలిపే తెలుగు ఆర్టికల్.",
-    "date": "2026-07-26",
-    "thumb": "images/ziggurat-of-ur.jpg",
-    "thumb_og": "images/ziggurat-of-ur.jpg",
-    "tags": ["History", "Geopolitics", "Technology"],
-    "content_html": ""
-  },
-  {
-    "title": "సుమేరియా: నాగరికత మరియు నియంత్రణ వ్యవస్థల జన్మస్థలం (Sumer — Telugu)",
-    "slug": "article-history-controllers-2.html",
-    "url": "https://insight-chronicles.com/article-history-controllers-2.html",
-    "desc": "క్రీ.పూ. 3500లో సుమేరియన్లు మానవ అవగాహనను నియంత్రించడమే అసలైన శక్తి అని ఎలా కనుగొన్నారు. పూజారి-పండితులు, ఖగోళ శాస్త్రం, గణితం, రాత మరియు ఆర్థిక వ్యవస్థల ద్వారా నియంత్రణ.",
-    "date": "2026-07-26",
-    "thumb": "images/ur-article2.webp",
-    "thumb_og": "images/ur-article2.webp",
-    "tags": ["History", "Geopolitics", "Technology"],
-    "content_html": ""
-  },
-  {
-    "title": "ABHA: India's Plan to Democratize Health Records",
-    "slug": "article-abha-health.html",
-    "url": "https://insight-chronicles.com/article-abha-health.html",
-    "desc": "How India's Ayushman Bharat Digital Mission is rewiring healthcare, empowering patients, and breaking the information monopoly of hospitals and insurers.",
-    "date": "2026-07-26",
-    "thumb": "images/abha.webp",
-    "thumb_og": "images/abha.webp",
-    "tags": ["Technology", "Governance", "Geopolitics"],
-    "content_html": ""
-  },
-  {
-    "title": "ONOE: India's Plan to Democratize Elections",
-    "slug": "article-onoe-elections.html",
-    "url": "https://insight-chronicles.com/article-onoe-elections.html",
-    "desc": "How India's One Nation, One Election proposal is rewiring the electoral calendar, reducing governance disruption, and what it means for federal democracy.",
-    "date": "2026-07-26",
-    "thumb": "images/onoe.webp",
-    "thumb_og": "images/onoe.webp",
-    "tags": ["Governance", "Geopolitics", "Technology"],
-    "content_html": ""
-  },
-  {
-    "title": "ONOS: India's Plan to Democratize Research",
-    "slug": "article-onos-research.html",
-    "url": "https://insight-chronicles.com/article-onos-research.html",
-    "desc": "How India's One Nation One Subscription is breaking paywalled knowledge monopolies, empowering millions of researchers, and rewiring who gets access to global scholarship.",
-    "date": "2026-07-26",
-    "thumb": "images/onos.webp",
-    "thumb_og": "images/onos.webp",
-    "tags": ["Technology", "Governance", "Geopolitics"],
-    "content_html": ""
-  },
-  {
-    "title": "Education: India's Plan to Democratize Learning",
-    "slug": "article-education-learning.html",
-    "url": "https://insight-chronicles.com/article-education-learning.html",
-    "desc": "How India's digital education infrastructure is breaking the elite campus monopoly, taking classrooms to every village, and rewiring who gets access to knowledge.",
-    "date": "2026-07-26",
-    "thumb": "images/education.webp",
-    "thumb_og": "images/education.webp",
-    "tags": ["Technology", "Governance", "Geopolitics"],
-    "content_html": ""
-  },
-  {
-    "title": "DBT: India's Plan to Democratize Welfare Delivery",
-    "slug": "article-dbt-welfare.html",
-    "url": "https://insight-chronicles.com/article-dbt-welfare.html",
-    "desc": "How India's Direct Benefit Transfer system is rewiring government spending, eliminating leakages, and transforming the lives of 176 crore beneficiaries through the JAM Trinity.",
-    "date": "2026-07-25",
-    "thumb": "images/dbt.webp",
-    "thumb_og": "images/dbt.webp",
-    "tags": [
-      "Technology",
-      "Governance",
-      "Geopolitics"
-    ],
-    "content_html": ""
-  },
-  {
-    "title": "ULIP: India's Plan to Democratize Logistics",
-    "slug": "article-ulip-logistics.html",
-    "url": "https://insight-chronicles.com/article-ulip-logistics.html",
-    "desc": "How India's Unified Logistics Interface Platform is breaking data silos, empowering small players, and rewiring the nation's supply chains through API-based integration.",
-    "date": "2026-07-25",
-    "thumb": "images/ulip.webp",
-    "thumb_og": "images/ulip.webp",
-    "tags": [
-      "Technology",
-      "Governance",
-      "Geopolitics"
-    ],
-    "content_html": ""
-  },
-  {
-    "title": "GeM: India's Plan to Democratize Government Procurement",
-    "slug": "article-gem-procurement.html",
-    "url": "https://insight-chronicles.com/article-gem-procurement.html",
-    "desc": "How India's digital marketplace is rewiring public spending, breaking middlemen cartels, and opening government markets to millions of small businesses.",
-    "date": "2026-07-25",
-    "thumb": "images/gem.webp",
-    "thumb_og": "images/gem.webp",
-    "tags": [
-      "Technology",
-      "Governance",
-      "Geopolitics"
-    ],
-    "content_html": ""
-  },
-  {
-    "title": "iDEX: India's Plan to Democratize Defence Innovation",
-    "slug": "article-idex-defence-innovation.html",
-    "url": "https://insight-chronicles.com/article-idex-defence-innovation.html",
-    "desc": "How India's defence innovation programme is rewiring who builds military technology — breaking the legacy vendor monopoly and creating a pathway for startups to become defence suppliers.",
-    "date": "2026-07-25",
-    "thumb": "images/idex.webp",
-    "thumb_og": "images/idex.webp",
-    "tags": [
-      "Technology",
-      "Governance",
-      "Geopolitics"
-    ],
-    "content_html": ""
-  },
-  {
-    "title": "Digi Yatra: India's Plan to Democratize Airport Services",
-    "slug": "article-digi-yatra-travel.html",
-    "url": "https://insight-chronicles.com/article-digi-yatra-travel.html",
-    "desc": "How India's biometric-based digital travel system is rewiring airport journeys — and what it means for the future of seamless, privacy-first travel infrastructure.",
-    "date": "2026-07-25",
-    "thumb": "images/digi-yatra.webp",
-    "thumb_og": "images/digi-yatra.webp",
-    "tags": [
-      "Technology",
-      "Governance",
-      "Geopolitics"
-    ],
-    "content_html": ""
-  },
-  {
-    "title": "DigiLocker: India's Plan to Democratize Documents",
-    "slug": "article-digilocker-documents.html",
-    "url": "https://insight-chronicles.com/article-digilocker-documents.html",
-    "desc": "How India's DigiLocker is eliminating paper-based verification for 1.4 billion people — replacing physical certificates with cryptographically verifiable digital documents.",
-    "date": "2026-07-25",
-    "thumb": "images/digilocker.webp",
-    "thumb_og": "images/digilocker.webp",
-    "tags": [
-      "Technology",
-      "Governance",
-      "Geopolitics"
-    ],
-    "content_html": ""
-  },
-  {
-    "title": "OCEN: India's Plan to Democratize Credit",
-    "slug": "article-ocen-credit.html",
-    "url": "https://insight-chronicles.com/article-ocen-credit.html",
-    "desc": "How India's Open Credit Enablement Network is unlocking small-ticket loans for millions of informal workers and micro-businesses — without traditional collateral.",
-    "date": "2026-07-25",
-    "thumb": "images/ocen.webp",
-    "thumb_og": "images/ocen.webp",
-    "tags": [
-      "Technology",
-      "Governance",
-      "Geopolitics"
-    ],
-    "content_html": ""
-  },
-  {
-    "title": "Aadhaar: India's Plan to Democratize Identity",
-    "slug": "article-aadhaar-identity.html",
-    "url": "https://insight-chronicles.com/article-aadhaar-identity.html",
-    "desc": "How India's Digital Identity Layer Is Rewiring Who Holds Power in the Digital Economy — and What It Means for the World.",
-    "date": "2026-07-25",
-    "thumb": "images/aadhaar.webp",
-    "thumb_og": "images/aadhaar.webp",
-    "tags": [
-      "Technology",
-      "Governance",
-      "Geopolitics"
-    ],
-    "content_html": ""
-  },
-  {
-    "title": "ONDC: India's Plan to Break Amazon and Flipkart's Monopoly",
-    "slug": "article-ondc-ecommerce.html",
-    "url": "https://insight-chronicles.com/article-ondc-ecommerce.html",
-    "desc": "How India's Open Network for Digital Commerce is democratizing e-commerce by letting any seller reach any buyer on any app — without platform lock-in.",
-    "date": "2026-05-12",
-    "thumb": "images/ondc.webp",
-    "thumb_og": "images/ondc.webp",
-    "tags": [
-      "Technology",
-      "Governance",
-      "Geopolitics"
-    ],
-    "content_html": ""
-  },
-  {
-    "title": "UPI: How India Built the World's Largest Real-Time Payment System",
-    "slug": "article-upi-digital-payments.html",
-    "url": "https://insight-chronicles.com/article-upi-digital-payments.html",
-    "desc": "How UPI grew from 34% to 83% of all digital payments in India in just five years — and why the world is now copying it.",
-    "date": "2026-05-10",
-    "thumb": "images/upi.webp",
-    "thumb_og": "images/upi.webp",
-    "tags": [
-      "Technology",
-      "Governance"
-    ],
-    "content_html": ""
-  },
-  {
-    "title": "The Valuation Game: How the Top 10% Use the Middle Class as Their Exit Strategy",
-    "slug": "article-valuation-game.html",
-    "url": "https://insight-chronicles.com/article-valuation-game.html",
-    "desc": "How India's wealthy elite use retail investors in stock markets and real estate to sustain inflated valuations and quietly cash out before the crash comes.",
-    "date": "2026-05-06",
-    "thumb": "images/governance-model.webp",
-    "thumb_og": "images/governance-model.webp",
-    "tags": [
-      "Geopolitics",
-      "Governance"
-    ],
-    "content_html": ""
-  },
-  {
-    "title": "Democratization of India's Hardware, Manufacturing and Bio Labs Infrastructure",
-    "slug": "article-hardware-bio.html",
-    "url": "https://insight-chronicles.com/article-hardware-bio.html",
-    "desc": "Why India must democratize access to machine tools, CNC facilities, 3D printing hubs and public bio labs.",
-    "date": "2025-01-02",
-    "thumb": "images/hardware-bio.webp",
-    "thumb_og": "images/hardware-bio.webp",
-    "tags": [
-      "Technology",
-      "Governance"
-    ],
-    "content_html": ""
-  },
-  {
-    "title": "How India's Plan of Democratizing Public Services Will Guide Other Countries",
-    "slug": "article-1.html",
-    "url": "https://insight-chronicles.com/article-1.html",
-    "desc": "A breakdown of how UPI, ONDC, Aadhaar and ABHA form a model of open digital infrastructure.",
-    "date": "2025-01-01",
-    "thumb": "images/upi.webp",
-    "thumb_og": "images/upi.webp",
-    "tags": [
-      "Geopolitics",
-      "Technology",
-      "Governance"
-    ],
-    "content_html": ""
-  }
+﻿[
+    {
+        "title":  "ది మ్యాట్రిక్స్ రివీల్డ్: రియాలిటీ ఒక కంట్రోల్డ్ మోడల్ అని తెలిపే ప్రాచీన ఆధారాలు (The Matrix Revealed — Telugu)",
+        "slug":  "article-history-controllers-1.html",
+        "url":  "https://insight-chronicles.com/article-history-controllers-1.html",
+        "desc":  "వాస్తవం అనేది మనం అనుకున్నది కాదు. ప్రాచీన సుమేరియాలో పూజారులు మానవ అవగాహనను ఎలా నియంత్రణ సాధనంగా మార్చారో తెలిపే తెలుగు ఆర్టికల్.",
+        "date":  "2026-07-26",
+        "thumb":  "images/ziggurat-of-ur.jpg",
+        "thumb_og":  "images/ziggurat-of-ur.jpg",
+        "tags":  [
+                     "History",
+                     "Geopolitics",
+                     "Technology"
+                 ],
+        "lang":  "te",
+        "content_html":  ""
+    },
+    {
+        "title":  "సుమేరియా: నాగరికత మరియు నియంత్రణ వ్యవస్థల జన్మస్థలం (Sumer — Telugu)",
+        "slug":  "article-history-controllers-2.html",
+        "url":  "https://insight-chronicles.com/article-history-controllers-2.html",
+        "desc":  "క్రీ.పూ. 3500లో సుమేరియన్లు మానవ అవగాహనను నియంత్రించడమే అసలైన శక్తి అని ఎలా కనుగొన్నారు. పూజారి-పండితులు, ఖగోళ శాస్త్రం, గణితం, రాత మరియు ఆర్థిక వ్యవస్థల ద్వారా నియంత్రణ.",
+        "date":  "2026-07-26",
+        "thumb":  "images/ur-article2.webp",
+        "thumb_og":  "images/ur-article2.webp",
+        "tags":  [
+                     "History",
+                     "Geopolitics",
+                     "Technology"
+                 ],
+        "lang":  "te",
+        "content_html":  ""
+    },
+    {
+        "title":  "ABHA: India\u0027s Plan to Democratize Health Records",
+        "slug":  "article-abha-health.html",
+        "url":  "https://insight-chronicles.com/article-abha-health.html",
+        "desc":  "How India\u0027s Ayushman Bharat Digital Mission is rewiring healthcare, empowering patients, and breaking the information monopoly of hospitals and insurers.",
+        "date":  "2026-07-26",
+        "thumb":  "images/abha.webp",
+        "thumb_og":  "images/abha.webp",
+        "tags":  [
+                     "Technology",
+                     "Governance",
+                     "Geopolitics"
+                 ],
+        "lang": "en","content_html":  ""
+    },
+    {
+        "title":  "ONOE: India\u0027s Plan to Democratize Elections",
+        "slug":  "article-onoe-elections.html",
+        "url":  "https://insight-chronicles.com/article-onoe-elections.html",
+        "desc":  "How India\u0027s One Nation, One Election proposal is rewiring the electoral calendar, reducing governance disruption, and what it means for federal democracy.",
+        "date":  "2026-07-26",
+        "thumb":  "images/onoe.webp",
+        "thumb_og":  "images/onoe.webp",
+        "tags":  [
+                     "Governance",
+                     "Geopolitics",
+                     "Technology"
+                 ],
+        "lang": "en","content_html":  ""
+    },
+    {
+        "title":  "ONOS: India\u0027s Plan to Democratize Research",
+        "slug":  "article-onos-research.html",
+        "url":  "https://insight-chronicles.com/article-onos-research.html",
+        "desc":  "How India\u0027s One Nation One Subscription is breaking paywalled knowledge monopolies, empowering millions of researchers, and rewiring who gets access to global scholarship.",
+        "date":  "2026-07-26",
+        "thumb":  "images/onos.webp",
+        "thumb_og":  "images/onos.webp",
+        "tags":  [
+                     "Technology",
+                     "Governance",
+                     "Geopolitics"
+                 ],
+        "lang": "en","content_html":  ""
+    },
+    {
+        "title":  "Education: India\u0027s Plan to Democratize Learning",
+        "slug":  "article-education-learning.html",
+        "url":  "https://insight-chronicles.com/article-education-learning.html",
+        "desc":  "How India\u0027s digital education infrastructure is breaking the elite campus monopoly, taking classrooms to every village, and rewiring who gets access to knowledge.",
+        "date":  "2026-07-26",
+        "thumb":  "images/education.webp",
+        "thumb_og":  "images/education.webp",
+        "tags":  [
+                     "Technology",
+                     "Governance",
+                     "Geopolitics"
+                 ],
+        "lang": "en","content_html":  ""
+    },
+    {
+        "title":  "DBT: India\u0027s Plan to Democratize Welfare Delivery",
+        "slug":  "article-dbt-welfare.html",
+        "url":  "https://insight-chronicles.com/article-dbt-welfare.html",
+        "desc":  "How India\u0027s Direct Benefit Transfer system is rewiring government spending, eliminating leakages, and transforming the lives of 176 crore beneficiaries through the JAM Trinity.",
+        "date":  "2026-07-25",
+        "thumb":  "images/dbt.webp",
+        "thumb_og":  "images/dbt.webp",
+        "tags":  [
+                     "Technology",
+                     "Governance",
+                     "Geopolitics"
+                 ],
+        "lang": "en","content_html":  ""
+    },
+    {
+        "title":  "ULIP: India\u0027s Plan to Democratize Logistics",
+        "slug":  "article-ulip-logistics.html",
+        "url":  "https://insight-chronicles.com/article-ulip-logistics.html",
+        "desc":  "How India\u0027s Unified Logistics Interface Platform is breaking data silos, empowering small players, and rewiring the nation\u0027s supply chains through API-based integration.",
+        "date":  "2026-07-25",
+        "thumb":  "images/ulip.webp",
+        "thumb_og":  "images/ulip.webp",
+        "tags":  [
+                     "Technology",
+                     "Governance",
+                     "Geopolitics"
+                 ],
+        "lang": "en","content_html":  ""
+    },
+    {
+        "title":  "GeM: India\u0027s Plan to Democratize Government Procurement",
+        "slug":  "article-gem-procurement.html",
+        "url":  "https://insight-chronicles.com/article-gem-procurement.html",
+        "desc":  "How India\u0027s digital marketplace is rewiring public spending, breaking middlemen cartels, and opening government markets to millions of small businesses.",
+        "date":  "2026-07-25",
+        "thumb":  "images/gem.webp",
+        "thumb_og":  "images/gem.webp",
+        "tags":  [
+                     "Technology",
+                     "Governance",
+                     "Geopolitics"
+                 ],
+        "lang": "en","content_html":  ""
+    },
+    {
+        "title":  "iDEX: India\u0027s Plan to Democratize Defence Innovation",
+        "slug":  "article-idex-defence-innovation.html",
+        "url":  "https://insight-chronicles.com/article-idex-defence-innovation.html",
+        "desc":  "How India\u0027s defence innovation programme is rewiring who builds military technology — breaking the legacy vendor monopoly and creating a pathway for startups to become defence suppliers.",
+        "date":  "2026-07-25",
+        "thumb":  "images/idex.webp",
+        "thumb_og":  "images/idex.webp",
+        "tags":  [
+                     "Technology",
+                     "Governance",
+                     "Geopolitics"
+                 ],
+        "lang": "en","content_html":  ""
+    },
+    {
+        "title":  "Digi Yatra: India\u0027s Plan to Democratize Airport Services",
+        "slug":  "article-digi-yatra-travel.html",
+        "url":  "https://insight-chronicles.com/article-digi-yatra-travel.html",
+        "desc":  "How India\u0027s biometric-based digital travel system is rewiring airport journeys — and what it means for the future of seamless, privacy-first travel infrastructure.",
+        "date":  "2026-07-25",
+        "thumb":  "images/digi-yatra.webp",
+        "thumb_og":  "images/digi-yatra.webp",
+        "tags":  [
+                     "Technology",
+                     "Governance",
+                     "Geopolitics"
+                 ],
+        "lang": "en","content_html":  ""
+    },
+    {
+        "title":  "DigiLocker: India\u0027s Plan to Democratize Documents",
+        "slug":  "article-digilocker-documents.html",
+        "url":  "https://insight-chronicles.com/article-digilocker-documents.html",
+        "desc":  "How India\u0027s DigiLocker is eliminating paper-based verification for 1.4 billion people — replacing physical certificates with cryptographically verifiable digital documents.",
+        "date":  "2026-07-25",
+        "thumb":  "images/digilocker.webp",
+        "thumb_og":  "images/digilocker.webp",
+        "tags":  [
+                     "Technology",
+                     "Governance",
+                     "Geopolitics"
+                 ],
+        "lang": "en","content_html":  ""
+    },
+    {
+        "title":  "OCEN: India\u0027s Plan to Democratize Credit",
+        "slug":  "article-ocen-credit.html",
+        "url":  "https://insight-chronicles.com/article-ocen-credit.html",
+        "desc":  "How India\u0027s Open Credit Enablement Network is unlocking small-ticket loans for millions of informal workers and micro-businesses — without traditional collateral.",
+        "date":  "2026-07-25",
+        "thumb":  "images/ocen.webp",
+        "thumb_og":  "images/ocen.webp",
+        "tags":  [
+                     "Technology",
+                     "Governance",
+                     "Geopolitics"
+                 ],
+        "lang": "en","content_html":  ""
+    },
+    {
+        "title":  "Aadhaar: India\u0027s Plan to Democratize Identity",
+        "slug":  "article-aadhaar-identity.html",
+        "url":  "https://insight-chronicles.com/article-aadhaar-identity.html",
+        "desc":  "How India\u0027s Digital Identity Layer Is Rewiring Who Holds Power in the Digital Economy — and What It Means for the World.",
+        "date":  "2026-07-25",
+        "thumb":  "images/aadhaar.webp",
+        "thumb_og":  "images/aadhaar.webp",
+        "tags":  [
+                     "Technology",
+                     "Governance",
+                     "Geopolitics"
+                 ],
+        "lang": "en","content_html":  ""
+    },
+    {
+        "title":  "ONDC: India\u0027s Plan to Break Amazon and Flipkart\u0027s Monopoly",
+        "slug":  "article-ondc-ecommerce.html",
+        "url":  "https://insight-chronicles.com/article-ondc-ecommerce.html",
+        "desc":  "How India\u0027s Open Network for Digital Commerce is democratizing e-commerce by letting any seller reach any buyer on any app — without platform lock-in.",
+        "date":  "2026-05-12",
+        "thumb":  "images/ondc.webp",
+        "thumb_og":  "images/ondc.webp",
+        "tags":  [
+                     "Technology",
+                     "Governance",
+                     "Geopolitics"
+                 ],
+        "lang": "en","content_html":  ""
+    },
+    {
+        "title":  "UPI: How India Built the World\u0027s Largest Real-Time Payment System",
+        "slug":  "article-upi-digital-payments.html",
+        "url":  "https://insight-chronicles.com/article-upi-digital-payments.html",
+        "desc":  "How UPI grew from 34% to 83% of all digital payments in India in just five years — and why the world is now copying it.",
+        "date":  "2026-05-10",
+        "thumb":  "images/upi.webp",
+        "thumb_og":  "images/upi.webp",
+        "tags":  [
+                     "Technology",
+                     "Governance"
+                 ],
+        "lang": "en","content_html":  ""
+    },
+    {
+        "title":  "The Valuation Game: How the Top 10% Use the Middle Class as Their Exit Strategy",
+        "slug":  "article-valuation-game.html",
+        "url":  "https://insight-chronicles.com/article-valuation-game.html",
+        "desc":  "How India\u0027s wealthy elite use retail investors in stock markets and real estate to sustain inflated valuations and quietly cash out before the crash comes.",
+        "date":  "2026-05-06",
+        "thumb":  "images/governance-model.webp",
+        "thumb_og":  "images/governance-model.webp",
+        "tags":  [
+                     "Geopolitics",
+                     "Governance"
+                 ],
+        "lang": "en","content_html":  ""
+    },
+    {
+        "title":  "Democratization of India\u0027s Hardware, Manufacturing and Bio Labs Infrastructure",
+        "slug":  "article-hardware-bio.html",
+        "url":  "https://insight-chronicles.com/article-hardware-bio.html",
+        "desc":  "Why India must democratize access to machine tools, CNC facilities, 3D printing hubs and public bio labs.",
+        "date":  "2025-01-02",
+        "thumb":  "images/hardware-bio.webp",
+        "thumb_og":  "images/hardware-bio.webp",
+        "tags":  [
+                     "Technology",
+                     "Governance"
+                 ],
+        "lang": "en","content_html":  ""
+    },
+    {
+        "title":  "How India\u0027s Plan of Democratizing Public Services Will Guide Other Countries",
+        "slug":  "article-1.html",
+        "url":  "https://insight-chronicles.com/article-1.html",
+        "desc":  "A breakdown of how UPI, ONDC, Aadhaar and ABHA form a model of open digital infrastructure.",
+        "date":  "2025-01-01",
+        "thumb":  "images/upi.webp",
+        "thumb_og":  "images/upi.webp",
+        "tags":  [
+                     "Geopolitics",
+                     "Technology",
+                     "Governance"
+                 ],
+        "lang": "en","content_html":  ""
+    }
 ]
+
