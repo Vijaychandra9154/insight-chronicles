@@ -40,7 +40,7 @@
     <div class="ic-container" style="max-width:760px;">
       <section class="ic-sidebar-block">
         <h1 style="margin-top:0;">Archive</h1>
-        <p style="color:#cbd5f5;">Every article, grouped by year and month.</p>
+        <p style="color:#4b5563;">Every article, grouped by year and month.</p>
       </section>
 
       <section id="archive-root" class="ic-sidebar-block" style="margin-top:16px;">
@@ -91,7 +91,7 @@
           groups[year].forEach(function (a) {
             html +=
               '<li><span style="color:#9ca3af;">' + escapeHtml(a.date || "") + "</span> — " +
-              '<a href="' + escapeHtml(a.slug) + '" style="color:#93c5fd;text-decoration:none;">' +
+              '<a href="' + escapeHtml(a.slug) + '">' +
               escapeHtml(a.title) + "</a></li>";
           });
           html += "</ul>";

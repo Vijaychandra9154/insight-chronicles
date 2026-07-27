@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <!-- Adsense (keep placeholder until approved) -->
@@ -365,7 +365,7 @@
 
           <p class="ic-affiliate-note">
             Disclosure: Links may be affiliate links. See
-            <a href="disclaimer.html" style="color:#93c5fd;text-decoration:none;">Disclaimer</a>.
+            <a href="disclaimer.html">Disclaimer</a>.
           </p>
         </div>
 
@@ -383,7 +383,7 @@
       </section>
 
       <p style="margin-top:2rem;font-size:0.9rem;">
-        ← <a href="index.html" style="color:#93c5fd;text-decoration:none;">Back to homepage</a>
+        ← <a href="index.html">Back to homepage</a>
       </p>
     </div>
   </main>
@@ -425,7 +425,7 @@
     const btn = document.getElementById("backToTop");
     window.addEventListener("scroll", () => {
       if (!btn) return;
-      btn.style.display = window.scrollY > 500 ? "block" : "none";
+      btn.style.display = window.scrollY> 500 ? "block" : "none";
     });
     if (btn) btn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
   </script>

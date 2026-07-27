@@ -326,7 +326,7 @@ def make_category_page(tag_name, info, articles):
         </article>
         """)
 
-    cards_html = "\n".join(cards) if cards else "<p style='color:#9ca3af;'>No articles published yet. Coming soon.</p>"
+    cards_html = "\n".join(cards) if cards else "<p style='color:#6b7280;'>No articles published yet. Coming soon.</p>"
 
     return f"""<!doctype html>
 <html lang="en">
@@ -362,7 +362,7 @@ def make_category_page(tag_name, info, articles):
   <div class="ic-container">
     <section class="ic-sidebar-block">
       <h1 style="margin-top:0;">{escape(info["title"])}</h1>
-      <p style="color:#cbd5f5;">{escape(info["desc"])}</p>
+      <p style="color:#4b5563;">{escape(info["desc"])}</p>
     </section>
 
     <section class="ic-sidebar-block">
@@ -446,12 +446,12 @@ def make_search_page():
   <div class="ic-container">
     <section class="ic-sidebar-block">
       <h1 style="margin-top:0;">Search Articles</h1>
-      <p style="color:#cbd5f5;">Type keywords to search across all published posts.</p>
+      <p style="color:#4b5563;">Type keywords to search across all published posts.</p>
 
       <input id="q" type="text" placeholder="Search (UPI, ONDC, labs, geopolitics...)" 
-        style="width:100%;padding:14px;border-radius:14px;border:1px solid rgba(148,163,184,0.25);background:#020617;color:#e5e7eb;" />
+        style="width:100%;padding:14px;border-radius:14px;border:1px solid rgba(0,0,0,0.15);background:#f8f9fa;color:#1f2937;" />
 
-      <p id="count" style="margin-top:10px;color:#9ca3af;">Loading…</p>
+      <p id="count" style="margin-top:10px;color:#6b7280;">Loading…</p>
     </section>
 
     <section class="ic-sidebar-block">

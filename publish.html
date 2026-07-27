@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -8,16 +8,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; }
-    body { margin: 0; font-family: "Inter", system-ui, sans-serif; background: #050816; color: #e5e7eb; min-height: 100vh; }
+    body { margin: 0; font-family: "Inter", system-ui, sans-serif; background: #f8f9fa; color: #1f2937; min-height: 100vh; }
     a { color: inherit; }
 
     /* Header */
-    .pub-header { background: rgba(15,23,42,0.95); border-bottom: 1px solid rgba(148,163,184,0.2); padding: 0.85rem 0; position: sticky; top: 0; z-index: 50; }
+    .pub-header { background: rgba(255,255,255,0.95); border-bottom: 1px solid rgba(0,0,0,0.08); padding: 0.85rem 0; position: sticky; top: 0; z-index: 50; }
     .pub-header-inner { width: min(1200px, 100% - 2rem); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
-    .pub-logo { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; color: #e5e7eb; }
-    .pub-logo-mark { width: 34px; height: 34px; border-radius: 50%; background: radial-gradient(circle at 0 0, #22d3ee, #6366f1); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; color: #020617; }
+    .pub-logo { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; color: #1f2937; }
+    .pub-logo-mark { width: 34px; height: 34px; border-radius: 50%; background: radial-gradient(circle at 0 0, #22d3ee, #6366f1); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; color: #ffffff; }
     .pub-logo-title { font-weight: 700; font-size: 1rem; }
-    .pub-logo-sub { font-size: 0.75rem; color: #9ca3af; }
+    .pub-logo-sub { font-size: 0.75rem; color: #6b7280; }
     .pub-header-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
 
     /* Layout */
@@ -25,16 +25,16 @@
     @media (max-width: 900px) { .pub-wrap { grid-template-columns: 1fr; } }
 
     /* Card */
-    .pub-card { background: rgba(15,23,42,0.9); border: 1px solid rgba(148,163,184,0.15); border-radius: 16px; padding: 1.5rem; }
-    .pub-card h2 { margin: 0 0 1rem; font-size: 1rem; color: #e5e7eb; display: flex; align-items: center; gap: 0.5rem; }
+    .pub-card { background: #ffffff; border: 1px solid rgba(0,0,0,0.08); border-radius: 16px; padding: 1.5rem; box-shadow: 0 2px 12px rgba(0,0,0,0.04); }
+    .pub-card h2 { margin: 0 0 1rem; font-size: 1rem; color: #1f2937; display: flex; align-items: center; gap: 0.5rem; }
 
     /* Form fields */
     .field { margin-bottom: 1rem; }
-    .field label { display: block; font-size: 0.82rem; color: #9ca3af; margin-bottom: 0.35rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.04em; }
+    .field label { display: block; font-size: 0.82rem; color: #6b7280; margin-bottom: 0.35rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.04em; }
     .field input, .field select, .field textarea {
       width: 100%; padding: 0.6rem 0.85rem; border-radius: 10px;
-      border: 1px solid rgba(148,163,184,0.3); background: #020617;
-      color: #e5e7eb; font-family: "Inter", system-ui, sans-serif; font-size: 0.92rem;
+      border: 1px solid rgba(0,0,0,0.15); background: #f8f9fa;
+      color: #1f2937; font-family: "Inter", system-ui, sans-serif; font-size: 0.92rem;
       transition: border-color 0.15s;
     }
     .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: #6366f1; }
@@ -45,58 +45,58 @@
 
     /* Tag selector */
     .tag-grid { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.35rem; }
-    .tag-btn { padding: 0.3rem 0.75rem; border-radius: 999px; border: 1px solid rgba(148,163,184,0.3); background: transparent; color: #9ca3af; cursor: pointer; font-size: 0.82rem; font-family: "Inter", sans-serif; transition: all 0.15s; }
-    .tag-btn.active-tag { border-color: #6366f1; background: rgba(99,102,241,0.2); color: #a5b4fc; }
+    .tag-btn { padding: 0.3rem 0.75rem; border-radius: 999px; border: 1px solid rgba(0,0,0,0.15); background: transparent; color: #6b7280; cursor: pointer; font-size: 0.82rem; font-family: "Inter", sans-serif; transition: all 0.15s; }
+    .tag-btn.active-tag { border-color: #6366f1; background: rgba(99,102,241,0.10); color: #4f46e5; }
 
     /* Rich text toolbar */
-    .editor-toolbar { display: flex; gap: 0.35rem; flex-wrap: wrap; padding: 0.5rem; background: rgba(2,6,23,0.6); border: 1px solid rgba(148,163,184,0.2); border-radius: 10px 10px 0 0; }
-    .tb-btn { padding: 0.3rem 0.6rem; border-radius: 6px; border: 1px solid rgba(148,163,184,0.2); background: rgba(15,23,42,0.8); color: #cbd5f5; cursor: pointer; font-size: 0.8rem; font-family: "Inter", sans-serif; transition: all 0.15s; }
-    .tb-btn:hover { background: rgba(99,102,241,0.2); border-color: #6366f1; }
-    .tb-sep { width: 1px; background: rgba(148,163,184,0.2); margin: 0 0.1rem; }
+    .editor-toolbar { display: flex; gap: 0.35rem; flex-wrap: wrap; padding: 0.5rem; background: #f1f5f9; border: 1px solid rgba(0,0,0,0.08); border-radius: 10px 10px 0 0; }
+    .tb-btn { padding: 0.3rem 0.6rem; border-radius: 6px; border: 1px solid rgba(0,0,0,0.12); background: #ffffff; color: #4b5563; cursor: pointer; font-size: 0.8rem; font-family: "Inter", sans-serif; transition: all 0.15s; }
+    .tb-btn:hover { background: rgba(99,102,241,0.08); border-color: #6366f1; }
+    .tb-sep { width: 1px; background: rgba(0,0,0,0.10); margin: 0 0.1rem; }
     #contentEditor {
-      min-height: 320px; padding: 0.85rem; background: #020617; color: #e5e7eb;
-      border: 1px solid rgba(148,163,184,0.3); border-top: none;
+      min-height: 320px; padding: 0.85rem; background: #ffffff; color: #1f2937;
+      border: 1px solid rgba(0,0,0,0.12); border-top: none;
       border-radius: 0 0 10px 10px; outline: none; font-size: 0.92rem; line-height: 1.7;
       font-family: Georgia, serif;
     }
-    #contentEditor h2 { font-size: 1.3rem; color: #e5e7eb; }
-    #contentEditor h3 { font-size: 1.1rem; color: #e5e7eb; }
-    #contentEditor a { color: #93c5fd; }
+    #contentEditor h2 { font-size: 1.3rem; color: #1f2937; }
+    #contentEditor h3 { font-size: 1.1rem; color: #1f2937; }
+    #contentEditor a { color: #2563eb; }
     #contentEditor img { max-width: 100%; border-radius: 8px; }
 
     /* Buttons */
-    .btn-primary { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.6rem 1.25rem; border-radius: 999px; background: linear-gradient(135deg,#6366f1,#22d3ee); color: #020617; font-weight: 700; border: none; cursor: pointer; font-family: "Inter", sans-serif; font-size: 0.9rem; text-decoration: none; }
-    .btn-secondary { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.6rem 1.25rem; border-radius: 999px; background: rgba(99,102,241,0.15); color: #a5b4fc; border: 1px solid rgba(99,102,241,0.35); font-weight: 600; cursor: pointer; font-family: "Inter", sans-serif; font-size: 0.9rem; text-decoration: none; }
-    .btn-danger { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.45rem 0.9rem; border-radius: 999px; background: rgba(239,68,68,0.15); color: #fca5a5; border: 1px solid rgba(239,68,68,0.3); font-weight: 600; cursor: pointer; font-family: "Inter", sans-serif; font-size: 0.82rem; }
+    .btn-primary { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.6rem 1.25rem; border-radius: 999px; background: linear-gradient(135deg,#6366f1,#22d3ee); color: #ffffff; font-weight: 700; border: none; cursor: pointer; font-family: "Inter", sans-serif; font-size: 0.9rem; text-decoration: none; }
+    .btn-secondary { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.6rem 1.25rem; border-radius: 999px; background: rgba(99,102,241,0.10); color: #4f46e5; border: 1px solid rgba(99,102,241,0.30); font-weight: 600; cursor: pointer; font-family: "Inter", sans-serif; font-size: 0.9rem; text-decoration: none; }
+    .btn-danger { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.45rem 0.9rem; border-radius: 999px; background: rgba(239,68,68,0.10); color: #dc2626; border: 1px solid rgba(239,68,68,0.25); font-weight: 600; cursor: pointer; font-family: "Inter", sans-serif; font-size: 0.82rem; }
     .btn-sm { padding: 0.35rem 0.85rem; font-size: 0.82rem; }
 
     /* Preview panel */
-    .preview-meta { font-size: 0.8rem; color: #9ca3af; margin-bottom: 0.5rem; }
-    .preview-title { font-size: 1.1rem; font-weight: 700; margin: 0 0 0.35rem; color: #e5e7eb; font-family: Georgia, serif; }
-    .preview-desc { font-size: 0.88rem; color: #cbd5f5; margin: 0 0 0.75rem; }
-    .preview-thumb { width: 100%; height: 180px; object-fit: cover; border-radius: 10px; background: rgba(99,102,241,0.1); display: block; margin-bottom: 0.75rem; }
+    .preview-meta { font-size: 0.8rem; color: #6b7280; margin-bottom: 0.5rem; }
+    .preview-title { font-size: 1.1rem; font-weight: 700; margin: 0 0 0.35rem; color: #1f2937; font-family: Georgia, serif; }
+    .preview-desc { font-size: 0.88rem; color: #4b5563; margin: 0 0 0.75rem; }
+    .preview-thumb { width: 100%; height: 180px; object-fit: cover; border-radius: 10px; background: rgba(99,102,241,0.06); display: block; margin-bottom: 0.75rem; }
     .preview-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.5rem; }
-    .preview-tag { padding: 0.15rem 0.55rem; border-radius: 999px; border: 1px solid rgba(148,163,184,0.4); font-size: 0.75rem; }
+    .preview-tag { padding: 0.15rem 0.55rem; border-radius: 999px; border: 1px solid rgba(0,0,0,0.15); font-size: 0.75rem; color: #4b5563; }
 
     /* Published articles list */
-    .pub-article-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; border-radius: 10px; background: rgba(2,6,23,0.5); border: 1px solid rgba(148,163,184,0.12); margin-bottom: 0.6rem; transition: border-color 0.15s; }
-    .pub-article-item:hover { border-color: rgba(99,102,241,0.3); }
+    .pub-article-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; border-radius: 10px; background: #f8f9fa; border: 1px solid rgba(0,0,0,0.06); margin-bottom: 0.6rem; transition: border-color 0.15s; }
+    .pub-article-item:hover { border-color: rgba(99,102,241,0.25); }
     .pub-article-thumb { width: 52px; height: 44px; object-fit: cover; border-radius: 6px; flex-shrink: 0; }
     .pub-article-info { flex: 1; min-width: 0; }
-    .pub-article-title { font-size: 0.88rem; font-weight: 600; color: #e5e7eb; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 0 0 0.15rem; }
-    .pub-article-meta { font-size: 0.75rem; color: #9ca3af; }
+    .pub-article-title { font-size: 0.88rem; font-weight: 600; color: #1f2937; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 0 0 0.15rem; }
+    .pub-article-meta { font-size: 0.75rem; color: #6b7280; }
     .pub-article-actions { display: flex; gap: 0.35rem; flex-shrink: 0; }
 
     /* Status messages */
     .status-bar { padding: 0.75rem 1rem; border-radius: 10px; font-size: 0.88rem; margin-bottom: 1rem; display: none; }
-    .status-success { background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.3); color: #86efac; display: block; }
-    .status-error { background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.3); color: #fca5a5; display: block; }
+    .status-success { background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.25); color: #166534; display: block; }
+    .status-error { background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.25); color: #dc2626; display: block; }
 
     /* Step indicator */
     .steps { display: flex; gap: 0; margin-bottom: 1.5rem; }
-    .step { flex: 1; text-align: center; padding: 0.5rem; font-size: 0.8rem; color: #6b7280; border-bottom: 2px solid rgba(148,163,184,0.2); }
-    .step.active { color: #a5b4fc; border-bottom-color: #6366f1; font-weight: 600; }
-    .step.done { color: #22d3ee; border-bottom-color: #22d3ee; }
+    .step { flex: 1; text-align: center; padding: 0.5rem; font-size: 0.8rem; color: #6b7280; border-bottom: 2px solid rgba(0,0,0,0.08); }
+    .step.active { color: #4f46e5; border-bottom-color: #6366f1; font-weight: 600; }
+    .step.done { color: #0891b2; border-bottom-color: #06b6d4; }
 
     /* Slug preview */
     .slug-preview { font-size: 0.78rem; color: #6366f1; margin-top: 0.3rem; font-family: monospace; }
@@ -114,19 +114,19 @@
     .section-label { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #6b7280; margin-bottom: 0.75rem; }
 
     /* JSON output */
-    .json-output { font-family: monospace; font-size: 0.78rem; background: #020617; border: 1px solid rgba(148,163,184,0.2); border-radius: 8px; padding: 0.75rem; color: #a5f3fc; white-space: pre; overflow-x: auto; max-height: 220px; }
+    .json-output { font-family: monospace; font-size: 0.78rem; background: #f1f5f9; border: 1px solid rgba(0,0,0,0.08); border-radius: 8px; padding: 0.75rem; color: #0e7490; white-space: pre; overflow-x: auto; max-height: 220px; }
 
     /* Tab switcher */
-    .tabs { display: flex; gap: 0; margin-bottom: 1.25rem; border-bottom: 1px solid rgba(148,163,184,0.15); }
-    .tab-btn { padding: 0.5rem 1rem; font-size: 0.88rem; background: none; border: none; border-bottom: 2px solid transparent; color: #9ca3af; cursor: pointer; font-family: "Inter", sans-serif; margin-bottom: -1px; transition: all 0.15s; }
-    .tab-btn.active { color: #e5e7eb; border-bottom-color: #6366f1; }
+    .tabs { display: flex; gap: 0; margin-bottom: 1.25rem; border-bottom: 1px solid rgba(0,0,0,0.08); }
+    .tab-btn { padding: 0.5rem 1rem; font-size: 0.88rem; background: none; border: none; border-bottom: 2px solid transparent; color: #6b7280; cursor: pointer; font-family: "Inter", sans-serif; margin-bottom: -1px; transition: all 0.15s; }
+    .tab-btn.active { color: #1f2937; border-bottom-color: #6366f1; }
     .tab-panel { display: none; }
     .tab-panel.active { display: block; }
 
     /* Scrollbar */
     ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: #020617; }
-    ::-webkit-scrollbar-thumb { background: rgba(148,163,184,0.3); border-radius: 3px; }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 3px; }
   </style>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4014745723891069" crossorigin="anonymous"></script>
 </head>
@@ -243,7 +243,7 @@
 
       <!-- JSON TAB -->
       <div class="tab-panel" id="tab-json">
-        <p style="color:#9ca3af;font-size:0.88rem;margin-top:0;">Paste a JSON draft file here to auto-fill the editor. This is the same format used by <code style="color:#a5f3fc;">generate_seo.py</code>.</p>
+        <p style="color:#9ca3af;font-size:0.88rem;margin-top:0;">Paste a JSON draft file here to auto-fill the editor. This is the same format used by <code style="color:#0e7490;">generate_seo.py</code>.</p>
         <div class="field">
           <label>Paste JSON Draft</label>
           <textarea id="jsonInput" rows="12" placeholder='{
@@ -261,35 +261,35 @@
 
       <!-- GUIDE TAB -->
       <div class="tab-panel" id="tab-guide">
-        <div style="color:#cbd5f5;font-size:0.92rem;line-height:1.8;">
-          <h3 style="margin-top:0;color:#e5e7eb;">How to publish a new article</h3>
-          <p><strong style="color:#22d3ee;">Option A — Use this Dashboard (Easiest)</strong></p>
+        <div style="color:#4b5563;font-size:0.92rem;line-height:1.8;">
+          <h3 style="margin-top:0;color:#1f2937;">How to publish a new article</h3>
+          <p><strong style="color:#0891b2;">Option A — Use this Dashboard (Easiest)</strong></p>
           <ol style="padding-left:1.2rem;display:grid;gap:0.5rem;">
             <li>Fill in the form on the Editor tab (title, date, description, tags, image, content).</li>
             <li>Click <strong>Generate Article Files</strong>.</li>
-            <li>Download <code style="color:#a5f3fc;">your-article.html</code> and the updated <code style="color:#a5f3fc;">articles.json</code>.</li>
+            <li>Download <code style="color:#0e7490;">your-article.html</code> and the updated <code style="color:#0e7490;">articles.json</code>.</li>
             <li>Upload both files to your GitHub repo (drag & drop in the web UI).</li>
             <li>GitHub Pages redeploys automatically — your article is live in ~60 seconds!</li>
           </ol>
 
-          <p style="margin-top:1.25rem;"><strong style="color:#22d3ee;">Option B — JSON Draft + Python Script</strong></p>
+          <p style="margin-top:1.25rem;"><strong style="color:#0891b2;">Option B — JSON Draft + Python Script</strong></p>
           <ol style="padding-left:1.2rem;display:grid;gap:0.5rem;">
-            <li>Create a JSON file in <code style="color:#a5f3fc;">drafts/</code> folder (see JSON tab for format).</li>
-            <li>Run <code style="color:#a5f3fc;">python generate_seo.py</code> locally.</li>
+            <li>Create a JSON file in <code style="color:#0e7490;">drafts/</code> folder (see JSON tab for format).</li>
+            <li>Run <code style="color:#0e7490;">python generate_seo.py</code> locally.</li>
             <li>Commit all generated files to GitHub.</li>
-            <li>Or use the GitHub Actions workflow (<code style="color:#a5f3fc;">workflows/seo.yml</code>) to auto-publish on push.</li>
+            <li>Or use the GitHub Actions workflow (<code style="color:#0e7490;">workflows/seo.yml</code>) to auto-publish on push.</li>
           </ol>
 
-          <p style="margin-top:1.25rem;"><strong style="color:#22d3ee;">Option C — Direct HTML Edit</strong></p>
+          <p style="margin-top:1.25rem;"><strong style="color:#0891b2;">Option C — Direct HTML Edit</strong></p>
           <ol style="padding-left:1.2rem;display:grid;gap:0.5rem;">
-            <li>Copy <code style="color:#a5f3fc;">article_template.html</code> and rename it.</li>
-            <li>Replace all <code style="color:#a5f3fc;">{{PLACEHOLDER}}</code> values.</li>
-            <li>Add the article to <code style="color:#a5f3fc;">articles.json</code> manually.</li>
+            <li>Copy <code style="color:#0e7490;">article_template.html</code> and rename it.</li>
+            <li>Replace all <code style="color:#0e7490;">{{PLACEHOLDER}}</code> values.</li>
+            <li>Add the article to <code style="color:#0e7490;">articles.json</code> manually.</li>
             <li>Upload to GitHub.</li>
           </ol>
 
-          <div style="margin-top:1.25rem;padding:1rem;background:rgba(99,102,241,0.1);border-radius:10px;border:1px solid rgba(99,102,241,0.25);">
-            <strong style="color:#a5b4fc;">📌 Uploading to GitHub (web UI)</strong><br>
+          <div style="margin-top:1.25rem;padding:1rem;background:rgba(99,102,241,0.06);border-radius:10px;border:1px solid rgba(99,102,241,0.20);">
+            <strong style="color:#4f46e5;">📌 Uploading to GitHub (web UI)</strong><br>
             Go to your repo → click <strong>Add file → Upload files</strong> → drag your files → click <strong>Commit changes</strong>. GitHub Pages will rebuild automatically.
           </div>
         </div>
@@ -308,7 +308,7 @@
       <div class="section-label">Preview: articles.json entry</div>
       <div class="json-output" id="jsonPreview"></div>
 
-      <div style="margin-top:1rem;padding:1rem;background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.25);border-radius:10px;font-size:0.88rem;color:#86efac;">
+      <div style="margin-top:1rem;padding:1rem;background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.20);border-radius:10px;font-size:0.88rem;color:#166534;">
         ✅ <strong>Next steps:</strong> Upload the downloaded files to your GitHub repo (Add file → Upload files). GitHub Pages rebuilds in ~60 seconds.
       </div>
     </div>
@@ -556,7 +556,7 @@ function generateFiles() {
 
   // Update local articles list (avoid duplicates)
   const exists = articles.findIndex(a => a.slug === slug);
-  if (exists >= 0) articles[exists] = newEntry;
+  if (exists>= 0) articles[exists] = newEntry;
   else articles.unshift(newEntry);
 
   // Sort by date
@@ -689,7 +689,7 @@ function buildArticleHTML({ title, desc, date, thumb, slug, readTime, tags, cont
   <script>
     document.getElementById('hamburger').addEventListener('click', () => document.getElementById('mainNav').classList.toggle('open'));
     const btn = document.getElementById("backToTop");
-    window.addEventListener("scroll", () => { btn.style.display = window.scrollY > 500 ? "block" : "none"; });
+    window.addEventListener("scroll", () => { btn.style.display = window.scrollY> 500 ? "block" : "none"; });
     btn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
   <\/script>
 </body>
