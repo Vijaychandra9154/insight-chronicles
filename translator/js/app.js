@@ -160,7 +160,7 @@ export function initializeApp(config = {}) {
   function getState() {
     return {
       repository: state.repository
-        ? { totalArticles: state.repository.summary.totalArticles, totalWords: state.repository.summary.totalWords, languages: state.repository.summary.languages }
+        ? { totalArticles: state.repository.summary.totalArticles, totalWords: state.repository.summary.totalWords, languages: state.repository.summary.languages, articles: state.repository.articles.map(a => ({ slug: a.slug, language: a.language, wordCount: a.wordCount })) }
         : null,
       provider: state.provider ? state.provider.getName() : "none",
       selectedArticles: [...state.selectedArticles],

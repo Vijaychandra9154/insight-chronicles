@@ -217,6 +217,7 @@ function syncFromState() {
   if (s.repository) {
     $.articleCount && ($.articleCount.textContent = s.repository.totalArticles);
     $.langCount && ($.langCount.textContent = s.repository.languages?.length || 0);
+    if (s.repository.articles) renderArticles(s.repository.articles);
   }
   setBusy(!!s.busy);
 }
