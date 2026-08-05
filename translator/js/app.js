@@ -10,21 +10,28 @@ import { createTranslationProvider } from "./translationProvider.js";
 import { createSarvamProvider } from "./providers/sarvamProvider.js";
 import { isSupported } from "./languages.js";
 import { createExportPlan } from "./githubExporter.js";
+import { loadConfig, saveConfig } from "./config.js";
+import { loadSession, saveSession } from "./persistence.js";
 
 export function initializeApp(config = {}) {
-  const apiKey = config.apiKey || null;
-  const endpoint = config.endpoint || null;
+  // ── Persisted config (parameter takes precedence) ──────────────
+  const savedConfig = loadConfig();
+  const apiKey = config.apiKey || savedConfig.apiKey || null;
+  const endpoint = config.endpoint || savedConfig.endpoint || null;
   const proxyEndpoint = config.proxyEndpoint || null;
   const maxRetries = config.maxRetries;
   const onProgress = config.progressCallback || (() => {});
   const log = config.logger || (() => {});
 
+  // ── Persisted session ────────────────────────────────────────
+  const savedSession = loadSession();
+
   // ── State ───────────────────────────────────────────────────
   const state = {
     repository: null,
     provider: null,
-    selectedArticles: [],
-    selectedLanguages: ["hi"],
+    selectedArticles: savedSession.selectedArticles.length ? [...savedSession.selectedArticles] : [],
+    selectedLanguages: savedSession.selectedLanguages.length ? [...savedSession.selectedLanguages] : ["hi"],
     exportPlan: null,
     lastPublishResult: null,
     busy: false,
@@ -43,6 +50,11 @@ export function initializeApp(config = {}) {
   } else {
     state.provider = createTranslationProvider();
     log("warn", "No API credentials — provider not configured");
+  }
+
+  // Persist credentials when provided (so next launch restores them)
+  if (apiKey || endpoint) {
+    saveConfig({ apiKey, endpoint });
   }
 
   // ── Guards ──────────────────────────────────────────────────
@@ -76,6 +88,7 @@ export function initializeApp(config = {}) {
   function setSelectedArticles(slugs) {
     if (!Array.isArray(slugs)) throw new Error("setSelectedArticles expects an array.");
     state.selectedArticles = slugs;
+    saveSession({ selectedArticles: slugs });
     log("info", `Selected ${slugs.length} article(s)`);
   }
 
@@ -84,6 +97,7 @@ export function initializeApp(config = {}) {
     const invalid = codes.filter((c) => !isSupported(c));
     if (invalid.length) throw new Error(`Unsupported language(s): ${invalid.join(", ")}`);
     state.selectedLanguages = codes;
+    saveSession({ selectedLanguages: codes });
     log("info", `Selected ${codes.length} language(s): ${codes.join(", ")}`);
   }
 
