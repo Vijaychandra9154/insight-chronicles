@@ -14,6 +14,7 @@ import {
   hasTranslation
 } from "./translationMemory.js";
 import { rebuildHTML } from "./htmlRebuilder.js";
+import { getTranslation as getGlossaryTranslation } from "./glossary.js";
 
 // ── Public API ────────────────────────────────────────────────────
 
@@ -31,7 +32,7 @@ import { rebuildHTML } from "./htmlRebuilder.js";
  * @param {function} options.translateFunction    — async (text, lang) => translatedText
  * @param {function} [options.translateBatchFunction] — async (texts[], lang) => translatedTexts[]
  * @param {string} [options.slug]                 — article slug (optional)
- * @returns {Promise<object>} { html, translatedNodes, translatedCount, cachedCount, failedCount, skippedCount }
+ * @returns {Promise<object>} { html, translatedNodes, translatedCount, cachedCount, glossaryCount, failedCount, skippedCount }
  */
 export async function translateDocument({ html, targetLanguage, translateFunction, translateBatchFunction, slug = "" }) {
   if (!html) throw new Error("Missing required option: html");
@@ -64,9 +65,11 @@ export async function translateDocument({ html, targetLanguage, translateFunctio
 
   // ── 4. TM lookup — separate cached from uncached ──
   let cachedCount = 0;
+  let glossaryCount = 0;
   let translatedCount = 0;
   let failedCount = 0;
   const translatedNodes = [];
+  const glossaryItems = [];  // { node, translatedText, priority }
   const cachedItems = [];    // { node, translatedText, priority }
   const uncachedItems = [];  // { node, sourceText, priority }
 
@@ -80,7 +83,13 @@ export async function translateDocument({ html, targetLanguage, translateFunctio
 
     const priority = classification.priority;
 
-    if (hasTranslation(sourceText, targetLanguage)) {
+    // 4a. Glossary lookup (user-managed, highest priority)
+    const glossaryHit = getGlossaryTranslation("en", targetLanguage, sourceText);
+    if (glossaryHit) {
+      glossaryItems.push({ node, translatedText: glossaryHit, priority });
+      glossaryCount++;
+    } else if (hasTranslation(sourceText, targetLanguage)) {
+      // 4b. Translation Memory lookup
       const cachedText = getTranslation(sourceText, targetLanguage);
       cachedItems.push({ node, translatedText: cachedText, priority });
       cachedCount++;
@@ -162,7 +171,10 @@ export async function translateDocument({ html, targetLanguage, translateFunctio
     }
   }
 
-  // ── 6. Add cached nodes to result ──
+  // ── 6. Add glossary + cached nodes to result ──
+  for (const { node, translatedText, priority } of glossaryItems) {
+    translatedNodes.push({ ...node, priority, translatedText });
+  }
   for (const { node, translatedText, priority } of cachedItems) {
     translatedNodes.push({ ...node, priority, translatedText });
   }
@@ -176,6 +188,7 @@ export async function translateDocument({ html, targetLanguage, translateFunctio
     translatedNodes,
     translatedCount,
     cachedCount,
+    glossaryCount,
     failedCount,
     skippedCount: skipped.length
   };
