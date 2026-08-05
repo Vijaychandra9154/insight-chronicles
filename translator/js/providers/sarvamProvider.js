@@ -254,11 +254,17 @@ export function createSarvamProvider(config) {
           `Batch returned ${translations.length} results, expected ${items.length}.`
         );
       } catch (err) {
-        // Fallback to sequential
+        // Fallback to sequential — each item isolated so one failure
+        // doesn't abandon remaining items (BUGFIX: stall at ~6%)
         console.warn(`Sarvam batch failed, falling back to sequential: ${err.message}`);
         const results = [];
         for (const text of items) {
-          results.push(await translateWithRetry(text, targetLanguage));
+          try {
+            results.push(await translateWithRetry(text, targetLanguage));
+          } catch (seqErr) {
+            console.warn(`Sarvam sequential item failed: ${seqErr.message}`);
+            results.push(text); // fall back to untranslated source text
+          }
         }
         return results;
       }
