@@ -20,14 +20,15 @@ const MIN_SCORE = 90;
  * Translates one article into multiple target languages.
  *
  * @param {object} options
- * @param {string} options.html              — original article HTML
- * @param {string} options.sourceLanguage    — source language code (e.g. "en")
- * @param {string[]} options.targetLanguages — target language codes (e.g. ["hi","te"])
- * @param {function} options.translateFunction — async (text, lang) => translatedText
- * @param {string} [options.slug]            — article slug (optional)
+ * @param {string} options.html                  — original article HTML
+ * @param {string} options.sourceLanguage        — source language code (e.g. "en")
+ * @param {string[]} options.targetLanguages     — target language codes (e.g. ["hi","te"])
+ * @param {function} options.translateFunction   — async (text, lang) => translatedText
+ * @param {function} [options.translateBatchFunction] — async (texts[], lang) => translatedTexts[]
+ * @param {string} [options.slug]                — article slug (optional)
  * @returns {Promise<object[]>} Array of per-language results
  */
-export async function publishArticle({ html, sourceLanguage, targetLanguages, translateFunction, slug = "" }) {
+export async function publishArticle({ html, sourceLanguage, targetLanguages, translateFunction, translateBatchFunction, slug = "" }) {
   if (!html) throw new Error("publishArticle requires html.");
   if (!targetLanguages || !targetLanguages.length) throw new Error("publishArticle requires targetLanguages.");
 
@@ -49,6 +50,7 @@ export async function publishArticle({ html, sourceLanguage, targetLanguages, tr
         html,
         targetLanguage: lang,
         translateFunction,
+        translateBatchFunction,
         slug
       });
 
@@ -90,14 +92,15 @@ export async function publishArticle({ html, sourceLanguage, targetLanguages, tr
  * Translates multiple articles into multiple target languages.
  *
  * @param {object} options
- * @param {Array<{html:string, slug?:string}>} options.articles — articles to translate
- * @param {string} options.sourceLanguage                       — source language code
- * @param {string[]} options.targetLanguages                    — target language codes
- * @param {function} options.translateFunction                  — async (text, lang) => translatedText
- * @param {function} [options.onProgress]                       — ({articleIndex, articleTotal, language, status})
+ * @param {Array<{html:string, slug?:string}>} options.articles     — articles to translate
+ * @param {string} options.sourceLanguage                           — source language code
+ * @param {string[]} options.targetLanguages                        — target language codes
+ * @param {function} options.translateFunction                      — async (text, lang) => translatedText
+ * @param {function} [options.translateBatchFunction]               — async (texts[], lang) => translatedTexts[]
+ * @param {function} [options.onProgress]                           — ({articleIndex, articleTotal, language, status})
  * @returns {Promise<object>} { results, success, failed, generated, skipped }
  */
-export async function publishAll({ articles, sourceLanguage, targetLanguages, translateFunction, onProgress }) {
+export async function publishAll({ articles, sourceLanguage, targetLanguages, translateFunction, translateBatchFunction, onProgress }) {
   if (!articles || !articles.length) throw new Error("publishAll requires articles array.");
   if (!targetLanguages || !targetLanguages.length) throw new Error("publishAll requires targetLanguages.");
 
@@ -123,6 +126,7 @@ export async function publishAll({ articles, sourceLanguage, targetLanguages, tr
       sourceLanguage,
       targetLanguages: effectiveTargets,
       translateFunction,
+      translateBatchFunction,
       slug
     });
 

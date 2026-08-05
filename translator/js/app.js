@@ -14,6 +14,8 @@ import { createExportPlan } from "./githubExporter.js";
 export function initializeApp(config = {}) {
   const apiKey = config.apiKey || null;
   const endpoint = config.endpoint || null;
+  const proxyEndpoint = config.proxyEndpoint || null;
+  const maxRetries = config.maxRetries;
   const onProgress = config.progressCallback || (() => {});
   const log = config.logger || (() => {});
 
@@ -28,10 +30,16 @@ export function initializeApp(config = {}) {
     busy: false,
   };
 
-  // Provider
-  if (apiKey && endpoint) {
-    state.provider = createTranslationProvider(createSarvamProvider({ apiKey, endpoint }));
-    log("info", "Provider initialized: sarvam");
+  // Provider — proxy mode (recommended for production) or direct mode
+  if ((apiKey || proxyEndpoint) && endpoint) {
+    const providerConfig = { apiKey, endpoint, proxyEndpoint };
+    if (maxRetries !== undefined) providerConfig.maxRetries = maxRetries;
+    state.provider = createTranslationProvider(createSarvamProvider(providerConfig));
+    const mode = proxyEndpoint ? "sarvam (via proxy)" : "sarvam (direct — dev only)";
+    log("info", `Provider initialized: ${mode}`);
+    if (!proxyEndpoint && apiKey) {
+      log("warn", "API key passed directly — NOT safe for public URLs. Use proxyEndpoint for production.");
+    }
   } else {
     state.provider = createTranslationProvider();
     log("warn", "No API credentials — provider not configured");
@@ -104,6 +112,7 @@ export function initializeApp(config = {}) {
         sourceLanguage: "en",
         targetLanguages: state.selectedLanguages,
         translateFunction: (text, lang) => state.provider.translate(text, lang),
+        translateBatchFunction: (texts, lang) => state.provider.translateBatch(texts, lang),
         onProgress: ({ articleIndex, articleTotal, language, status }) =>
           progress("translating", { current: articleIndex, total: articleTotal, language, status }),
       });
