@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Parser Test — Insight Chronicles</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
+    pre { background: #f3f4f6; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; font-size: 0.82rem; max-height: 70vh; overflow-y: auto; }
+    .pass { color: #10b981; } .fail { color: #ef4444; }
+    button { padding: 0.5rem 1.5rem; font-size: 1rem; cursor: pointer; }
+    .stats { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px,1fr)); gap: 0.5rem; margin: 1rem 0; }
+    .stat { background: #f9fafb; border-radius: 0.5rem; padding: 0.75rem; text-align: center; }
+    .stat .v { font-size: 1.5rem; font-weight: 700; }
+    .stat .l { font-size: 0.7rem; color: #6b7280; }
+  </style>
+</head>
+<body>
+  <h1>Parser Test Suite</h1>
+  <button id="runBtn">Run Tests</button>
+  <div id="results"></div>
+
+  <script type="module">
+    import { parseArticleHTML, getASTStats, findNodes } from './js/parser.js';
+
+    const resultsEl = document.getElementById('results');
+    let passCount = 0;
+    let failCount = 0;
+
+    function pass(msg) { passCount++; return `<span class="pass">✓ ${msg}</span>`; }
+    function fail(msg) { failCount++; return `<span class="fail">✗ ${msg}</span>`; }
+
+    async function runTests() {
+      passCount = 0;
+      failCount = 0;
+      const log = [];
+
+      // ── Test 1: Inline text merging ──
+      log.push('<h3>Test 1: Inline text merging</h3>');
+      const html1 = `<!doctype html><html lang="en"><head><title>T</title></head><body><p>This is <strong>important</strong> text.</p></body></html>`;
+      const ast1 = parseArticleHTML(html1, 'test-1');
+      const pNode = ast1.nodes.find(n => n.tag === 'p');
+      if (pNode && pNode.text === 'This is important text.') {
+        log.push(pass('Inline <strong> merged into parent <p>'));
+      } else {
+        log.push(fail(`Expected "This is important text." got "${pNode?.text}"`));
+      }
+
+      // ── Test 2: Nested list — outer li skips inner li text ──
+      log.push('<h3>Test 2: Nested list text separation</h3>');
+      const html2 = `<!doctype html><html lang="en"><head><title>T</title></head><body><ul><li>Fruits <ul><li>Apple</li><li>Banana</li></ul></li></ul></body></html>`;
+      const ast2 = parseArticleHTML(html2, 'test-2');
+      const outerLi = ast2.nodes.find(n => n.tag === 'li' && n.text.includes('Fruits'));
+      const innerLis = ast2.nodes.filter(n => n.tag === 'li' && (n.text === 'Apple' || n.text === 'Banana'));
+      if (outerLi && outerLi.text === 'Fruits') {
+        log.push(pass('Outer <li> text excludes nested list items'));
+      } else {
+        log.push(fail(`Outer <li> expected "Fruits" got "${outerLi?.text}"`));
+      }
+      if (innerLis.length === 2) {
+        log.push(pass('Nested <li> elements extracted separately'));
+      } else {
+        log.push(fail(`Expected 2 nested <li> nodes, got ${innerLis.length}`));
+      }
+
+      // ── Test 3: Head extraction ──
+      log.push('<h3>Test 3: Head extraction</h3>');
+      const html3 = `<!doctype html><html lang="en"><head><title>Article Title – Insight Chronicles</title><meta name="description" content="A description."><meta property="og:title" content="OG Title"><meta property="og:description" content="OG Desc"></head><body><p>Body text.</p></body></html>`;
+      const ast3 = parseArticleHTML(html3, 'test-3');
+      const titleNode = ast3.nodes.find(n => n.type === 'title');
+      const metaDescNode = ast3.nodes.find(n => n.type === 'meta-description');
+      const ogTitleNode = ast3.nodes.find(n => n.type === 'og-title');
+      const ogDescNode = ast3.nodes.find(n => n.type === 'og-description');
+      if (titleNode && titleNode.text.includes('Article Title')) log.push(pass('Title extracted'));
+      else log.push(fail('Title extraction failed'));
+      if (metaDescNode && metaDescNode.text === 'A description.') log.push(pass('Meta description extracted'));
+      else log.push(fail('Meta description extraction failed'));
+      if (ogTitleNode && ogTitleNode.text === 'OG Title') log.push(pass('OG title extracted'));
+      else log.push(fail('OG title extraction failed'));
+      if (ogDescNode && ogDescNode.text === 'OG Desc') log.push(pass('OG description extracted'));
+      else log.push(fail('OG description extraction failed'));
+
+      // ── Test 4: Ignored elements (script, style, pre, code) ──
+      log.push('<h3>Test 4: Ignored elements</h3>');
+      const html4 = `<!doctype html><html lang="en"><head><title>T</title><script>console.log("hi")</script><style>body{}</style></head><body><p>Visible text.</p><pre>Code block</pre><script>var x=1;</script><noscript>No JS</noscript></body></html>`;
+      const ast4 = parseArticleHTML(html4, 'test-4');
+      const scriptNodes = ast4.nodes.filter(n => n.text.includes('console.log') || n.text.includes('var x'));
+      const styleNodes = ast4.nodes.filter(n => n.text.includes('body{}'));
+      const preNodes = ast4.nodes.filter(n => n.text.includes('Code block'));
+      const noscriptNodes = ast4.nodes.filter(n => n.text.includes('No JS'));
+      if (scriptNodes.length === 0) log.push(pass('Script content ignored'));
+      else log.push(fail('Script content was extracted'));
+      if (styleNodes.length === 0) log.push(pass('Style content ignored'));
+      else log.push(fail('Style content was extracted'));
+      if (preNodes.length === 0) log.push(pass('Pre content ignored'));
+      else log.push(fail('Pre content was extracted'));
+      if (noscriptNodes.length === 0) log.push(pass('Noscript content ignored'));
+      else log.push(fail('Noscript content was extracted'));
+
+      // ── Test 5: Alt and aria-label extraction ──
+      log.push('<h3>Test 5: Alt and aria-label extraction</h3>');
+      const html5 = `<!doctype html><html lang="en"><head><title>T</title></head><body><img src="a.jpg" alt="A scenic view"><button aria-label="Menu"><svg></svg></button></body></html>`;
+      const ast5 = parseArticleHTML(html5, 'test-5');
+      const altNode = ast5.nodes.find(n => n.type === 'alt');
+      const ariaNode = ast5.nodes.find(n => n.type === 'aria-label');
+      if (altNode && altNode.text === 'A scenic view') log.push(pass('Alt text extracted'));
+      else log.push(fail(`Alt extraction failed: "${altNode?.text}"`));
+      if (ariaNode && ariaNode.text === 'Menu') log.push(pass('Aria-label extracted'));
+      else log.push(fail(`Aria-label extraction failed: "${ariaNode?.text}"`));
+
+      // ── Test 6: Multiple inline elements merged ──
+      log.push('<h3>Test 6: Multiple inline elements merged</h3>');
+      const html6 = `<!doctype html><html lang="en"><head><title>T</title></head><body><p>A <strong>bold</strong> word, an <em>italic</em> phrase, and a <a href="#">link</a>.</p></body></html>`;
+      const ast6 = parseArticleHTML(html6, 'test-6');
+      const pNode6 = ast6.nodes.find(n => n.tag === 'p');
+      const expected6 = 'A bold word, an italic phrase, and a link.';
+      if (pNode6 && pNode6.text === expected6) {
+        log.push(pass('All inline elements merged (strong, em, a)'));
+      } else {
+        log.push(fail(`Expected "${expected6}" got "${pNode6?.text}"`));
+      }
+
+      // ── Test 7: Empty elements skipped ──
+      log.push('<h3>Test 7: Empty elements skipped</h3>');
+      const html7 = `<!doctype html><html lang="en"><head><title>T</title></head><body><p></p><p>  </p><p>Real text.</p></body></html>`;
+      const ast7 = parseArticleHTML(html7, 'test-7');
+      const pNodes = ast7.nodes.filter(n => n.tag === 'p');
+      if (pNodes.length === 1 && pNodes[0].text === 'Real text.') {
+        log.push(pass('Empty paragraphs skipped'));
+      } else {
+        log.push(fail(`Expected 1 paragraph, got ${pNodes.length}: ${pNodes.map(n=>n.text).join(' | ')}`));
+      }
+
+      // ── Test 8: XPath generation ──
+      log.push('<h3>Test 8: XPath generation</h3>');
+      const html8 = `<!doctype html><html lang="en"><head><title>T</title></head><body><main><div><section><p>First</p><p>Second</p><p>Third</p></section></div></main></body></html>`;
+      const ast8 = parseArticleHTML(html8, 'test-8');
+      const p3 = ast8.nodes.find(n => n.text === 'Third');
+      if (p3 && p3.xpath.includes('p[3]')) {
+        log.push(pass(`XPath index correct: ${p3.xpath}`));
+      } else {
+        log.push(fail(`XPath for third p: "${p3?.xpath}"`));
+      }
+
+      // ── Test 9: Context detection ──
+      log.push('<h3>Test 9: Context detection</h3>');
+      const html9 = `<!doctype html><html lang="en"><head><title>T</title></head><body><header><p>Header text</p></header><section class="article-body"><p>Article text</p></section><footer><p>Footer text</p></footer></body></html>`;
+      const ast9 = parseArticleHTML(html9, 'test-9');
+      const headerP = ast9.nodes.find(n => n.text === 'Header text');
+      const articleP = ast9.nodes.find(n => n.text === 'Article text');
+      const footerP = ast9.nodes.find(n => n.text === 'Footer text');
+      if (headerP && headerP.context === 'header') log.push(pass('Header context detected'));
+      else log.push(fail(`Header context: expected "header" got "${headerP?.context}"`));
+      if (articleP && articleP.context === 'article-body') log.push(pass('Article-body context detected'));
+      else log.push(fail(`Article-body context: expected "article-body" got "${articleP?.context}"`));
+      if (footerP && footerP.context === 'footer') log.push(pass('Footer context detected'));
+      else log.push(fail(`Footer context: expected "footer" got "${footerP?.context}"`));
+
+      // ── Test 10: Real article fetch ──
+      log.push('<h3>Test 10: Real article (UPI)</h3>');
+      try {
+        const resp = await fetch('../article-upi-digital-payments.html');
+        const html = await resp.text();
+        const ast = parseArticleHTML(html, 'article-upi-digital-payments');
+        const stats = getASTStats(ast);
+        log.push(pass(`Fetched and parsed: ${stats.totalNodes} nodes, ${stats.totalChars} chars`));
+        log.push(`<pre>Types: ${JSON.stringify(stats.types, null, 2)}\nContexts: ${JSON.stringify(stats.contexts, null, 2)}</pre>`);
+        // Verify expected ranges
+        if (stats.totalNodes > 50) log.push(pass('Node count > 50 (rich article)'));
+        else log.push(fail(`Expected > 50 nodes, got ${stats.totalNodes}`));
+        if (stats.types['h2'] >= 8) log.push(pass(`H2 count: ${stats.types['h2']}`));
+        else log.push(fail(`Expected >= 8 h2s, got ${stats.types['h2']}`));
+        if (stats.types['p'] > 20) log.push(pass(`P count: ${stats.types['p']}`));
+        else log.push(fail(`Expected > 20 paragraphs, got ${stats.types['p']}`));
+        if (stats.types['title']) log.push(pass('Title node present'));
+        else log.push(fail('Title node missing'));
+        if (stats.types['og-title']) log.push(pass('OG title node present'));
+        else log.push(fail('OG title node missing'));
+      } catch (err) {
+        log.push(fail(`Real article test failed: ${err.message}`));
+      }
+
+      // ── Summary ──
+      const total = passCount + failCount;
+      resultsEl.innerHTML = `
+        <h2>Results: ${passCount}/${total} passed</h2>
+        ${failCount > 0 ? `<p class="fail">${failCount} test(s) failed</p>` : '<p class="pass">All tests passed!</p>'}
+        ${log.join('\n')}
+      `;
+    }
+
+    document.getElementById('runBtn').addEventListener('click', runTests);
+  </script>
+</body>
+</html>
