@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Translate — Insight Chronicles</title>
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,system-ui,sans-serif;background:#f8fafc;color:#1e293b}
+    .topbar{background:linear-gradient(135deg,#6366f1,#22d3ee);color:#fff;padding:.5rem 1.5rem;font-size:.8rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem}
+    .topbar a{color:#fff}
+    .controls{display:flex;gap:.5rem;padding:.75rem 1.5rem;background:#fff;border-bottom:1px solid #e2e8f0;flex-wrap:wrap;align-items:center}
+    .controls input{padding:.45rem .6rem;border:1px solid #d1d5db;border-radius:6px;font-size:.82rem;font-family:inherit;min-width:180px}
+    .controls input:focus{outline:2px solid #6366f1;outline-offset:-1px}
+    .btn{padding:.45rem 1rem;border-radius:6px;font-weight:600;font-size:.82rem;cursor:pointer;border:none;font-family:inherit;white-space:nowrap}
+    .btn-primary{background:#6366f1;color:#fff}
+    .btn-primary:hover{background:#4f46e5}
+    .btn-secondary{background:#f1f5f9;color:#475569;border:1px solid #e2e8f0}
+    .btn-secondary:hover{background:#e2e8f0}
+    .btn-danger{background:#fef2f2;color:#dc2626;border:1px solid #fecaca}
+    .btn:disabled{opacity:.45;cursor:not-allowed}
+    .main-grid{display:grid;grid-template-columns:280px 260px 1fr;gap:0;min-height:calc(100vh - 200px)}
+    @media(max-width:900px){.main-grid{grid-template-columns:1fr}}
+    .panel{padding:1rem;overflow-y:auto;border-right:1px solid #e2e8f0;max-height:calc(100vh - 200px)}
+    .panel:last-child{border-right:none}
+    .panel h3{margin:0 0 .75rem;font-size:.85rem;text-transform:uppercase;letter-spacing:.05em;color:#64748b}
+    .search-box{width:100%;padding:.4rem .5rem;border:1px solid #d1d5db;border-radius:6px;font-size:.8rem;margin-bottom:.5rem}
+    .checklist{list-style:none;padding:0;margin:0}
+    .checklist label{display:flex;align-items:center;gap:.4rem;padding:.3rem 0;font-size:.82rem;cursor:pointer;border-radius:4px}
+    .checklist label:hover{background:#f1f5f9}
+    .checklist input[type=checkbox]{accent-color:#6366f1}
+    .select-all{cursor:pointer;font-size:.78rem;color:#6366f1;font-weight:600;user-select:none}
+    #progressBar{height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden;margin-bottom:.35rem}
+    #progressBar div{height:100%;width:0;background:linear-gradient(90deg,#6366f1,#22d3ee);border-radius:3px;transition:width .25s}
+    #progressLabel{font-size:.75rem;color:#64748b;min-height:1.2em}
+    #statusBar{display:none;padding:.5rem .75rem;border-radius:6px;font-size:.8rem;margin-bottom:.75rem}
+    #statusBar.ui-status-info{display:block;background:#dbeafe;color:#1e40af}
+    #statusBar.ui-status-success{display:block;background:#d1fae5;color:#065f46}
+    #statusBar.ui-status-warn{display:block;background:#fef3c7;color:#92400e}
+    #statusBar.ui-status-error{display:block;background:#fee2e2;color:#991b1b}
+    #logList{list-style:none;padding:0;margin:0;font-size:.72rem;font-family:ui-monospace,monospace;max-height:200px;overflow-y:auto}
+    #logList li{padding:.2rem 0;border-bottom:1px solid #f1f5f9}
+    #logList .log-warn{color:#d97706}#logList .log-error{color:#dc2626}
+    #untranslatedCount{font-size:.78rem;color:#b91c1c;margin-bottom:.5rem}
+    .bottom-bar{display:flex;gap:.5rem;padding:.75rem 1.5rem;background:#fff;border-top:1px solid #e2e8f0;flex-wrap:wrap;position:sticky;bottom:0}
+    #busyOverlay{display:none;position:fixed;inset:0;background:rgba(255,255,255,.7);z-index:99;align-items:center;justify-content:center;font-size:1.1rem;color:#6366f1}
+    .article-meta{font-size:.7rem;color:#94a3b8}
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <span>Insight Chronicles · Translator</span>
+  <nav><a href="../index.html">Home</a> · <a href="index.html">Scanner</a> · <a href="translate.html">Translate</a></nav>
+</div>
+
+<div class="controls">
+  <input type="password" id="apiKeyInput" placeholder="Sarvam API key" autocomplete="off" />
+  <input type="url" id="endpointInput" placeholder="https://api.sarvam.ai/translate" value="https://api.sarvam.ai/translate" />
+  <button class="btn btn-primary" id="scanBtn">Scan Repository</button>
+  <button class="btn btn-secondary" id="resetBtn">Reset</button>
+</div>
+
+<div class="main-grid">
+  <!-- Left: Articles -->
+  <section class="panel" aria-label="Articles">
+    <h3>Articles <span id="articleCount">0</span></h3>
+    <input type="search" class="search-box" id="articleSearch" placeholder="Filter articles…" aria-label="Search articles" />
+    <label class="select-all"><input type="checkbox" id="selectAllArticles" checked /> Select All</label>
+    <div id="articleList" class="checklist"></div>
+  </section>
+
+  <!-- Middle: Languages -->
+  <section class="panel" aria-label="Languages">
+    <h3>Languages <span id="langCount">0</span></h3>
+    <div id="langList" class="checklist"></div>
+  </section>
+
+  <!-- Right: Progress & Logs -->
+  <section class="panel" aria-label="Status">
+    <h3>Progress</h3>
+    <div id="progressBar"><div></div></div>
+    <div id="progressLabel">Ready.</div>
+    <div id="statusBar"></div>
+    <div id="untranslatedCount"></div>
+    <h3>Logs</h3>
+    <ul id="logList"><li>—</li></ul>
+  </section>
+</div>
+
+<div class="bottom-bar">
+  <button class="btn btn-primary" id="translateBtn">Translate Selected</button>
+  <button class="btn btn-primary" id="translateAllBtn">Translate All</button>
+  <button class="btn btn-secondary" id="exportBtn">Generate Export Plan</button>
+  <button class="btn btn-secondary" id="downloadBtn">Download Export</button>
+</div>
+
+<div id="busyOverlay">Working…</div>
+
+<script type="module">
+  import { initializeApp } from './js/app.js';
+  import { initializeUI, renderArticles, renderLanguages, updateProgress, showStatus, bindEvents } from './js/ui.js';
+  import { getAllLanguages } from './js/languages.js';
+  import { scanRepository } from './js/repository.js';
+  import { publishAll } from './js/publisher.js';
+  import { createTranslationProvider } from './js/translationProvider.js';
+  import { createSarvamProvider } from './js/providers/sarvamProvider.js';
+
+  let _db = null, _app = null, _provider = null;
+
+  function getConfig() {
+    const key = document.getElementById('apiKeyInput').value.trim();
+    const ep = document.getElementById('endpointInput').value.trim();
+    return { apiKey: key || null, endpoint: ep || null };
+  }
+
+  function initProvider() {
+    const c = getConfig();
+    if (c.apiKey && c.endpoint) {
+      _provider = createTranslationProvider(createSarvamProvider(c));
+      return _provider;
+    }
+    return null;
+  }
+
+  function addLog(level, msg) {
+    const list = document.getElementById('logList');
+    const li = document.createElement('li');
+    li.className = `log-${level}`;
+    li.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
+    list.appendChild(li);
+    if (list.children.length > 50) list.firstChild.remove();
+  }
+
+  function log(level, msg) { addLog(level, msg); }
+
+  // ── Scan ──
+  document.getElementById('scanBtn').addEventListener('click', async function sc() {
+    if (this.disabled) return;
+    this.disabled = true;
+    showStatus('Scanning repository…', 'info');
+    try {
+      _db = await scanRepository({
+        onProgress: ({ current, total, filename, status }) =>
+          updateProgress({ current, total, filename, status })
+      });
+      renderArticles(_db.articles);
+      document.getElementById('articleCount').textContent = _db.summary.totalArticles;
+      showStatus(`${_db.summary.totalArticles} articles found.`, 'success');
+      log('info', `Scanned ${_db.summary.totalArticles} articles, ${_db.summary.totalWords} words`);
+    } catch (e) {
+      showStatus(e.message, 'error');
+      log('error', `Scan failed: ${e.message}`);
+    } finally { this.disabled = false; }
+  });
+
+  // ── Article search ──
+  document.getElementById('articleSearch').addEventListener('input', function () {
+    const q = this.value.toLowerCase();
+    document.querySelectorAll('[data-article-checkbox]').forEach(cb => {
+      cb.closest('label').style.display = cb.value.toLowerCase().includes(q) ? '' : 'none';
+    });
+  });
+
+  // ── Select All ──
+  document.getElementById('selectAllArticles').addEventListener('change', function () {
+    document.querySelectorAll('[data-article-checkbox]').forEach(cb => { cb.checked = this.checked; });
+  });
+
+  // ── Translate Selected ──
+  document.getElementById('translateBtn').addEventListener('click', async function () {
+    if (!_db) { showStatus('Scan repository first.', 'warn'); return; }
+    const slugs = [...document.querySelectorAll('[data-article-checkbox]:checked')].map(cb => cb.value);
+    const codes = [...document.querySelectorAll('[data-lang-checkbox]:checked')].map(cb => cb.value);
+    if (!slugs.length) { showStatus('Select articles.', 'warn'); return; }
+    if (!codes.length) { showStatus('Select languages.', 'warn'); return; }
+
+    const provider = initProvider();
+    if (!provider) { showStatus('Enter API key and endpoint.', 'error'); return; }
+
+    this.disabled = true;
+    showStatus('Translating…', 'info');
+    try {
+      const fetched = [];
+      for (const s of slugs) {
+        const a = _db.articles.find(x => x.slug === s);
+        const fn = a?.source || `${s}.html`;
+        try { const r = await fetch(`../${fn}`); if (r.ok) fetched.push({ html: await r.text(), slug: s }); }
+        catch (e) { log('warn', `Skip ${fn}: ${e.message}`); }
+      }
+      if (!fetched.length) throw new Error('No articles fetched.');
+
+      const r = await publishAll({
+        articles: fetched, sourceLanguage: 'en', targetLanguages: codes,
+        translateFunction: (t, l) => provider.translate(t, l),
+        translateBatchFunction: (t, l) => provider.translateBatch(t, l),
+        onProgress: ({ articleIndex, articleTotal, language, status }) =>
+          updateProgress({ articleIndex, articleTotal, language, status })
+      });
+      showStatus(`Done: ${r.success} ok, ${r.failed} failed.`, r.failed ? 'warn' : 'success');
+      if (r.failed) document.getElementById('untranslatedCount').textContent = `${r.failed} failed`;
+      log('info', `Translated ${r.success}/${r.success + r.failed} articles`);
+    } catch (e) {
+      showStatus(e.message, 'error');
+      log('error', e.message);
+    } finally { this.disabled = false; }
+  });
+
+  // ── Translate All ──
+  document.getElementById('translateAllBtn').addEventListener('click', function () {
+    document.querySelectorAll('[data-article-checkbox]').forEach(cb => { cb.checked = true; });
+    document.getElementById('selectAllArticles').checked = true;
+    document.getElementById('translateBtn').click();
+  });
+
+  // ── Export Plan ──
+  document.getElementById('exportBtn').addEventListener('click', async function () {
+    const { createExportPlan } = await import('./js/githubExporter.js');
+    const codes = [...document.querySelectorAll('[data-lang-checkbox]:checked')].map(cb => cb.value);
+    const slugs = [...document.querySelectorAll('[data-article-checkbox]:checked')].map(cb => cb.value);
+    if (!slugs.length || !codes.length) { showStatus('Select articles and languages first.', 'warn'); return; }
+    // Build entries from what would be translated (placeholder — real entries come from translation results)
+    const entries = [];
+    for (const s of slugs) for (const l of codes) entries.push({ slug: s, language: l, html: '' });
+    const plan = createExportPlan({ articles: entries });
+    showStatus(`Export plan: ${plan.report.totalFiles} files, ${plan.report.estimatedSizeKB} KB.`, 'success');
+    log('info', `Export plan: ${plan.report.totalFiles} files`);
+    window._lastPlan = plan;
+  });
+
+  // ── Download ──
+  document.getElementById('downloadBtn').addEventListener('click', function () {
+    if (!window._lastPlan) { showStatus('Generate export plan first.', 'warn'); return; }
+    const json = JSON.stringify(window._lastPlan, null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'export-plan.json';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+
+  // ── Reset ──
+  document.getElementById('resetBtn').addEventListener('click', function () {
+    _db = null;
+    window._lastPlan = null;
+    document.getElementById('articleList').innerHTML = '';
+    document.getElementById('articleCount').textContent = '0';
+    document.getElementById('logList').innerHTML = '<li>—</li>';
+    document.getElementById('untranslatedCount').textContent = '';
+    updateProgress(null);
+    showStatus('Reset.', 'info');
+  });
+
+  // ── Init ──
+  _app = initializeApp({
+    ...getConfig(),
+    progressCallback: (stage, detail) => updateProgress({ stage, ...detail }),
+    logger: (level, msg) => addLog(level, msg)
+  });
+  initializeUI(_app);
+  renderLanguages(getAllLanguages());
+  document.getElementById('langCount').textContent = getAllLanguages().length;
+  bindEvents();
+</script>
+</body>
+</html>
