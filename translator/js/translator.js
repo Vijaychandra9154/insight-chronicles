@@ -31,7 +31,7 @@ import { rebuildHTML } from "./htmlRebuilder.js";
  * @param {function} options.translateFunction    — async (text, lang) => translatedText
  * @param {function} [options.translateBatchFunction] — async (texts[], lang) => translatedTexts[]
  * @param {string} [options.slug]                 — article slug (optional)
- * @returns {Promise<object>} { html, translatedNodes, translatedCount, cachedCount, skippedCount }
+ * @returns {Promise<object>} { html, translatedNodes, translatedCount, cachedCount, failedCount, skippedCount }
  */
 export async function translateDocument({ html, targetLanguage, translateFunction, translateBatchFunction, slug = "" }) {
   if (!html) throw new Error("Missing required option: html");
@@ -65,11 +65,12 @@ export async function translateDocument({ html, targetLanguage, translateFunctio
   // ── 4. TM lookup — separate cached from uncached ──
   let cachedCount = 0;
   let translatedCount = 0;
+  let failedCount = 0;
   const translatedNodes = [];
-  const cachedItems = [];    // { node, translatedText }
-  const uncachedItems = [];  // { node, sourceText }
+  const cachedItems = [];    // { node, translatedText, priority }
+  const uncachedItems = [];  // { node, sourceText, priority }
 
-  for (const { node } of toTranslate) {
+  for (const { node, classification } of toTranslate) {
     const sourceText = node.text || "";
 
     if (!sourceText.trim()) {
@@ -77,12 +78,14 @@ export async function translateDocument({ html, targetLanguage, translateFunctio
       continue;
     }
 
+    const priority = classification.priority;
+
     if (hasTranslation(sourceText, targetLanguage)) {
       const cachedText = getTranslation(sourceText, targetLanguage);
-      cachedItems.push({ node, translatedText: cachedText });
+      cachedItems.push({ node, translatedText: cachedText, priority });
       cachedCount++;
     } else {
-      uncachedItems.push({ node, sourceText });
+      uncachedItems.push({ node, sourceText, priority });
     }
   }
 
@@ -106,35 +109,41 @@ export async function translateDocument({ html, targetLanguage, translateFunctio
       if (batchResults && Array.isArray(batchResults) && batchResults.length === uncachedItems.length) {
         // Success — distribute batch results
         for (let i = 0; i < uncachedItems.length; i++) {
-          const { node, sourceText } = uncachedItems[i];
+          const { node, sourceText, priority } = uncachedItems[i];
           const translatedText = String(batchResults[i] || sourceText).trim();
 
           if (translatedText && translatedText !== sourceText) {
             setTranslation(sourceText, targetLanguage, translatedText);
             translatedCount++;
+          } else if (!translatedText || translatedText === sourceText) {
+            failedCount++;
           }
-          translatedNodes.push({ ...node, translatedText: translatedText || sourceText });
+          translatedNodes.push({ ...node, priority, translatedText: translatedText || sourceText });
         }
       } else {
         // Batch returned wrong shape — sequential fallback
-        for (const { node, sourceText } of uncachedItems) {
+        for (const { node, sourceText, priority } of uncachedItems) {
           let translatedText;
+          let errored = false;
           try {
             translatedText = await translateFunction(sourceText, targetLanguage);
           } catch (err) {
             console.warn(`Translation failed for node ${node.id}: ${err.message}`);
             translatedText = sourceText;
+            errored = true;
           }
           if (translatedText && translatedText !== sourceText) {
             setTranslation(sourceText, targetLanguage, translatedText);
             translatedCount++;
+          } else {
+            failedCount++;
           }
-          translatedNodes.push({ ...node, translatedText: translatedText || sourceText });
+          translatedNodes.push({ ...node, priority, translatedText: translatedText || sourceText });
         }
       }
     } else {
       // ── Sequential path (no batch function available) ──
-      for (const { node, sourceText } of uncachedItems) {
+      for (const { node, sourceText, priority } of uncachedItems) {
         let translatedText;
         try {
           translatedText = await translateFunction(sourceText, targetLanguage);
@@ -145,15 +154,17 @@ export async function translateDocument({ html, targetLanguage, translateFunctio
         if (translatedText && translatedText !== sourceText) {
           setTranslation(sourceText, targetLanguage, translatedText);
           translatedCount++;
+        } else {
+          failedCount++;
         }
-        translatedNodes.push({ ...node, translatedText: translatedText || sourceText });
+        translatedNodes.push({ ...node, priority, translatedText: translatedText || sourceText });
       }
     }
   }
 
   // ── 6. Add cached nodes to result ──
-  for (const { node, translatedText } of cachedItems) {
-    translatedNodes.push({ ...node, translatedText });
+  for (const { node, translatedText, priority } of cachedItems) {
+    translatedNodes.push({ ...node, priority, translatedText });
   }
 
   // ── 7. Rebuild HTML ──
@@ -165,6 +176,7 @@ export async function translateDocument({ html, targetLanguage, translateFunctio
     translatedNodes,
     translatedCount,
     cachedCount,
+    failedCount,
     skippedCount: skipped.length
   };
 }

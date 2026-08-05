@@ -11,7 +11,7 @@ const ARIA_NODES = new Set(["aria-label"]);
 const INLINE_TAGS = new Set([
   "strong", "em", "span", "a", "b", "i", "u", "small", "mark",
   "sub", "sup", "abbr", "cite", "dfn", "kbd", "samp", "var",
-  "time", "q", "del", "ins", "s", "code"
+  "time", "q", "wbr", "br", "del", "ins", "s", "code"
 ]);
 
 // ── Public API ────────────────────────────────────────────────────
