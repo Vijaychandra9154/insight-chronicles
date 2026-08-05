@@ -1,190 +1,165 @@
 /**
- * Application Controller — Insight Chronicles Translator
- * Connects all modules. No UI, no DOM manipulation.
+ * Application Controller — Insight Chronicles Localization System
+ * Connects all modules. No DOM, no file I/O, no git operations.
  * @module app
  */
 
 import { scanRepository } from "./repository.js";
 import { publishAll } from "./publisher.js";
-import { createExportPlan } from "./githubExporter.js";
 import { createTranslationProvider } from "./translationProvider.js";
 import { createSarvamProvider } from "./providers/sarvamProvider.js";
-import { getLanguageCodes, isSupported } from "./languages.js";
+import { isSupported } from "./languages.js";
+import { createExportPlan } from "./githubExporter.js";
 
-// ── Public API ────────────────────────────────────────────────────
-
-/**
- * @param {object} config
- * @param {string} [config.sourceLanguage="en"]
- * @param {string} [config.apiKey]        — Sarvam API key
- * @param {string} [config.endpoint]      — Sarvam endpoint
- * @param {function} [config.translateFunction] — custom translator (overrides Sarvam)
- * @param {function} [config.onProgress]  — ({phase, detail}) => {}
- * @returns {object} app API
- */
 export function initializeApp(config = {}) {
-  const srcLang = config.sourceLanguage || "en";
-  const onProgress = config.onProgress || (() => {});
+  const apiKey = config.apiKey || null;
+  const endpoint = config.endpoint || null;
+  const onProgress = config.progressCallback || (() => {});
+  const log = config.logger || (() => {});
 
+  // ── State ───────────────────────────────────────────────────
   const state = {
-    sourceLanguage: srcLang,
     repository: null,
-    selectedArticles: [],
-    selectedLanguages: [],
     provider: null,
+    selectedArticles: [],
+    selectedLanguages: ["hi"],
     exportPlan: null,
-    progress: { phase: "idle", detail: "" },
-    lastResults: null,
+    lastPublishResult: null,
+    busy: false,
   };
 
-  // Provider: custom function > Sarvam > no-op
-  if (config.translateFunction) {
-    state.provider = createTranslationProvider({
-      name: "custom", translate: config.translateFunction, supportsBatch: () => false,
-    });
-  } else if (config.apiKey && config.endpoint) {
-    state.provider = createTranslationProvider(
-      createSarvamProvider({ apiKey: config.apiKey, endpoint: config.endpoint })
-    );
+  // Provider
+  if (apiKey && endpoint) {
+    state.provider = createTranslationProvider(createSarvamProvider({ apiKey, endpoint }));
+    log("info", "Provider initialized: sarvam");
   } else {
     state.provider = createTranslationProvider();
+    log("warn", "No API credentials — provider not configured");
   }
 
-  // ── App object ──────────────────────────────────────────────
+  // ── Guards ──────────────────────────────────────────────────
+  const guardBusy = () => { if (state.busy) throw new Error("App is busy. Wait for current operation."); };
+  const guardRepo = () => { if (!state.repository) throw new Error("Repository not scanned. Call scanRepository() first."); };
+  const guardArts = () => { if (!state.selectedArticles.length) throw new Error("No articles selected."); };
+  const guardLangs = () => { if (!state.selectedLanguages.length) throw new Error("No target languages selected."); };
 
-  const app = {
-    /** Scan all articles. Auto-selects all on success. */
-    async scanRepository() {
-      setProgress("scanning", "Scanning repository...");
+  function progress(stage, detail) {
+    const pct = (detail?.current != null && detail?.total)
+      ? Math.round((detail.current / detail.total) * 100) : null;
+    onProgress(stage, { ...detail, percent: pct });
+  }
+
+  // ── Public API ──────────────────────────────────────────────
+
+  async function scanRepo() {
+    guardBusy(); state.busy = true; progress("scanning", { phase: "start" });
+    try {
       state.repository = await scanRepository({
-        onProgress: ({ current, total, filename, status }) => {
-          setProgress("scanning", `${status} ${current}/${total}: ${filename}`);
-        },
+        onProgress: ({ current, total, filename, status }) =>
+          progress("scanning", { current, total, filename, status }),
       });
       state.selectedArticles = state.repository.articles.map((a) => a.slug);
-      setProgress("idle", `Scanned ${state.repository.summary.totalArticles} articles.`);
-      return state.repository;
-    },
+      const s = state.repository.summary;
+      log("info", `Scanned: ${s.totalArticles} articles, ${s.totalWords} words`);
+      progress("scanning", { phase: "done", articles: s.totalArticles, words: s.totalWords });
+    } finally { state.busy = false; }
+  }
 
-    /** Select articles by slug. Pass ["*"] for all. */
-    selectArticles(slugs) {
-      if (!slugs || (slugs.length === 1 && slugs[0] === "*")) {
-        state.selectedArticles = state.repository
-          ? state.repository.articles.map((a) => a.slug)
-          : [];
-      } else {
-        state.selectedArticles = slugs;
-      }
-      return state.selectedArticles;
-    },
+  function setSelectedArticles(slugs) {
+    if (!Array.isArray(slugs)) throw new Error("setSelectedArticles expects an array.");
+    state.selectedArticles = slugs;
+    log("info", `Selected ${slugs.length} article(s)`);
+  }
 
-    /** Select target languages by code. Pass ["*"] for all supported. */
-    selectLanguages(codes) {
-      if (!codes || (codes.length === 1 && codes[0] === "*")) {
-        state.selectedLanguages = getLanguageCodes().filter((c) => c !== state.sourceLanguage);
-      } else {
-        state.selectedLanguages = codes.filter(
-          (c) => isSupported(c) && c !== state.sourceLanguage
-        );
-      }
-      return state.selectedLanguages;
-    },
+  function setSelectedLanguages(codes) {
+    if (!Array.isArray(codes)) throw new Error("setSelectedLanguages expects an array.");
+    const invalid = codes.filter((c) => !isSupported(c));
+    if (invalid.length) throw new Error(`Unsupported language(s): ${invalid.join(", ")}`);
+    state.selectedLanguages = codes;
+    log("info", `Selected ${codes.length} language(s): ${codes.join(", ")}`);
+  }
 
-    /** Translate selected articles × selected languages. */
-    async translateSelected() {
-      if (!state.repository) throw new Error("Repository not scanned. Call scanRepository() first.");
-      if (!state.selectedArticles.length) throw new Error("No articles selected.");
-      if (!state.selectedLanguages.length) throw new Error("No languages selected.");
-
-      const articles = state.repository.articles
+  async function translateSelected() {
+    guardBusy(); guardRepo(); guardArts(); guardLangs();
+    state.busy = true;
+    progress("translating", { phase: "start", articles: state.selectedArticles.length, languages: state.selectedLanguages.length });
+    try {
+      const entries = state.repository.articles
         .filter((a) => state.selectedArticles.includes(a.slug))
-        .map((a) => ({ html: null, slug: a.slug, _filename: a.source }));
+        .map((a) => ({ html: null, slug: a.slug, _fn: a.source }));
 
-      return runPublish(articles);
-    },
-
-    /** Translate all articles × all supported languages. */
-    async translateAll() {
-      if (!state.repository) throw new Error("Repository not scanned.");
-      this.selectArticles(["*"]);
-      if (!state.selectedLanguages.length) this.selectLanguages(["*"]);
-      return this.translateSelected();
-    },
-
-    /** Build export plan from last translation results. */
-    generateExportPlan(options = {}) {
-      if (!state.lastResults) throw new Error("No translation results. Run translateSelected() or translateAll() first.");
-      const articles = [];
-      for (const item of state.lastResults.results) {
-        for (const t of item.translations) {
-          if (t.success && t.html) articles.push({ slug: item.slug, language: t.language, html: t.html });
-        }
+      const fetched = [];
+      for (const e of entries) {
+        const fn = e._fn || `${e.slug}.html`;
+        try {
+          const res = await fetch(`../${fn}`);
+          if (!res.ok) { log("warn", `Skip ${fn}: HTTP ${res.status}`); continue; }
+          fetched.push({ html: await res.text(), slug: e.slug });
+        } catch (err) { log("warn", `Skip ${fn}: ${err.message}`); }
       }
-      state.exportPlan = createExportPlan({ articles, baseURL: options.baseURL || "https://insight-chronicles.com" });
-      return state.exportPlan;
-    },
+      if (!fetched.length) throw new Error("No articles could be fetched.");
 
-    /** Read-only snapshot of current state. */
-    getState() {
-      return {
-        sourceLanguage: state.sourceLanguage,
-        repositoryLoaded: !!state.repository,
-        articleCount: state.repository ? state.repository.summary.totalArticles : 0,
-        selectedArticles: [...state.selectedArticles],
-        selectedLanguages: [...state.selectedLanguages],
-        providerName: state.provider ? state.provider.getName() : "none",
-        hasExportPlan: !!state.exportPlan,
-        progress: { ...state.progress },
-        lastResults: state.lastResults ? {
-          success: state.lastResults.success,
-          failed: state.lastResults.failed,
-          generated: state.lastResults.generated,
-          skipped: state.lastResults.skipped,
-        } : null,
-      };
-    },
+      state.lastPublishResult = await publishAll({
+        articles: fetched,
+        sourceLanguage: "en",
+        targetLanguages: state.selectedLanguages,
+        translateFunction: (text, lang) => state.provider.translate(text, lang),
+        onProgress: ({ articleIndex, articleTotal, language, status }) =>
+          progress("translating", { current: articleIndex, total: articleTotal, language, status }),
+      });
 
-    setProvider(impl) { state.provider = createTranslationProvider(impl); },
-    setSourceLanguage(code) {
-      if (!isSupported(code)) throw new Error(`Unsupported language: "${code}"`);
-      state.sourceLanguage = code;
-      state.selectedLanguages = state.selectedLanguages.filter((l) => l !== code);
-    },
-  };
+      const r = state.lastPublishResult;
+      log("info", `Done: ${r.success} ok, ${r.failed} failed`);
+      progress("translating", { phase: "done", success: r.success, failed: r.failed, generated: r.generated });
+    } finally { state.busy = false; }
+    return state.lastPublishResult;
+  }
 
-  // ── Internal ────────────────────────────────────────────────
+  async function translateAll() {
+    guardRepo();
+    setSelectedArticles(state.repository.articles.map((a) => a.slug));
+    return translateSelected();
+  }
 
-  async function runPublish(articleEntries) {
-    const articles = [];
-    for (const entry of articleEntries) {
-      const filename = entry._filename || `${entry.slug}.html`;
-      try {
-        const res = await fetch(`../${filename}`);
-        if (!res.ok) { console.warn(`Skipping ${filename}: HTTP ${res.status}`); continue; }
-        articles.push({ html: await res.text(), slug: entry.slug });
-      } catch (err) { console.warn(`Skipping ${filename}: ${err.message}`); }
+  function generateExportPlan() {
+    if (!state.lastPublishResult) throw new Error("No publish results. Translate first.");
+    const entries = [];
+    for (const item of state.lastPublishResult.results) {
+      for (const t of item.translations) {
+        if (t.success && t.html) entries.push({ slug: item.slug, language: t.language, html: t.html });
+      }
     }
-
-    setProgress("translating", `Translating ${articles.length} article(s)...`);
-
-    state.lastResults = await publishAll({
-      articles,
-      sourceLanguage: state.sourceLanguage,
-      targetLanguages: state.selectedLanguages,
-      translateFunction: (text, lang) => state.provider.translate(text, lang),
-      onProgress: ({ articleIndex, articleTotal, language, status }) => {
-        setProgress("translating", `Article ${articleIndex}/${articleTotal} → ${language}: ${status}`);
-      },
-    });
-
-    setProgress("idle", `Done: ${state.lastResults.success} ok, ${state.lastResults.failed} failed.`);
-    return state.lastResults;
+    state.exportPlan = createExportPlan({ articles: entries });
+    log("info", `Export plan: ${state.exportPlan.report.totalFiles} files`);
+    return state.exportPlan;
   }
 
-  function setProgress(phase, detail) {
-    state.progress = { phase, detail };
-    onProgress({ phase, detail });
+  function getState() {
+    return {
+      repository: state.repository
+        ? { totalArticles: state.repository.summary.totalArticles, totalWords: state.repository.summary.totalWords, languages: state.repository.summary.languages }
+        : null,
+      provider: state.provider ? state.provider.getName() : "none",
+      selectedArticles: [...state.selectedArticles],
+      selectedLanguages: [...state.selectedLanguages],
+      hasExportPlan: !!state.exportPlan,
+      lastResult: state.lastPublishResult
+        ? { success: state.lastPublishResult.success, failed: state.lastPublishResult.failed, generated: state.lastPublishResult.generated, skipped: state.lastPublishResult.skipped }
+        : null,
+      busy: state.busy,
+    };
   }
 
-  return app;
+  function reset() {
+    state.repository = null;
+    state.selectedArticles = [];
+    state.selectedLanguages = ["hi"];
+    state.exportPlan = null;
+    state.lastPublishResult = null;
+    state.busy = false;
+    log("info", "App state reset");
+    progress("idle", { phase: "reset" });
+  }
+
+  return Object.freeze({ scanRepository: scanRepo, setSelectedArticles, setSelectedLanguages, translateSelected, translateAll, generateExportPlan, getState, reset });
 }
