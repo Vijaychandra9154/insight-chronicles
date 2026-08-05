@@ -38,19 +38,25 @@ export function initializeApp(config = {}) {
   };
 
   // Provider — proxy mode (recommended for production) or direct mode
-  if ((apiKey || proxyEndpoint) && endpoint) {
-    const providerConfig = { apiKey, endpoint, proxyEndpoint };
-    if (maxRetries !== undefined) providerConfig.maxRetries = maxRetries;
-    state.provider = createTranslationProvider(createSarvamProvider(providerConfig));
-    const mode = proxyEndpoint ? "sarvam (via proxy)" : "sarvam (direct — dev only)";
-    log("info", `Provider initialized: ${mode}`);
-    if (!proxyEndpoint && apiKey) {
-      log("warn", "API key passed directly — NOT safe for public URLs. Use proxyEndpoint for production.");
+  function configureProvider(key, ep, proxyEp, retries) {
+    if ((key || proxyEp) && ep) {
+      const cfg = { apiKey: key, endpoint: ep, proxyEndpoint: proxyEp };
+      if (retries !== undefined) cfg.maxRetries = retries;
+      state.provider = createTranslationProvider(createSarvamProvider(cfg));
+      const mode = proxyEp ? "sarvam (via proxy)" : "sarvam (direct — dev only)";
+      log("info", `Provider initialized: ${mode}`);
+      if (!proxyEp && key) {
+        log("warn", "API key passed directly — NOT safe for public URLs. Use proxyEndpoint for production.");
+      }
+      return true;
+    } else {
+      state.provider = createTranslationProvider();
+      log("warn", "No API credentials — provider not configured");
+      return false;
     }
-  } else {
-    state.provider = createTranslationProvider();
-    log("warn", "No API credentials — provider not configured");
   }
+
+  configureProvider(apiKey, endpoint, proxyEndpoint, maxRetries);
 
   // Persist credentials when provided (so next launch restores them)
   if (apiKey || endpoint) {
@@ -173,6 +179,19 @@ export function initializeApp(config = {}) {
     };
   }
 
+  function reconfigure(cred = {}) {
+    const ok = configureProvider(
+      cred.apiKey || null,
+      cred.endpoint || null,
+      cred.proxyEndpoint || null,
+      cred.maxRetries
+    );
+    if (ok && (cred.apiKey || cred.endpoint)) {
+      saveConfig({ apiKey: cred.apiKey, endpoint: cred.endpoint });
+    }
+    return ok;
+  }
+
   function reset() {
     state.repository = null;
     state.selectedArticles = [];
@@ -184,5 +203,5 @@ export function initializeApp(config = {}) {
     progress("idle", { phase: "reset" });
   }
 
-  return Object.freeze({ scanRepository: scanRepo, setSelectedArticles, setSelectedLanguages, translateSelected, translateAll, generateExportPlan, getState, reset });
+  return Object.freeze({ scanRepository: scanRepo, setSelectedArticles, setSelectedLanguages, translateSelected, translateAll, generateExportPlan, getState, reset, reconfigure });
 }

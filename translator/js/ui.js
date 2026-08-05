@@ -124,12 +124,12 @@ export function bindEvents() {
     if (!codes.length) { showStatus("Select at least one language.", "warn"); return; }
     setBusy(true);
     try {
+      syncCredentials();
       _app.setSelectedArticles(slugs);
       _app.setSelectedLanguages(codes);
       showStatus("Translating…", "info");
       const result = await _app.translateSelected();
       showStatus(`Done: ${result.success} ok, ${result.failed} failed.`, result.failed ? "warn" : "success");
-      // B4 mitigation: surface untranslated count when failures exist
       if (result.failed > 0) {
         const count = $.untranslatedCount;
         if (count) count.textContent = `${result.failed} article(s) had translation failures`;
@@ -144,9 +144,14 @@ export function bindEvents() {
     if (!_app || _app.getState().busy) return;
     setBusy(true);
     try {
+      syncCredentials();
       showStatus("Translating all articles…", "info");
       const result = await _app.translateAll();
       showStatus(`Done: ${result.success} ok, ${result.failed} failed.`, result.failed ? "warn" : "success");
+      // Sync DOM checkboxes to reflect "all selected" (BUG-DOMSYNC-001)
+      document.querySelectorAll("[data-article-checkbox]").forEach(cb => { cb.checked = true; });
+      const selectAll = document.getElementById("selectAllArticles");
+      if (selectAll) selectAll.checked = true;
     } catch (err) {
       showStatus(err.message, "error");
     } finally { setBusy(false); }
@@ -220,6 +225,12 @@ function syncFromState() {
     if (s.repository.articles) renderArticles(s.repository.articles);
   }
   setBusy(!!s.busy);
+}
+
+function syncCredentials() {
+  const key = document.getElementById("apiKeyInput")?.value?.trim() || null;
+  const ep = document.getElementById("endpointInput")?.value?.trim() || null;
+  if (key || ep) _app.reconfigure({ apiKey: key, endpoint: ep });
 }
 
 function setBusy(on) {
