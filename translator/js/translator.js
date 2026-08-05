@@ -34,7 +34,7 @@ import { getTranslation as getGlossaryTranslation } from "./glossary.js";
  * @param {string} [options.slug]                 — article slug (optional)
  * @returns {Promise<object>} { html, translatedNodes, translatedCount, cachedCount, glossaryCount, failedCount, skippedCount }
  */
-export async function translateDocument({ html, targetLanguage, translateFunction, translateBatchFunction, slug = "" }) {
+export async function translateDocument({ html, targetLanguage, translateFunction, translateBatchFunction, slug = "", onProgress }) {
   if (!html) throw new Error("Missing required option: html");
   if (!targetLanguage) throw new Error("Missing required option: targetLanguage");
   if (typeof translateFunction !== "function") {
@@ -101,6 +101,8 @@ export async function translateDocument({ html, targetLanguage, translateFunctio
   // ── 5. Translate uncached nodes — batch or sequential ──
   if (uncachedItems.length > 0) {
     const hasBatch = typeof translateBatchFunction === "function";
+    const total = uncachedItems.length;
+    if (onProgress) onProgress({ current: 0, total, status: "translating" });
 
     if (hasBatch) {
       // ── Batch path (single API call for all uncached nodes) ──
@@ -129,17 +131,17 @@ export async function translateDocument({ html, targetLanguage, translateFunctio
           }
           translatedNodes.push({ ...node, priority, translatedText: translatedText || sourceText });
         }
+        if (onProgress) onProgress({ current: total, total, status: "translated" });
       } else {
         // Batch returned wrong shape — sequential fallback
-        for (const { node, sourceText, priority } of uncachedItems) {
+        for (let i = 0; i < uncachedItems.length; i++) {
+          const { node, sourceText, priority } = uncachedItems[i];
           let translatedText;
-          let errored = false;
           try {
             translatedText = await translateFunction(sourceText, targetLanguage);
           } catch (err) {
             console.warn(`Translation failed for node ${node.id}: ${err.message}`);
             translatedText = sourceText;
-            errored = true;
           }
           if (translatedText && translatedText !== sourceText) {
             setTranslation(sourceText, targetLanguage, translatedText);
@@ -148,11 +150,13 @@ export async function translateDocument({ html, targetLanguage, translateFunctio
             failedCount++;
           }
           translatedNodes.push({ ...node, priority, translatedText: translatedText || sourceText });
+          if (onProgress && i % 5 === 0) onProgress({ current: i + 1, total, status: "translating" });
         }
       }
     } else {
       // ── Sequential path (no batch function available) ──
-      for (const { node, sourceText, priority } of uncachedItems) {
+      for (let i = 0; i < uncachedItems.length; i++) {
+        const { node, sourceText, priority } = uncachedItems[i];
         let translatedText;
         try {
           translatedText = await translateFunction(sourceText, targetLanguage);
@@ -167,6 +171,7 @@ export async function translateDocument({ html, targetLanguage, translateFunctio
           failedCount++;
         }
         translatedNodes.push({ ...node, priority, translatedText: translatedText || sourceText });
+        if (onProgress && i % 5 === 0) onProgress({ current: i + 1, total, status: "translating" });
       }
     }
   }

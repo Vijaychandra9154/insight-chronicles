@@ -28,7 +28,7 @@ const MIN_SCORE = 90;
  * @param {string} [options.slug]                — article slug (optional)
  * @returns {Promise<object[]>} Array of per-language results
  */
-export async function publishArticle({ html, sourceLanguage, targetLanguages, translateFunction, translateBatchFunction, slug = "" }) {
+export async function publishArticle({ html, sourceLanguage, targetLanguages, translateFunction, translateBatchFunction, slug = "", onProgress }) {
   if (!html) throw new Error("publishArticle requires html.");
   if (!targetLanguages || !targetLanguages.length) throw new Error("publishArticle requires targetLanguages.");
 
@@ -51,7 +51,8 @@ export async function publishArticle({ html, sourceLanguage, targetLanguages, tr
         targetLanguage: lang,
         translateFunction,
         translateBatchFunction,
-        slug
+        slug,
+        onProgress: (p) => onProgress?.({ ...p, language: lang })
       });
 
       // ── Validate ──
@@ -127,7 +128,8 @@ export async function publishAll({ articles, sourceLanguage, targetLanguages, tr
       targetLanguages: effectiveTargets,
       translateFunction,
       translateBatchFunction,
-      slug
+      slug,
+      onProgress
     });
 
     for (const result of perArticle) {
