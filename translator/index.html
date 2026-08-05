@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Repository Scanner — Insight Chronicles Translator</title>
+  <meta name="description" content="Scan the Insight Chronicles article repository, extract metadata, and detect missing SEO elements." />
+  <meta name="robots" content="noindex" />
+
+  <link rel="stylesheet" href="../styles.css" />
+
+  <style>
+    .scanner-body {
+      font-family: "Inter", "Georgia", system-ui, sans-serif;
+    }
+
+    .scanner-main {
+      padding: 2rem 0 3rem;
+    }
+
+    .scanner-main h1 {
+      font-family: "Inter", system-ui, sans-serif;
+      font-size: 1.6rem;
+      margin: 0 0 0.35rem;
+    }
+    .scanner-main .subtitle {
+      color: #6b7280;
+      margin: 0 0 1.5rem;
+      font-size: 0.95rem;
+    }
+
+    /* Controls */
+    .controls {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .btn-scan {
+      display: inline-flex;
+      padding: 0.6rem 1.5rem;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #6366f1, #22d3ee);
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.95rem;
+      border: none;
+      cursor: pointer;
+      font-family: "Inter", system-ui, sans-serif;
+      transition: opacity 0.15s;
+    }
+    .btn-scan:hover { opacity: 0.9; }
+    .btn-scan:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn-download {
+      display: inline-flex;
+      padding: 0.6rem 1.5rem;
+      border-radius: 999px;
+      background: rgba(99,102,241,0.10);
+      color: #4f46e5;
+      border: 1px solid rgba(99,102,241,0.30);
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      font-family: "Inter", system-ui, sans-serif;
+      transition: background 0.15s;
+    }
+    .btn-download:hover { background: rgba(99,102,241,0.15); }
+    .btn-download:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    /* Progress */
+    .progress-wrap {
+      margin-bottom: 1.5rem;
+      background: #e5e7eb;
+      border-radius: 999px;
+      height: 6px;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(135deg, #6366f1, #22d3ee);
+      border-radius: 999px;
+      transition: width 0.25s ease;
+    }
+    .progress-label {
+      font-size: 0.8rem;
+      color: #6b7280;
+      margin-top: 0.35rem;
+      font-family: "Inter", system-ui, sans-serif;
+      min-height: 1.2em;
+    }
+
+    /* Stats grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 0.85rem;
+      margin-bottom: 2rem;
+    }
+    .stat-card {
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 0.75rem;
+      padding: 1rem 1.1rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    .stat-card.muted { opacity: 0.5; }
+    .stat-card.success { border-left: 3px solid #10b981; }
+    .stat-card.warning { border-left: 3px solid #f59e0b; }
+    .stat-card.info { border-left: 3px solid #6366f1; }
+    .stat-card.cost { border-left: 3px solid #22d3ee; }
+    .stat-card.error { border-left: 3px solid #ef4444; }
+    .stat-value {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #1f2937;
+      font-family: "Inter", system-ui, sans-serif;
+      line-height: 1.2;
+    }
+    .stat-label {
+      font-size: 0.78rem;
+      color: #6b7280;
+      margin-top: 0.2rem;
+      font-family: "Inter", system-ui, sans-serif;
+    }
+
+    /* Sections */
+    .section {
+      margin-bottom: 2.5rem;
+    }
+    .section h2 {
+      font-size: 1.15rem;
+      margin: 0 0 0.75rem;
+      font-family: "Inter", system-ui, sans-serif;
+      color: #1f2937;
+    }
+
+    /* Missing summary */
+    .missing-summary {
+      background: #fffbeb;
+      border: 1px solid rgba(245,158,11,0.3);
+      border-radius: 0.5rem;
+      padding: 0.75rem 1rem;
+      font-size: 0.9rem;
+      color: #92400e;
+      margin-bottom: 1rem;
+      font-family: "Inter", system-ui, sans-serif;
+    }
+    .missing-summary.ok {
+      background: #ecfdf5;
+      border-color: rgba(16,185,129,0.3);
+      color: #065f46;
+    }
+
+    /* Tables */
+    .table-wrap {
+      overflow-x: auto;
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 0.75rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+      font-family: "Inter", system-ui, sans-serif;
+    }
+    th {
+      text-align: left;
+      padding: 0.55rem 0.75rem;
+      background: #f9fafb;
+      color: #6b7280;
+      font-weight: 600;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      white-space: nowrap;
+    }
+    td {
+      padding: 0.5rem 0.75rem;
+      border-bottom: 1px solid rgba(0,0,0,0.04);
+      color: #374151;
+      vertical-align: top;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #fafbfc; }
+    code {
+      font-size: 0.78rem;
+      background: #f3f4f6;
+      padding: 0.1rem 0.35rem;
+      border-radius: 3px;
+      color: #4f46e5;
+    }
+    .cell-slug { min-width: 180px; }
+    .cell-title { min-width: 200px; max-width: 300px; }
+    .cell-date { white-space: nowrap; }
+    .cell-num { text-align: right; white-space: nowrap; }
+    .cell-checks { white-space: nowrap; }
+    .cell-lang { text-align: center; }
+
+    /* Badges */
+    .badge {
+      display: inline-block;
+      padding: 0.1rem 0.4rem;
+      border-radius: 3px;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+    .badge.lang-en { background: #dbeafe; color: #1e40af; }
+    .badge.lang-te { background: #fce7f3; color: #9d174d; }
+    .badge-ok { color: #10b981; font-weight: 600; }
+    .badge-bad {
+      display: inline-block;
+      background: #fef2f2;
+      color: #dc2626;
+      padding: 0.1rem 0.35rem;
+      border-radius: 3px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      margin-right: 1px;
+    }
+    .flag { font-weight: 700; }
+    .flag.miss { color: #dc2626; }
+    .flag.ok { color: #10b981; }
+
+    /* Empty state */
+    .empty-state {
+      padding: 2.5rem 2rem;
+      text-align: center;
+      color: #6b7280;
+      font-family: "Inter", system-ui, sans-serif;
+    }
+    .empty-state p { margin: 0 0 0.5rem; }
+    .empty-state .hint { font-size: 0.82rem; color: #9ca3af; }
+
+    /* Errors */
+    .error-box {
+      background: #fef2f2;
+      border: 1px solid rgba(239,68,68,0.25);
+      border-radius: 0.5rem;
+      padding: 0.75rem 1rem;
+    }
+    .error-box h3 {
+      margin: 0 0 0.5rem;
+      font-size: 0.9rem;
+      color: #dc2626;
+      font-family: "Inter", system-ui, sans-serif;
+    }
+    .error-box ul {
+      margin: 0;
+      padding-left: 1.25rem;
+      font-size: 0.82rem;
+      color: #991b1b;
+      font-family: "Inter", system-ui, sans-serif;
+    }
+
+    /* Footer note */
+    .tool-footer-note {
+      text-align: center;
+      color: #9ca3af;
+      font-size: 0.75rem;
+      margin-top: 2rem;
+      font-family: "Inter", system-ui, sans-serif;
+    }
+  </style>
+</head>
+<body class="ic-body scanner-body">
+
+  <div class="ic-topstrip">Insight Chronicles &bull; Translator Tools</div>
+
+  <header class="ic-header">
+    <div class="ic-container ic-header-inner">
+      <a href="../index.html" class="ic-logo">
+        <span class="ic-logo-mark">IC</span>
+        <span>
+          <span class="ic-logo-title">Insight Chronicles</span>
+          <span class="ic-logo-sub">Long-form global analysis</span>
+        </span>
+      </a>
+      <nav class="ic-nav">
+        <a href="../index.html" class="ic-nav-link">Home</a>
+        <a href="../articles.html" class="ic-nav-link">Articles</a>
+        <a href="index.html" class="ic-nav-link ic-nav-link-active">Scanner</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="scanner-main">
+    <div class="ic-container">
+
+      <h1>Repository Scanner</h1>
+      <p class="subtitle">
+        Module 1 — Scan <span id="articleCount">—</span> articles. Extract metadata.
+        Detect missing SEO tags, schema, canonical, and hreflang.
+      </p>
+
+      <div class="controls">
+        <button class="btn-scan" id="scanBtn">Scan Repository</button>
+        <button class="btn-download" id="downloadBtn" disabled>Download articles-db.json</button>
+      </div>
+
+      <div class="progress-wrap">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+      <div class="progress-label" id="progressText"></div>
+
+      <div class="stats-grid" id="statsGrid"></div>
+
+      <div class="missing-summary ok" id="missingSummary">
+        Press <strong>Scan Repository</strong> to begin analysis.
+      </div>
+
+      <div class="section">
+        <h2>Articles</h2>
+        <div class="table-wrap" id="articlesTable"></div>
+      </div>
+
+      <div class="section">
+        <h2>SEO Checks Detail</h2>
+        <div class="table-wrap" id="checksTable"></div>
+      </div>
+
+      <div class="section" id="errorsSection" style="display:none;">
+        <h2>Scan Errors</h2>
+        <div class="error-box">
+          <ul id="errorsList"></ul>
+        </div>
+      </div>
+
+      <p class="tool-footer-note">
+        Insight Chronicles Translator — Module 1: Repository Scanner.
+        Runs entirely in the browser. No data leaves your machine.
+      </p>
+
+    </div>
+  </main>
+
+  <footer class="ic-footer">
+    <div class="ic-container ic-footer-grid">
+      <div><h4>Insight Chronicles</h4><p>Independent writing on history, geopolitics and technology.</p></div>
+      <div><h4>Pages</h4><ul><li><a href="../index.html">Home</a></li><li><a href="../articles.html">Articles</a></li><li><a href="../about.html">About</a></li></ul></div>
+      <div><h4>Legal</h4><ul><li><a href="../privacy.html">Privacy</a></li><li><a href="../terms.html">Terms</a></li><li><a href="../disclaimer.html">Disclaimer</a></li></ul></div>
+      <div><h4>Contact</h4><p><a href="mailto:moonoriginblue@gmail.com">moonoriginblue@gmail.com</a></p></div>
+    </div>
+    <div class="ic-footer-bottom">&copy; 2026 Insight Chronicles. All rights reserved.</div>
+  </footer>
+
+  <script type="module" src="js/repository-ui.js"></script>
+
+</body>
+</html>
