@@ -228,9 +228,10 @@ function syncFromState() {
 }
 
 function syncCredentials() {
-  const key = document.getElementById("apiKeyInput")?.value?.trim() || null;
+  const key = document.getElementById("apiKeyInput")?.value?.trim();
+  if (!key) return; // no key typed — keep provider from saved config
   const ep = document.getElementById("endpointInput")?.value?.trim() || null;
-  if (key || ep) _app.reconfigure({ apiKey: key, endpoint: ep });
+  _app.reconfigure({ apiKey: key, endpoint: ep });
 }
 
 function setBusy(on) {
