@@ -139,15 +139,41 @@ export function bindEvents() {
     } finally { setBusy(false); }
   });
 
+  // Translate all
+  $.translateAllBtn?.addEventListener("click", async () => {
+    if (!_app || _app.getState().busy) return;
+    setBusy(true);
+    try {
+      showStatus("Translating all articles…", "info");
+      const result = await _app.translateAll();
+      showStatus(`Done: ${result.success} ok, ${result.failed} failed.`, result.failed ? "warn" : "success");
+    } catch (err) {
+      showStatus(err.message, "error");
+    } finally { setBusy(false); }
+  });
+
   // Export
   $.exportBtn?.addEventListener("click", () => {
     if (!_app) return;
     try {
       const plan = _app.generateExportPlan();
+      window._lastPlan = plan;
       showStatus(`Export plan: ${plan.report.totalFiles} files ready.`, "success");
     } catch (err) {
       showStatus(err.message, "error");
     }
+  });
+
+  // Download export
+  $.downloadBtn?.addEventListener("click", () => {
+    if (!window._lastPlan) { showStatus("Generate export plan first.", "warn"); return; }
+    const json = JSON.stringify(window._lastPlan, null, 2);
+    const blob = new Blob([json], { type: "application/json" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "export-plan.json";
+    a.click();
+    URL.revokeObjectURL(a.href);
   });
 
   // Reset
@@ -155,6 +181,12 @@ export function bindEvents() {
     if (!_app) return;
     _app.reset();
     syncFromState();
+    if ($.articleList) $.articleList.innerHTML = "";
+    if ($.articleCount) $.articleCount.textContent = "0";
+    if ($.untranslatedCount) $.untranslatedCount.textContent = "";
+    const logList = document.getElementById("logList");
+    if (logList) logList.innerHTML = "<li>—</li>";
+    updateProgress(null);
     showStatus("Reset.", "info");
   });
 }
@@ -175,6 +207,8 @@ function cacheElements() {
   $.langCount     = document.getElementById("langCount");
   $.busyOverlay   = document.getElementById("busyOverlay");
   $.untranslatedCount = document.getElementById("untranslatedCount");
+  $.translateAllBtn = document.getElementById("translateAllBtn");
+  $.downloadBtn     = document.getElementById("downloadBtn");
 }
 
 function syncFromState() {
