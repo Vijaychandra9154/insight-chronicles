@@ -19,26 +19,33 @@ export function createAI4BharatProvider(config = {}) {
   if (!apiKey)   throw new Error("AI4Bharat provider requires config.apiKey.");
   if (!endpoint) throw new Error("AI4Bharat provider requires config.endpoint.");
 
-  // ── Request builder ──────────────────────────────────────────
-  function buildRequest(text, targetLanguage) {
-    return {
-      url: endpoint,
-      init: {
-        method: "POST",
-        headers: {
-          "Content-Type":  "application/json",
-          "Authorization": `Bearer ${apiKey}`,
-        },
-        body: JSON.stringify({
-          input:                 text,
-          source_language_code:  "en",
-          target_language_code:  targetLanguage,
-        }),
-      },
-    };
+  // ── Shared helpers ───────────────────────────────────────────
+
+  function authHeaders() {
+    return { "Content-Type": "application/json", "Authorization": `Bearer ${apiKey}` };
+  }
+
+  function buildBody(text, targetLanguage) {
+    return { input: text, source_language_code: "en", target_language_code: targetLanguage };
+  }
+
+  async function doFetch(body, timeoutMs) {
+    const res = await fetch(endpoint, {
+      method: "POST",
+      headers: authHeaders(),
+      body: JSON.stringify(body),
+      signal: AbortSignal.timeout(timeoutMs),
+    });
+    if (!res.ok) {
+      let errBody = "";
+      try { errBody = await res.text(); } catch (_) { /* ignore */ }
+      throw new Error(`HTTP ${res.status}${errBody ? ": " + errBody.slice(0, 200) : ""}`);
+    }
+    return res;
   }
 
   // ── Response parsing — probes common shapes ──────────────────
+
   async function extractTranslation(response) {
     const d = await response.json();
     if (typeof d.translated_text === "string") return d.translated_text;
@@ -61,37 +68,27 @@ export function createAI4BharatProvider(config = {}) {
     throw new Error("Could not extract batch translations from AI4Bharat response.");
   }
 
-  // ── Translate — retry once on timeout / network error ────────
+  // ── Core translate — retry once on timeout / network error ───
+
   async function translateWithRetry(text, targetLanguage) {
     for (let attempt = 0; attempt <= 1; attempt++) {
       try {
-        const { url, init } = buildRequest(text, targetLanguage);
-        const res = await fetch(url, { ...init, signal: AbortSignal.timeout(20_000) });
-
-        if (!res.ok) {
-          let errBody = "";
-          try { errBody = await res.text(); } catch (_) { /* ignore */ }
-          throw new Error(`HTTP ${res.status}${errBody ? ": " + errBody.slice(0, 200) : ""}`);
-        }
-
+        const res  = await doFetch(buildBody(text, targetLanguage), 20_000);
         const translation = await extractTranslation(res);
         if (!translation || !String(translation).trim()) {
           throw new Error("AI4Bharat returned empty translation.");
         }
         return String(translation).trim();
-
       } catch (err) {
-        if (attempt === 0 && (err.name === "TimeoutError" || err.name === "AbortError" || err.name === "TypeError")) {
-          await sleep(2_000);
-          continue;
-        }
-        if (attempt > 0) throw err;
+        const isNetwork = err.name === "TimeoutError" || err.name === "AbortError" || err.name === "TypeError";
+        if (attempt === 0 && isNetwork) { await sleep(2_000); continue; }
         throw err;
       }
     }
   }
 
   // ── Provider interface ────────────────────────────────────────
+
   return Object.freeze({
     name: "ai4bharat",
 
@@ -103,26 +100,8 @@ export function createAI4BharatProvider(config = {}) {
     async translateBatch(items, targetLanguage) {
       if (!Array.isArray(items) || !items.length) return [];
 
-      // Try batch request first
       try {
-        const res = await fetch(endpoint, {
-          method: "POST",
-          headers: {
-            "Content-Type":  "application/json",
-            "Authorization": `Bearer ${apiKey}`,
-          },
-          body: JSON.stringify({
-            input:                 items,
-            source_language_code:  "en",
-            target_language_code:  targetLanguage,
-          }),
-          signal: AbortSignal.timeout(15_000),
-        });
-        if (!res.ok) {
-          let errBody = "";
-          try { errBody = await res.text(); } catch (_) { /* ignore */ }
-          throw new Error(`HTTP ${res.status}${errBody ? ": " + errBody.slice(0, 200) : ""}`);
-        }
+        const res = await doFetch(buildBody(items, targetLanguage), 15_000);
         const translations = await extractBatchTranslations(res);
         if (translations.length === items.length) {
           return translations.map((t) => String(t).trim());
@@ -135,12 +114,8 @@ export function createAI4BharatProvider(config = {}) {
       // Sequential fallback — isolate each item
       const results = [];
       for (const text of items) {
-        try {
-          results.push(await translateWithRetry(text, targetLanguage));
-        } catch (e) {
-          console.warn(`AI4Bharat sequential item failed: ${e.message}`);
-          results.push(text); // return source text on failure
-        }
+        try          { results.push(await translateWithRetry(text, targetLanguage)); }
+        catch (e)    { console.warn(`AI4Bharat seq item failed: ${e.message}`); results.push(text); }
       }
       return results;
     },
