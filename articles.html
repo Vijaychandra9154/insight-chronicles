@@ -39,7 +39,32 @@
       <div class="ic-section-header">
         <h1>All Articles</h1>
         <p>Newest first.</p>
-<div class="ic-section-header" style="margin-top:20px;">
+<style>
+.ic-lang-tabs { display:flex; flex-wrap:wrap; gap:6px; margin:12px 0 10px 0; }
+.ic-lang-tab { padding:6px 14px; border:1px solid #d1d5db; border-radius:6px; background:#fff; cursor:pointer; font-size:0.85rem; color:#374151; }
+.ic-lang-tab:hover { background:#f3f4f6; }
+.ic-lang-tab.active { background:#1a1a2e; color:#fff; border-color:#1a1a2e; }
+</style>
+<script>
+function switchLang(c) {
+  document.querySelectorAll('.ic-lang-section').forEach(function(g){g.style.display='none'});
+  document.querySelectorAll('.ic-lang-tab').forEach(function(b){b.classList.remove('active')});
+  document.getElementById('lang-'+c).style.display='block';
+  event.target.classList.add('active');
+}
+</script>
+
+      <div class="ic-lang-tabs">
+        <button class="ic-lang-tab active" onclick="switchLang('en')">English</button>
+        <button class="ic-lang-tab" onclick="switchLang('hi')">हिन्दी</button>
+        <button class="ic-lang-tab" onclick="switchLang('bn')">বাংলা</button>
+        <button class="ic-lang-tab" onclick="switchLang('gu')">ગુજરાતી</button>
+        <button class="ic-lang-tab" onclick="switchLang('kn')">ಕನ್ನಡ</button>
+        <button class="ic-lang-tab" onclick="switchLang('mr')">मराठी</button>
+        <button class="ic-lang-tab" onclick="switchLang('ta')">தமிழ்</button>
+      </div>
+<div class="ic-lang-section" id="lang-en" style="display:block;">
+      <div class="ic-section-header" style="margin-top:20px;">
         <h2>English — History of the Controllers</h2>
         <p>6 articles</p>
       </div>
@@ -120,7 +145,8 @@
       </div>
 <div class="ic-articles-grid">
         <article class="card">
-          <div class="ic-section-header" style="margin-top:40px;">
+          <div class="ic-lang-section" id="lang-hi" style="display:none;">
+      <div class="ic-section-header" style="margin-top:40px;">
         <h2>हिन्दी — History of the Controllers</h2>
         <p>6 articles in हिन्दी</p>
       </div>
@@ -201,7 +227,8 @@
       </div>
 <div class="ic-articles-grid">
         <article class="card">
-          <div class="ic-section-header" style="margin-top:40px;">
+          <div class="ic-lang-section" id="lang-bn" style="display:none;">
+      <div class="ic-section-header" style="margin-top:40px;">
         <h2>বাংলা — History of the Controllers</h2>
         <p>6 articles in বাংলা</p>
       </div>
@@ -282,7 +309,8 @@
       </div>
 <div class="ic-articles-grid">
         <article class="card">
-          <div class="ic-section-header" style="margin-top:40px;">
+          <div class="ic-lang-section" id="lang-gu" style="display:none;">
+      <div class="ic-section-header" style="margin-top:40px;">
         <h2>ગુજરાતી — History of the Controllers</h2>
         <p>6 articles in ગુજરાતી</p>
       </div>
@@ -363,7 +391,8 @@
       </div>
 <div class="ic-articles-grid">
         <article class="card">
-          <div class="ic-section-header" style="margin-top:40px;">
+          <div class="ic-lang-section" id="lang-kn" style="display:none;">
+      <div class="ic-section-header" style="margin-top:40px;">
         <h2>ಕನ್ನಡ — History of the Controllers</h2>
         <p>6 articles in ಕನ್ನಡ</p>
       </div>
@@ -444,7 +473,8 @@
       </div>
 <div class="ic-articles-grid">
         <article class="card">
-          <div class="ic-section-header" style="margin-top:40px;">
+          <div class="ic-lang-section" id="lang-mr" style="display:none;">
+      <div class="ic-section-header" style="margin-top:40px;">
         <h2>मराठी — History of the Controllers</h2>
         <p>6 articles in मराठी</p>
       </div>
@@ -525,7 +555,8 @@
       </div>
 <div class="ic-articles-grid">
         <article class="card">
-          <div class="ic-section-header" style="margin-top:40px;">
+          <div class="ic-lang-section" id="lang-ta" style="display:none;">
+      <div class="ic-section-header" style="margin-top:40px;">
         <h2>தமிழ் — History of the Controllers</h2>
         <p>6 articles in தமிழ்</p>
       </div>
@@ -603,6 +634,7 @@
           </div>
         </article>
         
+      </div>
         <!-- ABHA -->
         <article class="card">
           <a href="article-abha-health.html" class="thumbwrap">
