@@ -39,33 +39,11 @@
       <div class="ic-section-header">
         <h1>All Articles</h1>
         <p>Newest first.</p>
-
-<style>
-.ic-lang-tabs { display:flex; flex-wrap:wrap; gap:6px; margin:0 0 20px 0; padding:0; }
-.ic-lang-tab { padding:8px 16px; border:1px solid #d1d5db; border-radius:6px; background:#fff; cursor:pointer; font-size:0.9rem; color:#374151; transition:all .2s; }
-.ic-lang-tab:hover { background:#f3f4f6; }
-.ic-lang-tab.active { background:#1a1a2e; color:#fff; border-color:#1a1a2e; }
-</style>
-<script>
-function switchLang(code) {
-  document.querySelectorAll('.ic-lang-group').forEach(g => g.style.display = 'none');
-  document.querySelectorAll('.ic-lang-tab').forEach(b => b.classList.remove('active'));
-  document.getElementById('lang-' + code).style.display = 'block';
-  document.querySelector('.ic-lang-tab[onclick="switchLang(''+code+'')"]').classList.add('active');
-}
-</script>
-      <div class="ic-lang-tabs">
-          <button class="ic-lang-tab active" onclick="switchLang('en')">English</button>
-          <button class="ic-lang-tab" onclick="switchLang('hi')">हिन्दी</button>
-          <button class="ic-lang-tab" onclick="switchLang('bn')">বাংলা</button>
-          <button class="ic-lang-tab" onclick="switchLang('gu')">ગુજરાતી</button>
-          <button class="ic-lang-tab" onclick="switchLang('kn')">ಕನ್ನಡ</button>
-          <button class="ic-lang-tab" onclick="switchLang('mr')">मराठी</button>
-          <button class="ic-lang-tab" onclick="switchLang('ta')">தமிழ்</button>
+<div class="ic-section-header" style="margin-top:20px;">
+        <h2>English — History of the Controllers</h2>
+        <p>6 articles</p>
       </div>
-
-      <div class="ic-lang-group" id="lang-en" style="display:block;">
-        <div class="ic-articles-grid">
+<div class="ic-articles-grid">
         <article class="card">
           <a href="article-history-controllers-6.html" class="thumbwrap">
             <img src="images/modern-banking-article6.png" alt="The Controllers' Journey: From Egypt to Rome, From Rome to Modern Times" loading="lazy" />
@@ -140,8 +118,13 @@ function switchLang(code) {
         </article>
         </div>
       </div>
-      <div class="ic-lang-group" id="lang-hi" style="display:block;">
-        <div class="ic-articles-grid">
+<div class="ic-articles-grid">
+        <article class="card">
+          <div class="ic-section-header" style="margin-top:40px;">
+        <h2>हिन्दी — History of the Controllers</h2>
+        <p>6 articles in हिन्दी</p>
+      </div>
+      <div class="ic-articles-grid">
         <article class="card">
           <a href="article-history-controllers-6-hi.html" class="thumbwrap">
             <img src="images/modern-banking-article6.png" alt="नियंत्रकों की यात्रा: मिस्र से रोम, रोम से आधुनिक काल तक" loading="lazy" />
@@ -216,8 +199,13 @@ function switchLang(code) {
         </article>
         </div>
       </div>
-      <div class="ic-lang-group" id="lang-bn" style="display:block;">
-        <div class="ic-articles-grid">
+<div class="ic-articles-grid">
+        <article class="card">
+          <div class="ic-section-header" style="margin-top:40px;">
+        <h2>বাংলা — History of the Controllers</h2>
+        <p>6 articles in বাংলা</p>
+      </div>
+      <div class="ic-articles-grid">
         <article class="card">
           <a href="article-history-controllers-6-bn.html" class="thumbwrap">
             <img src="images/modern-banking-article6.png" alt="কন্ট্রোলারদের যাত্রা: মিশর থেকে রোম, রোম থেকে আধুনিক যুগ" loading="lazy" />
@@ -292,8 +280,13 @@ function switchLang(code) {
         </article>
         </div>
       </div>
-      <div class="ic-lang-group" id="lang-gu" style="display:block;">
-        <div class="ic-articles-grid">
+<div class="ic-articles-grid">
+        <article class="card">
+          <div class="ic-section-header" style="margin-top:40px;">
+        <h2>ગુજરાતી — History of the Controllers</h2>
+        <p>6 articles in ગુજરાતી</p>
+      </div>
+      <div class="ic-articles-grid">
         <article class="card">
           <a href="article-history-controllers-6-gu.html" class="thumbwrap">
             <img src="images/modern-banking-article6.png" alt="કંટ્રોલર્સની યાત્રા: ઇજિપ્તથી રોમ, રોમથી આધુનિક સમય સુધી" loading="lazy" />
@@ -368,8 +361,13 @@ function switchLang(code) {
         </article>
         </div>
       </div>
-      <div class="ic-lang-group" id="lang-kn" style="display:block;">
-        <div class="ic-articles-grid">
+<div class="ic-articles-grid">
+        <article class="card">
+          <div class="ic-section-header" style="margin-top:40px;">
+        <h2>ಕನ್ನಡ — History of the Controllers</h2>
+        <p>6 articles in ಕನ್ನಡ</p>
+      </div>
+      <div class="ic-articles-grid">
         <article class="card">
           <a href="article-history-controllers-6-kn.html" class="thumbwrap">
             <img src="images/modern-banking-article6.png" alt="ದಿ ಕಂಟ್ರೋಲರ್ಸ್ ಜರ್ನಿ: ಈಜಿಪ್ಟ್‌ನಿಂದ ರೋಮ್‌ಗೆ, ರೋಮ್‌ನಿಂದ ಆಧುನಿಕ ಕಾಲಕ್ಕೆ" loading="lazy" />
@@ -444,8 +442,13 @@ function switchLang(code) {
         </article>
         </div>
       </div>
-      <div class="ic-lang-group" id="lang-mr" style="display:block;">
-        <div class="ic-articles-grid">
+<div class="ic-articles-grid">
+        <article class="card">
+          <div class="ic-section-header" style="margin-top:40px;">
+        <h2>मराठी — History of the Controllers</h2>
+        <p>6 articles in मराठी</p>
+      </div>
+      <div class="ic-articles-grid">
         <article class="card">
           <a href="article-history-controllers-6-mr.html" class="thumbwrap">
             <img src="images/modern-banking-article6.png" alt="नियंत्रकांचा प्रवास: इजिप्त ते रोम, रोम ते आधुनिक काळ" loading="lazy" />
@@ -520,8 +523,13 @@ function switchLang(code) {
         </article>
         </div>
       </div>
-      <div class="ic-lang-group" id="lang-ta" style="display:block;">
-        <div class="ic-articles-grid">
+<div class="ic-articles-grid">
+        <article class="card">
+          <div class="ic-section-header" style="margin-top:40px;">
+        <h2>தமிழ் — History of the Controllers</h2>
+        <p>6 articles in தமிழ்</p>
+      </div>
+      <div class="ic-articles-grid">
         <article class="card">
           <a href="article-history-controllers-6-ta.html" class="thumbwrap">
             <img src="images/modern-banking-article6.png" alt="கட்டுப்பாட்டாளர்களின் பயணம்: எகிப்திலிருந்து ரோம், ரோமிலிருந்து நவீன காலம் வரை" loading="lazy" />
@@ -594,9 +602,7 @@ function switchLang(code) {
             <a class="read" href="article-history-controllers-1-ta.html">Read →</a>
           </div>
         </article>
-        </div>
-      </div>
-
+        
         <!-- ABHA -->
         <article class="card">
           <a href="article-abha-health.html" class="thumbwrap">
