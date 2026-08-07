@@ -39,153 +39,157 @@
       <div class="ic-section-header">
         <h1>All Articles</h1>
         <p>Newest first.</p>
+
+<style>
+.ic-lang-tabs { display:flex; flex-wrap:wrap; gap:6px; margin:0 0 20px 0; padding:0; }
+.ic-lang-tab { padding:8px 16px; border:1px solid #d1d5db; border-radius:6px; background:#fff; cursor:pointer; font-size:0.9rem; color:#374151; transition:all .2s; }
+.ic-lang-tab:hover { background:#f3f4f6; }
+.ic-lang-tab.active { background:#1a1a2e; color:#fff; border-color:#1a1a2e; }
+</style>
+<script>
+function switchLang(code) {
+  document.querySelectorAll('.ic-lang-group').forEach(g => g.style.display = 'none');
+  document.querySelectorAll('.ic-lang-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById('lang-' + code).style.display = 'block';
+  document.querySelector('.ic-lang-tab[onclick="switchLang(''+code+'')"]').classList.add('active');
+}
+</script>
+      <div class="ic-lang-tabs">
+          <button class="ic-lang-tab active" onclick="switchLang('en')">English</button>
+          <button class="ic-lang-tab" onclick="switchLang('hi')">हिन्दी</button>
+          <button class="ic-lang-tab" onclick="switchLang('bn')">বাংলা</button>
+          <button class="ic-lang-tab" onclick="switchLang('gu')">ગુજરાતી</button>
+          <button class="ic-lang-tab" onclick="switchLang('kn')">ಕನ್ನಡ</button>
+          <button class="ic-lang-tab" onclick="switchLang('mr')">मराठी</button>
+          <button class="ic-lang-tab" onclick="switchLang('ta')">தமிழ்</button>
       </div>
 
-      <div class="ic-articles-grid">
-
-        <!-- History of Controllers 6  -->
+      <div class="ic-lang-group" id="lang-en" style="display:block;">
+        <div class="ic-articles-grid">
         <article class="card">
           <a href="article-history-controllers-6.html" class="thumbwrap">
-            <img src="images/modern-banking-article6.png" alt="Modern Financial Center" loading="lazy" />
-          </a>
-          <div class="cardbody">
-            <div class="tags"><span class="tag">History</span> <span class="tag">Modern</span> <span class="tag">Technology</span></div>
-            <h2><a href="article-history-controllers-6.html">The Controllers' Journey: From Egypt to Rome, From Rome to Modern Times</a></h2>
-            <p class="meta">2026-07-27 • English</p>
-            <p class="desc">How ancient control knowledge transferred from Sumer to the world — the Vatican, central banks, and media as modern control systems.</p>
-            <a class="read" href="article-history-controllers-6.html">Read &rarr;</a>
-          </div>
-        </article>
-
-        <!-- History of Controllers 5  -->
-        <article class="card">
-          <a href="article-history-controllers-5.html" class="thumbwrap">
-            <img src="images/allegory-of-cave-article5.webp" alt="Plato's Allegory of the Cave" loading="lazy" />
-          </a>
-          <div class="cardbody">
-            <div class="tags"><span class="tag">History</span> <span class="tag">Philosophy</span> <span class="tag">Technology</span></div>
-            <h2><a href="article-history-controllers-5.html">Greek Philosophy: Controlled Resistance — and Controlled Opposition</a></h2>
-            <p class="meta">2026-07-27 • English</p>
-            <p class="desc">Pythagoras' secret schools, Plato's allegory of the cave, and controlled ideologies — how ancient Greece shaped human thought through philosophy as a control mechanism.</p>
-            <a class="read" href="article-history-controllers-5.html">Read &rarr;</a>
-          </div>
-        </article>
-
-        <!-- History of Controllers 4  -->
-        <article class="card">
-          <a href="article-history-controllers-4.html" class="thumbwrap">
-            <img src="images/babylon-banking-article4.jpg" alt="Babylonian Temple Banking" loading="lazy" />
-          </a>
-          <div class="cardbody">
-            <div class="tags"><span class="tag">History</span> <span class="tag">Economics</span> <span class="tag">Technology</span></div>
-            <h2><a href="article-history-controllers-4.html">The Babylonian Revolution: Debt — A Powerful Tool for Control</a></h2>
-            <p class="meta">2026-07-27 • English</p>
-            <p class="desc">Temple banks, interest systems, and debt bondage — how ancient Babylon used finance to control populations. The foundations of modern banking.</p>
-            <a class="read" href="article-history-controllers-4.html">Read &rarr;</a>
-          </div>
-        </article>
-
-        <!-- History of Controllers 3  -->
-        <article class="card">
-          <a href="article-history-controllers-3.html" class="thumbwrap">
-            <img src="images/pyramid-article3.jpg" alt="Pyramid — Ancient Egypt" loading="lazy" />
-          </a>
-          <div class="cardbody">
-            <div class="tags"><span class="tag">History</span> <span class="tag">Religion</span> <span class="tag">Technology</span></div>
-            <h2><a href="article-history-controllers-3.html">The Egyptian System: The Perfect Model for Religious Control — and Akhenaten's Revolution</a></h2>
-            <p class="meta">2026-07-27 • English</p>
-            <p class="desc">Divine Pharaohs, secret priesthoods, and mystery schools — how ancient Egypt controlled belief for 3,000 years. And the story of Akhenaten, the first man to rebel against the system.</p>
-            <a class="read" href="article-history-controllers-3.html">Read &rarr;</a>
-          </div>
-        </article>
-
-        <!-- History of Controllers 1  -->
-        <article class="card">
-          <a href="article-history-controllers-1.html" class="thumbwrap">
-            <img src="images/ziggurat-of-ur.jpg" alt="Ziggurat of Ur — Ancient Sumerian Structure" loading="lazy" />
+            <img src="images/modern-banking-article6.png" alt="The Controllers' Journey: From Egypt to Rome, From Rome to Modern Times" loading="lazy" />
           </a>
           <div class="cardbody">
             <div class="tags"><span class="tag">History</span> <span class="tag">Geopolitics</span> <span class="tag">Technology</span></div>
-            <h2><a href="article-history-controllers-1.html">The Matrix Revealed: Reality as a Controlled Model</a></h2>
-            <p class="meta">2026-07-26 • English</p>
-            <p class="desc">The brain builds a model of the world — and whoever controls that model controls people. How ancient Sumerian priests discovered this 4,000 years ago and turned human perception into the ultimate tool of control.</p>
-            <a class="read" href="article-history-controllers-1.html">Read &rarr;</a>
+            <h2><a href="article-history-controllers-6.html">The Controllers' Journey: From Egypt to Rome, From Rome to Modern Times</a></h2>
+            <p class="meta">2026-07-27 • English</p>
+            <p class="desc">The Controllers' Journey: From Egypt to Rome, From Rome to Modern Times — History of the Controllers of the World</p>
+            <a class="read" href="article-history-controllers-6.html">Read →</a>
           </div>
         </article>
-
-        <!-- History of Controllers 2  -->
+        <article class="card">
+          <a href="article-history-controllers-5.html" class="thumbwrap">
+            <img src="images/allegory-of-cave-article5.webp" alt="Greek Philosophy: Controlled Resistance — and Controlled Opposition" loading="lazy" />
+          </a>
+          <div class="cardbody">
+            <div class="tags"><span class="tag">History</span> <span class="tag">Geopolitics</span> <span class="tag">Technology</span></div>
+            <h2><a href="article-history-controllers-5.html">Greek Philosophy: Controlled Resistance — and Controlled Opposition</a></h2>
+            <p class="meta">2026-07-27 • English</p>
+            <p class="desc">Greek Philosophy: Controlled Resistance — and Controlled Opposition — History of the Controllers of the World</p>
+            <a class="read" href="article-history-controllers-5.html">Read →</a>
+          </div>
+        </article>
+        <article class="card">
+          <a href="article-history-controllers-4.html" class="thumbwrap">
+            <img src="images/babylon-banking-article4.jpg" alt="The Babylonian Revolution: Debt — A Powerful Tool for Control" loading="lazy" />
+          </a>
+          <div class="cardbody">
+            <div class="tags"><span class="tag">History</span> <span class="tag">Geopolitics</span> <span class="tag">Technology</span></div>
+            <h2><a href="article-history-controllers-4.html">The Babylonian Revolution: Debt — A Powerful Tool for Control</a></h2>
+            <p class="meta">2026-07-27 • English</p>
+            <p class="desc">The Babylonian Revolution: Debt — A Powerful Tool for Control — History of the Controllers of the World</p>
+            <a class="read" href="article-history-controllers-4.html">Read →</a>
+          </div>
+        </article>
+        <article class="card">
+          <a href="article-history-controllers-3.html" class="thumbwrap">
+            <img src="images/pyramid-article3.jpg" alt="The Egyptian System: The Perfect Model for Religious Control — and Akhenaten's Revolution" loading="lazy" />
+          </a>
+          <div class="cardbody">
+            <div class="tags"><span class="tag">History</span> <span class="tag">Geopolitics</span> <span class="tag">Technology</span></div>
+            <h2><a href="article-history-controllers-3.html">The Egyptian System: The Perfect Model for Religious Control — and Akhenaten's Revolution</a></h2>
+            <p class="meta">2026-07-27 • English</p>
+            <p class="desc">The Egyptian System: The Perfect Model for Religious Control — and Akhenaten's Revolution — History of the Controllers of the World</p>
+            <a class="read" href="article-history-controllers-3.html">Read →</a>
+          </div>
+        </article>
         <article class="card">
           <a href="article-history-controllers-2.html" class="thumbwrap">
-            <img src="images/ur-article2.webp" alt="City of Ur — Ancient Sumeria" loading="lazy" />
+            <img src="images/ur-article2.webp" alt="Sumeria: The Birthplace of Civilization and Control Systems" loading="lazy" />
           </a>
           <div class="cardbody">
             <div class="tags"><span class="tag">History</span> <span class="tag">Geopolitics</span> <span class="tag">Technology</span></div>
             <h2><a href="article-history-controllers-2.html">Sumeria: The Birthplace of Civilization and Control Systems</a></h2>
             <p class="meta">2026-07-26 • English</p>
-            <p class="desc">How the Sumerians invented writing, mathematics, astronomy, and the first banking system — all as tools of control. The priest-scholar class that ruled for 2,000 years.</p>
-            <a class="read" href="article-history-controllers-2.html">Read &rarr;</a>
+            <p class="desc">Sumeria: The Birthplace of Civilization and Control Systems — History of the Controllers of the World</p>
+            <a class="read" href="article-history-controllers-2.html">Read →</a>
           </div>
         </article>
-
-
-      <div class="ic-section-header" style="margin-top:40px;">
-        <h2>हिन्दी — History of the Controllers</h2>
-        <p>6 articles in हिन्दी</p>
+        <article class="card">
+          <a href="article-history-controllers-1.html" class="thumbwrap">
+            <img src="images/ziggurat-of-ur.jpg" alt="The Matrix Revealed: Reality as a Controlled Model" loading="lazy" />
+          </a>
+          <div class="cardbody">
+            <div class="tags"><span class="tag">History</span> <span class="tag">Geopolitics</span> <span class="tag">Technology</span></div>
+            <h2><a href="article-history-controllers-1.html">The Matrix Revealed: Reality as a Controlled Model</a></h2>
+            <p class="meta">2026-07-26 • English</p>
+            <p class="desc">The Matrix Revealed: Reality as a Controlled Model — History of the Controllers of the World</p>
+            <a class="read" href="article-history-controllers-1.html">Read →</a>
+          </div>
+        </article>
+        </div>
       </div>
-      <div class="ic-articles-grid">
-        <!-- हिन्दी Article 6 -->
+      <div class="ic-lang-group" id="lang-hi" style="display:none;">
+        <div class="ic-articles-grid">
         <article class="card">
           <a href="article-history-controllers-6-hi.html" class="thumbwrap">
             <img src="images/modern-banking-article6.png" alt="नियंत्रकों की यात्रा: मिस्र से रोम, रोम से आधुनिक काल तक" loading="lazy" />
           </a>
           <div class="cardbody">
-            <div class="tags"><span class="tag">History</span> <span class="tag">Modern</span> <span class="tag">Technology</span></div>
+            <div class="tags"><span class="tag">History</span> <span class="tag">Geopolitics</span> <span class="tag">Technology</span></div>
             <h2><a href="article-history-controllers-6-hi.html">नियंत्रकों की यात्रा: मिस्र से रोम, रोम से आधुनिक काल तक</a></h2>
             <p class="meta">2026-07-27 • हिन्दी</p>
             <p class="desc">नियंत्रकों की यात्रा: मिस्र से रोम, रोम से आधुनिक काल तक — विश्व के नियंत्रकों का इतिहास</p>
-            <a class="read" href="article-history-controllers-6-hi.html">Read &rarr;</a>
+            <a class="read" href="article-history-controllers-6-hi.html">Read →</a>
           </div>
         </article>
-        <!-- हिन्दी Article 5 -->
         <article class="card">
           <a href="article-history-controllers-5-hi.html" class="thumbwrap">
             <img src="images/allegory-of-cave-article5.webp" alt="यूनानी दर्शन: नियंत्रित प्रतिरोध — और कंट्रोल्ड अपोज़िशन" loading="lazy" />
           </a>
           <div class="cardbody">
-            <div class="tags"><span class="tag">History</span> <span class="tag">Philosophy</span> <span class="tag">Technology</span></div>
+            <div class="tags"><span class="tag">History</span> <span class="tag">Geopolitics</span> <span class="tag">Technology</span></div>
             <h2><a href="article-history-controllers-5-hi.html">यूनानी दर्शन: नियंत्रित प्रतिरोध — और कंट्रोल्ड अपोज़िशन</a></h2>
             <p class="meta">2026-07-27 • हिन्दी</p>
             <p class="desc">यूनानी दर्शन: नियंत्रित प्रतिरोध — और कंट्रोल्ड अपोज़िशन — विश्व के नियंत्रकों का इतिहास</p>
-            <a class="read" href="article-history-controllers-5-hi.html">Read &rarr;</a>
+            <a class="read" href="article-history-controllers-5-hi.html">Read →</a>
           </div>
         </article>
-        <!-- हिन्दी Article 4 -->
         <article class="card">
           <a href="article-history-controllers-4-hi.html" class="thumbwrap">
             <img src="images/babylon-banking-article4.jpg" alt="बेबीलोन क्रांति: क़र्ज़ — नियंत्रण का एक शक्तिशाली साधन" loading="lazy" />
           </a>
           <div class="cardbody">
-            <div class="tags"><span class="tag">History</span> <span class="tag">Economics</span> <span class="tag">Technology</span></div>
+            <div class="tags"><span class="tag">History</span> <span class="tag">Geopolitics</span> <span class="tag">Technology</span></div>
             <h2><a href="article-history-controllers-4-hi.html">बेबीलोन क्रांति: क़र्ज़ — नियंत्रण का एक शक्तिशाली साधन</a></h2>
             <p class="meta">2026-07-27 • हिन्दी</p>
             <p class="desc">बेबीलोन क्रांति: क़र्ज़ — नियंत्रण का एक शक्तिशाली साधन — विश्व के नियंत्रकों का इतिहास</p>
-            <a class="read" href="article-history-controllers-4-hi.html">Read &rarr;</a>
+            <a class="read" href="article-history-controllers-4-hi.html">Read →</a>
           </div>
         </article>
-        <!-- हिन्दी Article 3 -->
         <article class="card">
           <a href="article-history-controllers-3-hi.html" class="thumbwrap">
             <img src="images/pyramid-article3.jpg" alt="मिस्र व्यवस्था: धार्मिक नियंत्रण का पूर्ण मॉडल — और अखेनातेन की क्रांति" loading="lazy" />
           </a>
           <div class="cardbody">
-            <div class="tags"><span class="tag">History</span> <span class="tag">Religion</span> <span class="tag">Ancient</span> <span class="tag">Technology</span></div>
+            <div class="tags"><span class="tag">History</span> <span class="tag">Geopolitics</span> <span class="tag">Technology</span></div>
             <h2><a href="article-history-controllers-3-hi.html">मिस्र व्यवस्था: धार्मिक नियंत्रण का पूर्ण मॉडल — और अखेनातेन की क्रांति</a></h2>
             <p class="meta">2026-07-27 • हिन्दी</p>
             <p class="desc">मिस्र व्यवस्था: धार्मिक नियंत्रण का पूर्ण मॉडल — और अखेनातेन की क्रांति — विश्व के नियंत्रकों का इतिहास</p>
-            <a class="read" href="article-history-controllers-3-hi.html">Read &rarr;</a>
+            <a class="read" href="article-history-controllers-3-hi.html">Read →</a>
           </div>
         </article>
-        <!-- हिन्दी Article 2 -->
         <article class="card">
           <a href="article-history-controllers-2-hi.html" class="thumbwrap">
             <img src="images/ur-article2.webp" alt="सुमेरिया: सभ्यता और नियंत्रण व्यवस्थाओं का जन्मस्थान" loading="lazy" />
@@ -195,82 +199,73 @@
             <h2><a href="article-history-controllers-2-hi.html">सुमेरिया: सभ्यता और नियंत्रण व्यवस्थाओं का जन्मस्थान</a></h2>
             <p class="meta">2026-07-26 • हिन्दी</p>
             <p class="desc">सुमेरिया: सभ्यता और नियंत्रण व्यवस्थाओं का जन्मस्थान — विश्व के नियंत्रकों का इतिहास</p>
-            <a class="read" href="article-history-controllers-2-hi.html">Read &rarr;</a>
+            <a class="read" href="article-history-controllers-2-hi.html">Read →</a>
           </div>
         </article>
-        <!-- हिन्दी Article 1 -->
         <article class="card">
           <a href="article-history-controllers-1-hi.html" class="thumbwrap">
             <img src="images/ziggurat-of-ur.jpg" alt="द मैट्रिक्स रिवील्ड: वास्तविकता एक नियंत्रित मॉडल" loading="lazy" />
           </a>
           <div class="cardbody">
-            <div class="tags"><span class="tag">History</span> <span class="tag">Technology</span></div>
+            <div class="tags"><span class="tag">History</span> <span class="tag">Geopolitics</span> <span class="tag">Technology</span></div>
             <h2><a href="article-history-controllers-1-hi.html">द मैट्रिक्स रिवील्ड: वास्तविकता एक नियंत्रित मॉडल</a></h2>
             <p class="meta">2026-07-26 • हिन्दी</p>
             <p class="desc">द मैट्रिक्स रिवील्ड: वास्तविकता एक नियंत्रित मॉडल — विश्व के नियंत्रकों का इतिहास</p>
-            <a class="read" href="article-history-controllers-1-hi.html">Read &rarr;</a>
+            <a class="read" href="article-history-controllers-1-hi.html">Read →</a>
           </div>
         </article>
+        </div>
       </div>
-
-      <div class="ic-section-header" style="margin-top:40px;">
-        <h2>বাংলা — History of the Controllers</h2>
-        <p>6 articles in বাংলা</p>
-      </div>
-      <div class="ic-articles-grid">
-        <!-- বাংলা Article 6 -->
+      <div class="ic-lang-group" id="lang-bn" style="display:none;">
+        <div class="ic-articles-grid">
         <article class="card">
           <a href="article-history-controllers-6-bn.html" class="thumbwrap">
             <img src="images/modern-banking-article6.png" alt="কন্ট্রোলারদের যাত্রা: মিশর থেকে রোম, রোম থেকে আধুনিক যুগ" loading="lazy" />
           </a>
           <div class="cardbody">
-            <div class="tags"><span class="tag">History</span> <span class="tag">Modern</span> <span class="tag">Technology</span></div>
+            <div class="tags"><span class="tag">History</span> <span class="tag">Geopolitics</span> <span class="tag">Technology</span></div>
             <h2><a href="article-history-controllers-6-bn.html">কন্ট্রোলারদের যাত্রা: মিশর থেকে রোম, রোম থেকে আধুনিক যুগ</a></h2>
             <p class="meta">2026-07-27 • বাংলা</p>
             <p class="desc">কন্ট্রোলারদের যাত্রা: মিশর থেকে রোম, রোম থেকে আধুনিক যুগ</p>
-            <a class="read" href="article-history-controllers-6-bn.html">Read &rarr;</a>
+            <a class="read" href="article-history-controllers-6-bn.html">Read →</a>
           </div>
         </article>
-        <!-- বাংলা Article 5 -->
         <article class="card">
           <a href="article-history-controllers-5-bn.html" class="thumbwrap">
             <img src="images/allegory-of-cave-article5.webp" alt="গ্রিক দর্শন: নিয়ন্ত্রিত প্রতিরোধ — এবং নিয়ন্ত্রিত বিরোধিতা" loading="lazy" />
           </a>
           <div class="cardbody">
-            <div class="tags"><span class="tag">History</span> <span class="tag">Philosophy</span> <span class="tag">Technology</span></div>
+            <div class="tags"><span class="tag">History</span> <span class="tag">Geopolitics</span> <span class="tag">Technology</span></div>
             <h2><a href="article-history-controllers-5-bn.html">গ্রিক দর্শন: নিয়ন্ত্রিত প্রতিরোধ — এবং নিয়ন্ত্রিত বিরোধিতা</a></h2>
             <p class="meta">2026-07-27 • বাংলা</p>
             <p class="desc">গ্রিক দর্শন: নিয়ন্ত্রিত প্রতিরোধ — এবং নিয়ন্ত্রিত বিরোধিতা</p>
-            <a class="read" href="article-history-controllers-5-bn.html">Read &rarr;</a>
+            <a class="read" href="article-history-controllers-5-bn.html">Read →</a>
           </div>
         </article>
-        <!-- বাংলা Article 4 -->
         <article class="card">
           <a href="article-history-controllers-4-bn.html" class="thumbwrap">
             <img src="images/babylon-banking-article4.jpg" alt="ব্যাবিলনীয় বিপ্লব: ঋণ — নিয়ন্ত্রণের একটি শক্তিশালী হাতিয়ার" loading="lazy" />
           </a>
           <div class="cardbody">
-            <div class="tags"><span class="tag">History</span> <span class="tag">Economics</span> <span class="tag">Technology</span></div>
+            <div class="tags"><span class="tag">History</span> <span class="tag">Geopolitics</span> <span class="tag">Technology</span></div>
             <h2><a href="article-history-controllers-4-bn.html">ব্যাবিলনীয় বিপ্লব: ঋণ — নিয়ন্ত্রণের একটি শক্তিশালী হাতিয়ার</a></h2>
             <p class="meta">2026-07-27 • বাংলা</p>
             <p class="desc">ব্যাবিলনীয় বিপ্লব: ঋণ — নিয়ন্ত্রণের একটি শক্তিশালী হাতিয়ার</p>
-            <a class="read" href="article-history-controllers-4-bn.html">Read &rarr;</a>
+            <a class="read" href="article-history-controllers-4-bn.html">Read →</a>
           </div>
         </article>
-        <!-- বাংলা Article 3 -->
         <article class="card">
           <a href="article-history-controllers-3-bn.html" class="thumbwrap">
             <img src="images/pyramid-article3.jpg" alt="মিশরীয় ব্যবস্থা: ধর্মীয় নিয়ন্ত্রণের জন্য একটি নিখুঁত মডেল — এবং আখেনাতেনের বিপ্লব" loading="lazy" />
           </a>
           <div class="cardbody">
-            <div class="tags"><span class="tag">History</span> <span class="tag">Religion</span> <span class="tag">Ancient</span> <span class="tag">Technology</span></div>
+            <div class="tags"><span class="tag">History</span> <span class="tag">Geopolitics</span> <span class="tag">Technology</span></div>
             <h2><a href="article-history-controllers-3-bn.html">মিশরীয় ব্যবস্থা: ধর্মীয় নিয়ন্ত্রণের জন্য একটি নিখুঁত মডেল — এবং আখেনাতেনের বিপ্লব</a></h2>
             <p class="meta">2026-07-27 • বাংলা</p>
             <p class="desc">মিশরীয় ব্যবস্থা: ধর্মীয় নিয়ন্ত্রণের জন্য একটি নিখুঁত মডেল — এবং আখেনাতেনের বিপ্লব</p>
-            <a class="read" href="article-history-controllers-3-bn.html">Read &rarr;</a>
+            <a class="read" href="article-history-controllers-3-bn.html">Read →</a>
           </div>
         </article>
-        <!-- বাংলা Article 2 -->
         <article class="card">
           <a href="article-history-controllers-2-bn.html" class="thumbwrap">
             <img src="images/ur-article2.webp" alt="সুমেরিয়া: সভ্যতার জন্মস্থান এবং নিয়ন্ত্রণ ব্যবস্থা" loading="lazy" />
@@ -280,82 +275,73 @@
             <h2><a href="article-history-controllers-2-bn.html">সুমেরিয়া: সভ্যতার জন্মস্থান এবং নিয়ন্ত্রণ ব্যবস্থা</a></h2>
             <p class="meta">2026-07-26 • বাংলা</p>
             <p class="desc">সুমেরিয়া: সভ্যতার জন্মস্থান এবং নিয়ন্ত্রণ ব্যবস্থা</p>
-            <a class="read" href="article-history-controllers-2-bn.html">Read &rarr;</a>
+            <a class="read" href="article-history-controllers-2-bn.html">Read →</a>
           </div>
         </article>
-        <!-- বাংলা Article 1 -->
         <article class="card">
           <a href="article-history-controllers-1-bn.html" class="thumbwrap">
             <img src="images/ziggurat-of-ur.jpg" alt="বাস্তবতা একটি নিয়ন্ত্রিত মডেল হিসেবে প্রকাশিত" loading="lazy" />
           </a>
           <div class="cardbody">
-            <div class="tags"><span class="tag">History</span> <span class="tag">Technology</span></div>
+            <div class="tags"><span class="tag">History</span> <span class="tag">Geopolitics</span> <span class="tag">Technology</span></div>
             <h2><a href="article-history-controllers-1-bn.html">বাস্তবতা একটি নিয়ন্ত্রিত মডেল হিসেবে প্রকাশিত</a></h2>
             <p class="meta">2026-07-26 • বাংলা</p>
             <p class="desc">বাস্তবতা একটি নিয়ন্ত্রিত মডেল হিসেবে প্রকাশিত</p>
-            <a class="read" href="article-history-controllers-1-bn.html">Read &rarr;</a>
+            <a class="read" href="article-history-controllers-1-bn.html">Read →</a>
           </div>
         </article>
+        </div>
       </div>
-
-      <div class="ic-section-header" style="margin-top:40px;">
-        <h2>ગુજરાતી — History of the Controllers</h2>
-        <p>6 articles in ગુજરાતી</p>
-      </div>
-      <div class="ic-articles-grid">
-        <!-- ગુજરાતી Article 6 -->
+      <div class="ic-lang-group" id="lang-gu" style="display:none;">
+        <div class="ic-articles-grid">
         <article class="card">
           <a href="article-history-controllers-6-gu.html" class="thumbwrap">
             <img src="images/modern-banking-article6.png" alt="કંટ્રોલર્સની યાત્રા: ઇજિપ્તથી રોમ, રોમથી આધુનિક સમય સુધી" loading="lazy" />
           </a>
           <div class="cardbody">
-            <div class="tags"><span class="tag">History</span> <span class="tag">Modern</span> <span class="tag">Technology</span></div>
+            <div class="tags"><span class="tag">History</span> <span class="tag">Geopolitics</span> <span class="tag">Technology</span></div>
             <h2><a href="article-history-controllers-6-gu.html">કંટ્રોલર્સની યાત્રા: ઇજિપ્તથી રોમ, રોમથી આધુનિક સમય સુધી</a></h2>
             <p class="meta">2026-07-27 • ગુજરાતી</p>
             <p class="desc">કંટ્રોલર્સની યાત્રા: ઇજિપ્તથી રોમ, રોમથી આધુનિક સમય સુધી</p>
-            <a class="read" href="article-history-controllers-6-gu.html">Read &rarr;</a>
+            <a class="read" href="article-history-controllers-6-gu.html">Read →</a>
           </div>
         </article>
-        <!-- ગુજરાતી Article 5 -->
         <article class="card">
           <a href="article-history-controllers-5-gu.html" class="thumbwrap">
             <img src="images/allegory-of-cave-article5.webp" alt="ગ્રીક ફિલોસોફી: નિયંત્રિત પ્રતિકાર — અને નિયંત્રિત વિરોધ" loading="lazy" />
           </a>
           <div class="cardbody">
-            <div class="tags"><span class="tag">History</span> <span class="tag">Philosophy</span> <span class="tag">Technology</span></div>
+            <div class="tags"><span class="tag">History</span> <span class="tag">Geopolitics</span> <span class="tag">Technology</span></div>
             <h2><a href="article-history-controllers-5-gu.html">ગ્રીક ફિલોસોફી: નિયંત્રિત પ્રતિકાર — અને નિયંત્રિત વિરોધ</a></h2>
             <p class="meta">2026-07-27 • ગુજરાતી</p>
             <p class="desc">ગ્રીક ફિલોસોફી: નિયંત્રિત પ્રતિકાર — અને નિયંત્રિત વિરોધ</p>
-            <a class="read" href="article-history-controllers-5-gu.html">Read &rarr;</a>
+            <a class="read" href="article-history-controllers-5-gu.html">Read →</a>
           </div>
         </article>
-        <!-- ગુજરાતી Article 4 -->
         <article class="card">
           <a href="article-history-controllers-4-gu.html" class="thumbwrap">
             <img src="images/babylon-banking-article4.jpg" alt="બેબીલોનિયન ક્રાંતિ: દેવું — નિયંત્રણ માટેનું એક શક્તિશાળી સાધન" loading="lazy" />
           </a>
           <div class="cardbody">
-            <div class="tags"><span class="tag">History</span> <span class="tag">Economics</span> <span class="tag">Technology</span></div>
+            <div class="tags"><span class="tag">History</span> <span class="tag">Geopolitics</span> <span class="tag">Technology</span></div>
             <h2><a href="article-history-controllers-4-gu.html">બેબીલોનિયન ક્રાંતિ: દેવું — નિયંત્રણ માટેનું એક શક્તિશાળી સાધન</a></h2>
             <p class="meta">2026-07-27 • ગુજરાતી</p>
             <p class="desc">બેબીલોનિયન ક્રાંતિ: દેવું — નિયંત્રણ માટેનું એક શક્તિશાળી સાધન</p>
-            <a class="read" href="article-history-controllers-4-gu.html">Read &rarr;</a>
+            <a class="read" href="article-history-controllers-4-gu.html">Read →</a>
           </div>
         </article>
-        <!-- ગુજરાતી Article 3 -->
         <article class="card">
           <a href="article-history-controllers-3-gu.html" class="thumbwrap">
             <img src="images/pyramid-article3.jpg" alt="ઇજિપ્તની પ્રણાલી: ધાર્મિક નિયંત્રણ માટે એક સંપૂર્ણ મોડેલ — અને અખેનાતેનની ક્રાંતિ" loading="lazy" />
           </a>
           <div class="cardbody">
-            <div class="tags"><span class="tag">History</span> <span class="tag">Religion</span> <span class="tag">Ancient</span> <span class="tag">Technology</span></div>
+            <div class="tags"><span class="tag">History</span> <span class="tag">Geopolitics</span> <span class="tag">Technology</span></div>
             <h2><a href="article-history-controllers-3-gu.html">ઇજિપ્તની પ્રણાલી: ધાર્મિક નિયંત્રણ માટે એક સંપૂર્ણ મોડેલ — અને અખેનાતેનની ક્રાંતિ</a></h2>
             <p class="meta">2026-07-27 • ગુજરાતી</p>
             <p class="desc">ઇજિપ્તની પ્રણાલી: ધાર્મિક નિયંત્રણ માટે એક સંપૂર્ણ મોડેલ — અને અખેનાતેનની ક્રાંતિ</p>
-            <a class="read" href="article-history-controllers-3-gu.html">Read &rarr;</a>
+            <a class="read" href="article-history-controllers-3-gu.html">Read →</a>
           </div>
         </article>
-        <!-- ગુજરાતી Article 2 -->
         <article class="card">
           <a href="article-history-controllers-2-gu.html" class="thumbwrap">
             <img src="images/ur-article2.webp" alt="સુમેરિયા: સભ્યતા અને નિયંત્રણ પ્રણાલીઓનું જન્મસ્થળ" loading="lazy" />
@@ -365,82 +351,73 @@
             <h2><a href="article-history-controllers-2-gu.html">સુમેરિયા: સભ્યતા અને નિયંત્રણ પ્રણાલીઓનું જન્મસ્થળ</a></h2>
             <p class="meta">2026-07-26 • ગુજરાતી</p>
             <p class="desc">સુમેરિયા: સભ્યતા અને નિયંત્રણ પ્રણાલીઓનું જન્મસ્થળ</p>
-            <a class="read" href="article-history-controllers-2-gu.html">Read &rarr;</a>
+            <a class="read" href="article-history-controllers-2-gu.html">Read →</a>
           </div>
         </article>
-        <!-- ગુજરાતી Article 1 -->
         <article class="card">
           <a href="article-history-controllers-1-gu.html" class="thumbwrap">
             <img src="images/ziggurat-of-ur.jpg" alt="ધ મેટ્રિક્સ રિવીલ્ડ: રિયાલિટી એઝ અ કંટ્રોલ્ડ મોડેલ" loading="lazy" />
           </a>
           <div class="cardbody">
-            <div class="tags"><span class="tag">History</span> <span class="tag">Technology</span></div>
+            <div class="tags"><span class="tag">History</span> <span class="tag">Geopolitics</span> <span class="tag">Technology</span></div>
             <h2><a href="article-history-controllers-1-gu.html">ધ મેટ્રિક્સ રિવીલ્ડ: રિયાલિટી એઝ અ કંટ્રોલ્ડ મોડેલ</a></h2>
             <p class="meta">2026-07-26 • ગુજરાતી</p>
             <p class="desc">ધ મેટ્રિક્સ રિવીલ્ડ: રિયાલિટી એઝ અ કંટ્રોલ્ડ મોડેલ</p>
-            <a class="read" href="article-history-controllers-1-gu.html">Read &rarr;</a>
+            <a class="read" href="article-history-controllers-1-gu.html">Read →</a>
           </div>
         </article>
+        </div>
       </div>
-
-      <div class="ic-section-header" style="margin-top:40px;">
-        <h2>ಕನ್ನಡ — History of the Controllers</h2>
-        <p>6 articles in ಕನ್ನಡ</p>
-      </div>
-      <div class="ic-articles-grid">
-        <!-- ಕನ್ನಡ Article 6 -->
+      <div class="ic-lang-group" id="lang-kn" style="display:none;">
+        <div class="ic-articles-grid">
         <article class="card">
           <a href="article-history-controllers-6-kn.html" class="thumbwrap">
             <img src="images/modern-banking-article6.png" alt="ದಿ ಕಂಟ್ರೋಲರ್ಸ್ ಜರ್ನಿ: ಈಜಿಪ್ಟ್‌ನಿಂದ ರೋಮ್‌ಗೆ, ರೋಮ್‌ನಿಂದ ಆಧುನಿಕ ಕಾಲಕ್ಕೆ" loading="lazy" />
           </a>
           <div class="cardbody">
-            <div class="tags"><span class="tag">History</span> <span class="tag">Modern</span> <span class="tag">Technology</span></div>
+            <div class="tags"><span class="tag">History</span> <span class="tag">Geopolitics</span> <span class="tag">Technology</span></div>
             <h2><a href="article-history-controllers-6-kn.html">ದಿ ಕಂಟ್ರೋಲರ್ಸ್ ಜರ್ನಿ: ಈಜಿಪ್ಟ್‌ನಿಂದ ರೋಮ್‌ಗೆ, ರೋಮ್‌ನಿಂದ ಆಧುನಿಕ ಕಾಲಕ್ಕೆ</a></h2>
             <p class="meta">2026-07-27 • ಕನ್ನಡ</p>
             <p class="desc">ದಿ ಕಂಟ್ರೋಲರ್ಸ್ ಜರ್ನಿ: ಈಜಿಪ್ಟ್‌ನಿಂದ ರೋಮ್‌ಗೆ, ರೋಮ್‌ನಿಂದ ಆಧುನಿಕ ಕಾಲಕ್ಕೆ</p>
-            <a class="read" href="article-history-controllers-6-kn.html">Read &rarr;</a>
+            <a class="read" href="article-history-controllers-6-kn.html">Read →</a>
           </div>
         </article>
-        <!-- ಕನ್ನಡ Article 5 -->
         <article class="card">
           <a href="article-history-controllers-5-kn.html" class="thumbwrap">
             <img src="images/allegory-of-cave-article5.webp" alt="ಗ್ರೀಕ್ ತತ್ವಶಾಸ್ತ್ರ: ನಿಯಂತ್ರಿತ ಪ್ರತಿರೋಧ — ಮತ್ತು ನಿಯಂತ್ರಿತ ವಿರೋಧ" loading="lazy" />
           </a>
           <div class="cardbody">
-            <div class="tags"><span class="tag">History</span> <span class="tag">Philosophy</span> <span class="tag">Technology</span></div>
+            <div class="tags"><span class="tag">History</span> <span class="tag">Geopolitics</span> <span class="tag">Technology</span></div>
             <h2><a href="article-history-controllers-5-kn.html">ಗ್ರೀಕ್ ತತ್ವಶಾಸ್ತ್ರ: ನಿಯಂತ್ರಿತ ಪ್ರತಿರೋಧ — ಮತ್ತು ನಿಯಂತ್ರಿತ ವಿರೋಧ</a></h2>
             <p class="meta">2026-07-27 • ಕನ್ನಡ</p>
             <p class="desc">ಗ್ರೀಕ್ ತತ್ವಶಾಸ್ತ್ರ: ನಿಯಂತ್ರಿತ ಪ್ರತಿರೋಧ — ಮತ್ತು ನಿಯಂತ್ರಿತ ವಿರೋಧ</p>
-            <a class="read" href="article-history-controllers-5-kn.html">Read &rarr;</a>
+            <a class="read" href="article-history-controllers-5-kn.html">Read →</a>
           </div>
         </article>
-        <!-- ಕನ್ನಡ Article 4 -->
         <article class="card">
           <a href="article-history-controllers-4-kn.html" class="thumbwrap">
             <img src="images/babylon-banking-article4.jpg" alt="ಬ್ಯಾಬಿಲೋನಿಯನ್ ಕ್ರಾಂತಿ: ಸಾಲ — ನಿಯಂತ್ರಣಕ್ಕಾಗಿ ಒಂದು ಪ್ರಬಲ ಸಾಧನ" loading="lazy" />
           </a>
           <div class="cardbody">
-            <div class="tags"><span class="tag">History</span> <span class="tag">Economics</span> <span class="tag">Technology</span></div>
+            <div class="tags"><span class="tag">History</span> <span class="tag">Geopolitics</span> <span class="tag">Technology</span></div>
             <h2><a href="article-history-controllers-4-kn.html">ಬ್ಯಾಬಿಲೋನಿಯನ್ ಕ್ರಾಂತಿ: ಸಾಲ — ನಿಯಂತ್ರಣಕ್ಕಾಗಿ ಒಂದು ಪ್ರಬಲ ಸಾಧನ</a></h2>
             <p class="meta">2026-07-27 • ಕನ್ನಡ</p>
             <p class="desc">ಬ್ಯಾಬಿಲೋನಿಯನ್ ಕ್ರಾಂತಿ: ಸಾಲ — ನಿಯಂತ್ರಣಕ್ಕಾಗಿ ಒಂದು ಪ್ರಬಲ ಸಾಧನ</p>
-            <a class="read" href="article-history-controllers-4-kn.html">Read &rarr;</a>
+            <a class="read" href="article-history-controllers-4-kn.html">Read →</a>
           </div>
         </article>
-        <!-- ಕನ್ನಡ Article 3 -->
         <article class="card">
           <a href="article-history-controllers-3-kn.html" class="thumbwrap">
             <img src="images/pyramid-article3.jpg" alt="ಈಜಿಪ್ಟ್ ವ್ಯವಸ್ಥೆ: ಧಾರ್ಮಿಕ ನಿಯಂತ್ರಣಕ್ಕೆ ಪರಿಪೂರ್ಣ ಮಾದರಿ — ಮತ್ತು ಅಖೆನಾಟೆನ್‌ನ ಕ್ರಾಂತಿ" loading="lazy" />
           </a>
           <div class="cardbody">
-            <div class="tags"><span class="tag">History</span> <span class="tag">Religion</span> <span class="tag">Ancient</span> <span class="tag">Technology</span></div>
+            <div class="tags"><span class="tag">History</span> <span class="tag">Geopolitics</span> <span class="tag">Technology</span></div>
             <h2><a href="article-history-controllers-3-kn.html">ಈಜಿಪ್ಟ್ ವ್ಯವಸ್ಥೆ: ಧಾರ್ಮಿಕ ನಿಯಂತ್ರಣಕ್ಕೆ ಪರಿಪೂರ್ಣ ಮಾದರಿ — ಮತ್ತು ಅಖೆನಾಟೆನ್‌ನ ಕ್ರಾಂತಿ</a></h2>
             <p class="meta">2026-07-27 • ಕನ್ನಡ</p>
             <p class="desc">ಈಜಿಪ್ಟ್ ವ್ಯವಸ್ಥೆ: ಧಾರ್ಮಿಕ ನಿಯಂತ್ರಣಕ್ಕೆ ಪರಿಪೂರ್ಣ ಮಾದರಿ — ಮತ್ತು ಅಖೆನಾಟೆನ್‌ನ ಕ್ರಾಂತಿ</p>
-            <a class="read" href="article-history-controllers-3-kn.html">Read &rarr;</a>
+            <a class="read" href="article-history-controllers-3-kn.html">Read →</a>
           </div>
         </article>
-        <!-- ಕನ್ನಡ Article 2 -->
         <article class="card">
           <a href="article-history-controllers-2-kn.html" class="thumbwrap">
             <img src="images/ur-article2.webp" alt="ಸುಮೇರಿಯಾ: ನಾಗರಿಕತೆ ಮತ್ತು ನಿಯಂತ್ರಣ ವ್ಯವಸ್ಥೆಗಳ ಜನ್ಮಸ್ಥಳ" loading="lazy" />
@@ -450,82 +427,73 @@
             <h2><a href="article-history-controllers-2-kn.html">ಸುಮೇರಿಯಾ: ನಾಗರಿಕತೆ ಮತ್ತು ನಿಯಂತ್ರಣ ವ್ಯವಸ್ಥೆಗಳ ಜನ್ಮಸ್ಥಳ</a></h2>
             <p class="meta">2026-07-26 • ಕನ್ನಡ</p>
             <p class="desc">ಸುಮೇರಿಯಾ: ನಾಗರಿಕತೆ ಮತ್ತು ನಿಯಂತ್ರಣ ವ್ಯವಸ್ಥೆಗಳ ಜನ್ಮಸ್ಥಳ</p>
-            <a class="read" href="article-history-controllers-2-kn.html">Read &rarr;</a>
+            <a class="read" href="article-history-controllers-2-kn.html">Read →</a>
           </div>
         </article>
-        <!-- ಕನ್ನಡ Article 1 -->
         <article class="card">
           <a href="article-history-controllers-1-kn.html" class="thumbwrap">
             <img src="images/ziggurat-of-ur.jpg" alt="ದಿ ಮ್ಯಾಟ್ರಿಕ್ಸ್ ರಿವೀಲ್ಡ್: ರಿಯಾಲಿಟಿ ಆಸ್ ಎ ಕಂಟ್ರೋಲ್ಡ್ ಮಾಡೆಲ್" loading="lazy" />
           </a>
           <div class="cardbody">
-            <div class="tags"><span class="tag">History</span> <span class="tag">Technology</span></div>
+            <div class="tags"><span class="tag">History</span> <span class="tag">Geopolitics</span> <span class="tag">Technology</span></div>
             <h2><a href="article-history-controllers-1-kn.html">ದಿ ಮ್ಯಾಟ್ರಿಕ್ಸ್ ರಿವೀಲ್ಡ್: ರಿಯಾಲಿಟಿ ಆಸ್ ಎ ಕಂಟ್ರೋಲ್ಡ್ ಮಾಡೆಲ್</a></h2>
             <p class="meta">2026-07-26 • ಕನ್ನಡ</p>
             <p class="desc">ದಿ ಮ್ಯಾಟ್ರಿಕ್ಸ್ ರಿವೀಲ್ಡ್: ರಿಯಾಲಿಟಿ ಆಸ್ ಎ ಕಂಟ್ರೋಲ್ಡ್ ಮಾಡೆಲ್</p>
-            <a class="read" href="article-history-controllers-1-kn.html">Read &rarr;</a>
+            <a class="read" href="article-history-controllers-1-kn.html">Read →</a>
           </div>
         </article>
+        </div>
       </div>
-
-      <div class="ic-section-header" style="margin-top:40px;">
-        <h2>मराठी — History of the Controllers</h2>
-        <p>6 articles in मराठी</p>
-      </div>
-      <div class="ic-articles-grid">
-        <!-- मराठी Article 6 -->
+      <div class="ic-lang-group" id="lang-mr" style="display:none;">
+        <div class="ic-articles-grid">
         <article class="card">
           <a href="article-history-controllers-6-mr.html" class="thumbwrap">
             <img src="images/modern-banking-article6.png" alt="नियंत्रकांचा प्रवास: इजिप्त ते रोम, रोम ते आधुनिक काळ" loading="lazy" />
           </a>
           <div class="cardbody">
-            <div class="tags"><span class="tag">History</span> <span class="tag">Modern</span> <span class="tag">Technology</span></div>
+            <div class="tags"><span class="tag">History</span> <span class="tag">Geopolitics</span> <span class="tag">Technology</span></div>
             <h2><a href="article-history-controllers-6-mr.html">नियंत्रकांचा प्रवास: इजिप्त ते रोम, रोम ते आधुनिक काळ</a></h2>
             <p class="meta">2026-07-27 • मराठी</p>
             <p class="desc">नियंत्रकांचा प्रवास: इजिप्त ते रोम, रोम ते आधुनिक काळ</p>
-            <a class="read" href="article-history-controllers-6-mr.html">Read &rarr;</a>
+            <a class="read" href="article-history-controllers-6-mr.html">Read →</a>
           </div>
         </article>
-        <!-- मराठी Article 5 -->
         <article class="card">
           <a href="article-history-controllers-5-mr.html" class="thumbwrap">
             <img src="images/allegory-of-cave-article5.webp" alt="ग्रीक तत्त्वज्ञान: नियंत्रित प्रतिकार — आणि नियंत्रित विरोध" loading="lazy" />
           </a>
           <div class="cardbody">
-            <div class="tags"><span class="tag">History</span> <span class="tag">Philosophy</span> <span class="tag">Technology</span></div>
+            <div class="tags"><span class="tag">History</span> <span class="tag">Geopolitics</span> <span class="tag">Technology</span></div>
             <h2><a href="article-history-controllers-5-mr.html">ग्रीक तत्त्वज्ञान: नियंत्रित प्रतिकार — आणि नियंत्रित विरोध</a></h2>
             <p class="meta">2026-07-27 • मराठी</p>
             <p class="desc">ग्रीक तत्त्वज्ञान: नियंत्रित प्रतिकार — आणि नियंत्रित विरोध</p>
-            <a class="read" href="article-history-controllers-5-mr.html">Read &rarr;</a>
+            <a class="read" href="article-history-controllers-5-mr.html">Read →</a>
           </div>
         </article>
-        <!-- मराठी Article 4 -->
         <article class="card">
           <a href="article-history-controllers-4-mr.html" class="thumbwrap">
             <img src="images/babylon-banking-article4.jpg" alt="बेबीलोनियन क्रांती: कर्ज — नियंत्रणाचे एक शक्तिशाली साधन" loading="lazy" />
           </a>
           <div class="cardbody">
-            <div class="tags"><span class="tag">History</span> <span class="tag">Economics</span> <span class="tag">Technology</span></div>
+            <div class="tags"><span class="tag">History</span> <span class="tag">Geopolitics</span> <span class="tag">Technology</span></div>
             <h2><a href="article-history-controllers-4-mr.html">बेबीलोनियन क्रांती: कर्ज — नियंत्रणाचे एक शक्तिशाली साधन</a></h2>
             <p class="meta">2026-07-27 • मराठी</p>
             <p class="desc">बेबीलोनियन क्रांती: कर्ज — नियंत्रणाचे एक शक्तिशाली साधन</p>
-            <a class="read" href="article-history-controllers-4-mr.html">Read &rarr;</a>
+            <a class="read" href="article-history-controllers-4-mr.html">Read →</a>
           </div>
         </article>
-        <!-- मराठी Article 3 -->
         <article class="card">
           <a href="article-history-controllers-3-mr.html" class="thumbwrap">
             <img src="images/pyramid-article3.jpg" alt="इजिप्शियन सिस्टम: धार्मिक नियंत्रणासाठी एक परिपूर्ण मॉडेल — आणि अखेनातेनची क्रांती" loading="lazy" />
           </a>
           <div class="cardbody">
-            <div class="tags"><span class="tag">History</span> <span class="tag">Religion</span> <span class="tag">Ancient</span> <span class="tag">Technology</span></div>
+            <div class="tags"><span class="tag">History</span> <span class="tag">Geopolitics</span> <span class="tag">Technology</span></div>
             <h2><a href="article-history-controllers-3-mr.html">इजिप्शियन सिस्टम: धार्मिक नियंत्रणासाठी एक परिपूर्ण मॉडेल — आणि अखेनातेनची क्रांती</a></h2>
             <p class="meta">2026-07-27 • मराठी</p>
             <p class="desc">इजिप्शियन सिस्टम: धार्मिक नियंत्रणासाठी एक परिपूर्ण मॉडेल — आणि अखेनातेनची क्रांती</p>
-            <a class="read" href="article-history-controllers-3-mr.html">Read &rarr;</a>
+            <a class="read" href="article-history-controllers-3-mr.html">Read →</a>
           </div>
         </article>
-        <!-- मराठी Article 2 -->
         <article class="card">
           <a href="article-history-controllers-2-mr.html" class="thumbwrap">
             <img src="images/ur-article2.webp" alt="सुमेरिया: सभ्यता आणि नियंत्रण प्रणालींचे जन्मस्थान" loading="lazy" />
@@ -535,82 +503,73 @@
             <h2><a href="article-history-controllers-2-mr.html">सुमेरिया: सभ्यता आणि नियंत्रण प्रणालींचे जन्मस्थान</a></h2>
             <p class="meta">2026-07-26 • मराठी</p>
             <p class="desc">सुमेरिया: सभ्यता आणि नियंत्रण प्रणालींचे जन्मस्थान</p>
-            <a class="read" href="article-history-controllers-2-mr.html">Read &rarr;</a>
+            <a class="read" href="article-history-controllers-2-mr.html">Read →</a>
           </div>
         </article>
-        <!-- मराठी Article 1 -->
         <article class="card">
           <a href="article-history-controllers-1-mr.html" class="thumbwrap">
             <img src="images/ziggurat-of-ur.jpg" alt="मॅट्रिक्स रिव्हील्ड: रिअॅलिटी ॲज अ कंट्रोल्ड मॉडेल" loading="lazy" />
           </a>
           <div class="cardbody">
-            <div class="tags"><span class="tag">History</span> <span class="tag">Technology</span></div>
+            <div class="tags"><span class="tag">History</span> <span class="tag">Geopolitics</span> <span class="tag">Technology</span></div>
             <h2><a href="article-history-controllers-1-mr.html">मॅट्रिक्स रिव्हील्ड: रिअॅलिटी ॲज अ कंट्रोल्ड मॉडेल</a></h2>
             <p class="meta">2026-07-26 • मराठी</p>
             <p class="desc">मॅट्रिक्स रिव्हील्ड: रिअॅलिटी ॲज अ कंट्रोल्ड मॉडेल</p>
-            <a class="read" href="article-history-controllers-1-mr.html">Read &rarr;</a>
+            <a class="read" href="article-history-controllers-1-mr.html">Read →</a>
           </div>
         </article>
+        </div>
       </div>
-
-      <div class="ic-section-header" style="margin-top:40px;">
-        <h2>தமிழ் — History of the Controllers</h2>
-        <p>6 articles in தமிழ்</p>
-      </div>
-      <div class="ic-articles-grid">
-        <!-- தமிழ் Article 6 -->
+      <div class="ic-lang-group" id="lang-ta" style="display:none;">
+        <div class="ic-articles-grid">
         <article class="card">
           <a href="article-history-controllers-6-ta.html" class="thumbwrap">
             <img src="images/modern-banking-article6.png" alt="கட்டுப்பாட்டாளர்களின் பயணம்: எகிப்திலிருந்து ரோம், ரோமிலிருந்து நவீன காலம் வரை" loading="lazy" />
           </a>
           <div class="cardbody">
-            <div class="tags"><span class="tag">History</span> <span class="tag">Modern</span> <span class="tag">Technology</span></div>
+            <div class="tags"><span class="tag">History</span> <span class="tag">Geopolitics</span> <span class="tag">Technology</span></div>
             <h2><a href="article-history-controllers-6-ta.html">கட்டுப்பாட்டாளர்களின் பயணம்: எகிப்திலிருந்து ரோம், ரோமிலிருந்து நவீன காலம் வரை</a></h2>
             <p class="meta">2026-07-27 • தமிழ்</p>
             <p class="desc">கட்டுப்பாட்டாளர்களின் பயணம்: எகிப்திலிருந்து ரோம், ரோமிலிருந்து நவீன காலம் வரை</p>
-            <a class="read" href="article-history-controllers-6-ta.html">Read &rarr;</a>
+            <a class="read" href="article-history-controllers-6-ta.html">Read →</a>
           </div>
         </article>
-        <!-- தமிழ் Article 5 -->
         <article class="card">
           <a href="article-history-controllers-5-ta.html" class="thumbwrap">
             <img src="images/allegory-of-cave-article5.webp" alt="கிரேக்கத் தத்துவம்: கட்டுப்படுத்தப்பட்ட எதிர்ப்பு — மற்றும் கட்டுப்படுத்தப்பட்ட எதிர்ப்பு" loading="lazy" />
           </a>
           <div class="cardbody">
-            <div class="tags"><span class="tag">History</span> <span class="tag">Philosophy</span> <span class="tag">Technology</span></div>
+            <div class="tags"><span class="tag">History</span> <span class="tag">Geopolitics</span> <span class="tag">Technology</span></div>
             <h2><a href="article-history-controllers-5-ta.html">கிரேக்கத் தத்துவம்: கட்டுப்படுத்தப்பட்ட எதிர்ப்பு — மற்றும் கட்டுப்படுத்தப்பட்ட எதிர்ப்பு</a></h2>
             <p class="meta">2026-07-27 • தமிழ்</p>
             <p class="desc">கிரேக்கத் தத்துவம்: கட்டுப்படுத்தப்பட்ட எதிர்ப்பு — மற்றும் கட்டுப்படுத்தப்பட்ட எதிர்ப்பு</p>
-            <a class="read" href="article-history-controllers-5-ta.html">Read &rarr;</a>
+            <a class="read" href="article-history-controllers-5-ta.html">Read →</a>
           </div>
         </article>
-        <!-- தமிழ் Article 4 -->
         <article class="card">
           <a href="article-history-controllers-4-ta.html" class="thumbwrap">
             <img src="images/babylon-banking-article4.jpg" alt="பாபிலோனியப் புரட்சி: கடன் — கட்டுப்பாட்டிற்கான ஒரு வலிமையான கருவி" loading="lazy" />
           </a>
           <div class="cardbody">
-            <div class="tags"><span class="tag">History</span> <span class="tag">Economics</span> <span class="tag">Technology</span></div>
+            <div class="tags"><span class="tag">History</span> <span class="tag">Geopolitics</span> <span class="tag">Technology</span></div>
             <h2><a href="article-history-controllers-4-ta.html">பாபிலோனியப் புரட்சி: கடன் — கட்டுப்பாட்டிற்கான ஒரு வலிமையான கருவி</a></h2>
             <p class="meta">2026-07-27 • தமிழ்</p>
             <p class="desc">பாபிலோனியப் புரட்சி: கடன் — கட்டுப்பாட்டிற்கான ஒரு வலிமையான கருவி</p>
-            <a class="read" href="article-history-controllers-4-ta.html">Read &rarr;</a>
+            <a class="read" href="article-history-controllers-4-ta.html">Read →</a>
           </div>
         </article>
-        <!-- தமிழ் Article 3 -->
         <article class="card">
           <a href="article-history-controllers-3-ta.html" class="thumbwrap">
             <img src="images/pyramid-article3.jpg" alt="எகிப்திய முறை: மதக் கட்டுப்பாட்டிற்கான ஒரு சிறந்த மாதிரி — மற்றும் அகெனடனின் புரட்சி" loading="lazy" />
           </a>
           <div class="cardbody">
-            <div class="tags"><span class="tag">History</span> <span class="tag">Religion</span> <span class="tag">Ancient</span> <span class="tag">Technology</span></div>
+            <div class="tags"><span class="tag">History</span> <span class="tag">Geopolitics</span> <span class="tag">Technology</span></div>
             <h2><a href="article-history-controllers-3-ta.html">எகிப்திய முறை: மதக் கட்டுப்பாட்டிற்கான ஒரு சிறந்த மாதிரி — மற்றும் அகெனடனின் புரட்சி</a></h2>
             <p class="meta">2026-07-27 • தமிழ்</p>
             <p class="desc">எகிப்திய முறை: மதக் கட்டுப்பாட்டிற்கான ஒரு சிறந்த மாதிரி — மற்றும் அகெனடனின் புரட்சி</p>
-            <a class="read" href="article-history-controllers-3-ta.html">Read &rarr;</a>
+            <a class="read" href="article-history-controllers-3-ta.html">Read →</a>
           </div>
         </article>
-        <!-- தமிழ் Article 2 -->
         <article class="card">
           <a href="article-history-controllers-2-ta.html" class="thumbwrap">
             <img src="images/ur-article2.webp" alt="சுமேரியா: நாகரிகம் மற்றும் கட்டுப்பாட்டு அமைப்புகளின் பிறப்பிடம்" loading="lazy" />
@@ -620,22 +579,22 @@
             <h2><a href="article-history-controllers-2-ta.html">சுமேரியா: நாகரிகம் மற்றும் கட்டுப்பாட்டு அமைப்புகளின் பிறப்பிடம்</a></h2>
             <p class="meta">2026-07-26 • தமிழ்</p>
             <p class="desc">சுமேரியா: நாகரிகம் மற்றும் கட்டுப்பாட்டு அமைப்புகளின் பிறப்பிடம்</p>
-            <a class="read" href="article-history-controllers-2-ta.html">Read &rarr;</a>
+            <a class="read" href="article-history-controllers-2-ta.html">Read →</a>
           </div>
         </article>
-        <!-- தமிழ் Article 1 -->
         <article class="card">
           <a href="article-history-controllers-1-ta.html" class="thumbwrap">
             <img src="images/ziggurat-of-ur.jpg" alt="மாட்ரிஸ் வெளிப்பட்டது: கட்டுப்படுத்தப்பட்ட மாதிரியாக உண்மை" loading="lazy" />
           </a>
           <div class="cardbody">
-            <div class="tags"><span class="tag">History</span> <span class="tag">Technology</span></div>
+            <div class="tags"><span class="tag">History</span> <span class="tag">Geopolitics</span> <span class="tag">Technology</span></div>
             <h2><a href="article-history-controllers-1-ta.html">மாட்ரிஸ் வெளிப்பட்டது: கட்டுப்படுத்தப்பட்ட மாதிரியாக உண்மை</a></h2>
             <p class="meta">2026-07-26 • தமிழ்</p>
             <p class="desc">மாட்ரிஸ் வெளிப்பட்டது: கட்டுப்படுத்தப்பட்ட மாதிரியாக உண்மை</p>
-            <a class="read" href="article-history-controllers-1-ta.html">Read &rarr;</a>
+            <a class="read" href="article-history-controllers-1-ta.html">Read →</a>
           </div>
         </article>
+        </div>
       </div>
 
         <!-- ABHA -->
