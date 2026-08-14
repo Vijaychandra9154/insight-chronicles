@@ -20,6 +20,7 @@ export function initializeApp(config = {}) {
   const endpoint = config.endpoint || savedConfig.endpoint || null;
   const proxyEndpoint = config.proxyEndpoint || null;
   const maxRetries = config.maxRetries;
+  const sourceLanguage = config.sourceLanguage || "te";
   const onProgress = config.progressCallback || (() => {});
   const log = config.logger || (() => {});
 
@@ -40,7 +41,7 @@ export function initializeApp(config = {}) {
   // Provider — proxy mode (recommended for production) or direct mode
   function configureProvider(key, ep, proxyEp, retries) {
     if ((key || proxyEp) && ep) {
-      const cfg = { apiKey: key, endpoint: ep, proxyEndpoint: proxyEp };
+      const cfg = { apiKey: key, endpoint: ep, proxyEndpoint: proxyEp, sourceLanguage };
       if (retries !== undefined) cfg.maxRetries = retries;
       state.provider = createTranslationProvider(createSarvamProvider(cfg));
       const mode = proxyEp ? "sarvam (via proxy)" : "sarvam (direct — dev only)";
@@ -129,12 +130,18 @@ export function initializeApp(config = {}) {
 
       state.lastPublishResult = await publishAll({
         articles: fetched,
-        sourceLanguage: "en",
+        sourceLanguage,
         targetLanguages: state.selectedLanguages,
         translateFunction: (text, lang) => state.provider.translate(text, lang),
         translateBatchFunction: (texts, lang) => state.provider.translateBatch(texts, lang),
-        onProgress: ({ articleIndex, articleTotal, language, status }) =>
-          progress("translating", { current: articleIndex, total: articleTotal, language, status }),
+        onProgress: (p) => {
+          // Accept both article-level ({ articleIndex, articleTotal }) and
+          // node-level ({ current, total }) progress shapes so the bar moves
+          // during translation, not just when an article finishes.
+          const cur = p.articleIndex ?? p.current ?? null;
+          const tot = p.articleTotal ?? p.total ?? null;
+          progress("translating", { current: cur, total: tot, language: p.language, status: p.status });
+        },
       });
 
       const r = state.lastPublishResult;

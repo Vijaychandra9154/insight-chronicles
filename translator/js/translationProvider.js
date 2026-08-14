@@ -62,8 +62,9 @@ export function createTranslationProvider(provider) {
   }
 
   // Optional methods with fallbacks
-  const hasBatch = typeof provider.translateBatch === "function";
   const hasSupportsBatch = typeof provider.supportsBatch === "function";
+  const hasBatch = typeof provider.translateBatch === "function"
+    && (!hasSupportsBatch || provider.supportsBatch());
 
   return Object.freeze({
     /**

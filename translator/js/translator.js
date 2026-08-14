@@ -150,7 +150,7 @@ export async function translateDocument({ html, targetLanguage, translateFunctio
             failedCount++;
           }
           translatedNodes.push({ ...node, priority, translatedText: translatedText || sourceText });
-          if (onProgress && i % 5 === 0) onProgress({ current: i + 1, total, status: "translating" });
+          if (onProgress) onProgress({ current: i + 1, total, status: "translating" });
         }
       }
     } else {
@@ -171,7 +171,7 @@ export async function translateDocument({ html, targetLanguage, translateFunctio
           failedCount++;
         }
         translatedNodes.push({ ...node, priority, translatedText: translatedText || sourceText });
-        if (onProgress && i % 5 === 0) onProgress({ current: i + 1, total, status: "translating" });
+        if (onProgress) onProgress({ current: i + 1, total, status: "translating" });
       }
     }
   }
@@ -185,7 +185,7 @@ export async function translateDocument({ html, targetLanguage, translateFunctio
   }
 
   // ── 7. Rebuild HTML ──
-  const rebuilt = rebuildHTML(html, translatedNodes);
+  const rebuilt = rebuildHTML(html, translatedNodes, targetLanguage);
 
   // ── 8. Return result ──
   return {
@@ -251,7 +251,7 @@ export function translateDocumentCached({ html, targetLanguage, slug = "" }) {
     });
   }
 
-  const rebuilt = rebuildHTML(html, translatedNodes);
+  const rebuilt = rebuildHTML(html, translatedNodes, targetLanguage);
 
   return {
     html: rebuilt,

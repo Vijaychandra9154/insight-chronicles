@@ -19,9 +19,10 @@ const INLINE_TAGS = new Set([
 /**
  * @param {string} originalHTML — original article HTML
  * @param {object[]} translatedNodes — AST nodes with added `translatedText`
+ * @param {string} [targetLanguage] — target language code (e.g. "hi", "bn")
  * @returns {string} rebuilt HTML
  */
-export function rebuildHTML(originalHTML, translatedNodes) {
+export function rebuildHTML(originalHTML, translatedNodes, targetLanguage) {
   const doc = new DOMParser().parseFromString(originalHTML, "text/html");
 
   for (const node of translatedNodes) {
@@ -29,6 +30,29 @@ export function rebuildHTML(originalHTML, translatedNodes) {
     const el = resolveXPath(doc, node.xpath);
     if (!el) continue;
     applyTranslation(el, node);
+  }
+
+  // Update document language to target language
+  if (targetLanguage) {
+    const htmlEl = doc.documentElement;
+    if (htmlEl) htmlEl.setAttribute("lang", targetLanguage);
+
+    // Update JSON-LD inLanguage
+    const scripts = doc.querySelectorAll('script[type="application/ld+json"]');
+    for (const s of scripts) {
+      try {
+        const ld = JSON.parse(s.textContent);
+        if (ld && typeof ld === "object") {
+          if (ld["inLanguage"] !== undefined) ld["inLanguage"] = targetLanguage;
+          if (ld["@graph"] && Array.isArray(ld["@graph"])) {
+            for (const item of ld["@graph"]) {
+              if (item["inLanguage"] !== undefined) item["inLanguage"] = targetLanguage;
+            }
+          }
+          s.textContent = JSON.stringify(ld);
+        }
+      } catch (_) { /* skip unparseable JSON */ }
+    }
   }
 
   const result = new XMLSerializer().serializeToString(doc);

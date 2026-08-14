@@ -6,8 +6,8 @@
 
 // ── Defaults ──────────────────────────────────────────────────────
 
-const DEFAULT_TIMEOUT_MS = 30_000;
-const DEFAULT_BATCH_TIMEOUT_MS = 60_000;
+const DEFAULT_TIMEOUT_MS = 20_000;
+const DEFAULT_BATCH_TIMEOUT_MS = 15_000;
 const DEFAULT_MAX_RETRIES = 3;        // 4 total attempts
 const DEFAULT_BASE_DELAY_MS = 1000;   // starting backoff
 const DEFAULT_MAX_DELAY_MS = 30_000;  // cap backoff at 30 seconds
@@ -31,6 +31,16 @@ const DEFAULT_MAX_DELAY_MS = 30_000;  // cap backoff at 30 seconds
 //   Pattern 2 — Direct (internal / dev only):
 //     Pass `apiKey` directly. Acceptable for localhost, password-protected
 //     staging, or internal tools behind a VPN. NEVER use on the open web.<｜end▁of▁thinking｜>OK
+
+// ── Language code mapping ──────────────────────────────────────────
+// Sarvam API expects "hi-IN", "en-IN" format. Convert short codes.
+// Special case: Odia "or" → "od-IN"
+function toSarvamCode(shortCode) {
+  const special = { or: "od-IN" };
+  if (special[shortCode]) return special[shortCode];
+  if (shortCode.includes("-")) return shortCode; // already long format
+  return shortCode + "-IN";
+}
 
 // ── Factory ───────────────────────────────────────────────────────
 
@@ -58,6 +68,7 @@ export function createSarvamProvider(config) {
   const maxRetries = config?.maxRetries ?? DEFAULT_MAX_RETRIES;
   const baseDelayMs = config?.baseDelayMs ?? DEFAULT_BASE_DELAY_MS;
   const maxDelayMs = config?.maxDelayMs ?? DEFAULT_MAX_DELAY_MS;
+  const sourceLanguage = config?.sourceLanguage || "en";
 
   // Must have either a direct endpoint + key, or a proxy endpoint
   if (!proxyEndpoint && !apiKey) {
@@ -66,6 +77,7 @@ export function createSarvamProvider(config) {
   if (!endpoint) throw new Error("Sarvam provider requires config.endpoint.");
 
   const useProxy = !!proxyEndpoint;
+  const sourceLangCode = toSarvamCode(sourceLanguage);
 
   // ── Helpers (easy to change payload / response format later) ──
 
@@ -84,9 +96,9 @@ export function createSarvamProvider(config) {
       headers,
       body: JSON.stringify({
         input: text,
-        source_language_code: "en",
-        target_language_code: targetLanguage,
-        model: "mayura-v1"
+        source_language_code: sourceLangCode,
+        target_language_code: toSarvamCode(targetLanguage),
+        model: "mayura:v1"
       })
     });
   }
@@ -106,9 +118,9 @@ export function createSarvamProvider(config) {
       headers,
       body: JSON.stringify({
         input: items,
-        source_language_code: "en",
-        target_language_code: targetLanguage,
-        model: "mayura-v1"
+        source_language_code: sourceLangCode,
+        target_language_code: toSarvamCode(targetLanguage),
+        model: "mayura:v1"
       })
     });
   }
@@ -270,9 +282,9 @@ export function createSarvamProvider(config) {
       }
     },
 
-    /** Sarvam supports native batch translation. */
+    /** Batch disabled — Sarvam /translate is single-text only. Sequential is reliable. */
     supportsBatch() {
-      return true;
+      return false;
     },
 
     /** Human-readable provider name. */
