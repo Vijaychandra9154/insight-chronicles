@@ -28,6 +28,4 @@ The repo root is the home dir, so it contains a huge amount of untracked persona
 - **Broken translation** = title/body still English (pipeline returned source). Detect: check `<title>` or `<html lang="{lang}">`.
 
 ## Language status
-- Correct: en, hi, bn, gu, kn, mr, ta, te, brx, doi, gom, mai, ne, pa, sa, sd, ur.
-- Broken (still English): `as`, `or`, `ml` (and `brx` article 5).
-- Broken (still Telugu): `ks`, `mni`, `sat`.
+- All 23 languages (en + 22) are correctly translated — including `as`, `or`, `ml`, `ks`, `mni`, `sat`, `brx` (verified 2026-08-19: title, body, `<html lang>`, and meta description all in target language).
